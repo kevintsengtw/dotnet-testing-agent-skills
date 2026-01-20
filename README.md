@@ -3,59 +3,100 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![.NET](https://img.shields.io/badge/.NET-8.0+-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
 [![xUnit](https://img.shields.io/badge/xUnit-3.x-5C2D91)](https://xunit.net/)
+[![Agent Skills](https://img.shields.io/badge/Agent_Skills-Standard-blue)](https://agentskills.io)
 
 > 🏆 基於 **2025 iThome 鐵人賽 Software Development 組冠軍作品**「老派軟體工程師的測試修練 - 30 天挑戰」提煉而成
 
-專為 .NET 開發者打造的 AI Agent Skills 集合，涵蓋從單元測試到整合測試的完整最佳實踐。讓 GitHub Copilot、Claude 等 AI 助理自動為您提供專業的測試指導！
+**跨平台通用的 AI Agent Skills 集合**，遵循 [agentskills.io](https://agentskills.io) 開放標準。涵蓋從單元測試到整合測試的完整最佳實踐，可在 **GitHub Copilot、Claude、Cursor** 等多種 AI 工具中使用！
 
 ---
 
 ## ✨ 特色
 
+- 🌐 **跨平台通用**：符合 agentskills.io 開放標準，可在多種 AI 工具使用
 - 🎯 **自動觸發**：AI 根據對話內容自動載入相關技能
 - 📚 **27 個精煉技能**：涵蓋單元測試、模擬、測試資料生成、整合測試等
 - 🔧 **即用範本**：提供完整的專案結構與程式碼範例
-- 🌐 **多平台支援**：GitHub Copilot、Claude、Cursor 等
 - 📖 **中文友善**：完整的繁體中文文件與命名建議
+
+---
+
+## 🌐 支援的 AI 平台
+
+本 repository 的 Agent Skills 可以在以下 AI 平台使用：
+
+| 平台 | 支援狀態 | 使用方式 |
+|------|----------|----------|
+| **GitHub Copilot (VS Code)** | ✅ 完整支援 | 複製到 \.github/skills/\ |
+| **GitHub Copilot CLI** | ✅ 完整支援 | 同上 |
+| **Claude Desktop** | ✅ 完整支援 | 使用 \/plugin\ 指令或複製到專案 |
+| **Claude Code CLI** | ✅ 完整支援 | 複製到 \.claude/skills/\ |
+| **Cursor** | ✅ 完整支援 | 複製到 \.cursor/skills/\ |
+| **其他支援 Agent Skills 的工具** | ✅ 通用 | 查閱該工具的文件 |
+
+> 💡 詳細的跨平台使用說明請參考 [PLATFORM_GUIDE.md](PLATFORM_GUIDE.md)
 
 ---
 
 ## 🚀 快速開始
 
-### 方法一：直接複製（推薦）
+### GitHub Copilot (VS Code)
 
-```bash
+\\\ash
 # 1. Clone 此 repo
 git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
 
 # 2. 複製到您的專案
 cp -r dotnet-testing-agent-skills/.github/skills /your-project/.github/
 
-# 3. 開始使用！在 VS Code 中啟用 Agent Skills
-# 設定 → 搜尋 "chat.useAgentSkills" → 勾選啟用
-```
+# 3. 在 VS Code 中啟用 Agent Skills
+# 設定 → 搜尋 \"chat.useAgentSkills\" → 勾選啟用
+\\\
 
-### 方法二：Git Submodule
+### Claude Desktop / Code CLI
 
-```bash
+\\\ash
+# 方法 1: 直接使用 /plugin 指令
+# 在 Claude 對話中：/plugin path/to/skill/SKILL.md
+
+# 方法 2: 複製到專案
+cp -r dotnet-testing-agent-skills/.github/skills /your-project/.claude/skills/
+\\\
+
+### Cursor
+
+\\\ash
+# 複製到 Cursor 的 skills 目錄
+cp -r dotnet-testing-agent-skills/.github/skills /your-project/.cursor/skills/
+\\\
+
+### Git Submodule（適用於所有平台）
+
+\\\ash
 cd /your-project
 
 # 加入 submodule
-git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .github/skills-source
+git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .agent-skills
 
-# 建立符號連結
-ln -s .github/skills-source/.github/skills/dotnet-testing .github/skills/dotnet-testing
-ln -s .github/skills-source/.github/skills/dotnet-testing-advanced .github/skills/dotnet-testing-advanced
-```
+# 根據您使用的 AI 平台建立符號連結
+ln -s .agent-skills/.github/skills .github/skills          # GitHub Copilot
+ln -s .agent-skills/.github/skills .claude/skills          # Claude
+ln -s .agent-skills/.github/skills .cursor/skills          # Cursor
+\\\
 
-### 方法三：選擇性複製
+### 選擇性複製
 
 只需要特定技能？
 
-```bash
+\\\ash
 # 只複製單元測試基礎
-cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/unit-test-fundamentals /your-project/.github/skills/
+cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/unit-test-fundamentals /your-project/.ai-skills/
 
+# 只複製 AutoFixture 系列
+cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/autofixture-* /your-project/.ai-skills/
+\\\
+
+---
 # 只複製 AutoFixture 系列
 cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/autofixture-* /your-project/.github/skills/
 ```

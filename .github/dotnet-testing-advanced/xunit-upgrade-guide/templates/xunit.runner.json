@@ -1,0 +1,26 @@
+{
+  "$schema": "https://xunit.net/schema/v3/xunit.runner.schema.json",
+  
+  // 並行執行設定
+  "parallelAlgorithm": "conservative",
+  "maxParallelThreads": 0,
+  
+  // 診斷訊息
+  "diagnosticMessages": false,
+  "internalDiagnosticMessages": false,
+  
+  // 測試顯示
+  "methodDisplay": "classAndMethod",
+  "methodDisplayOptions": "none",
+  
+  // Theory 設定
+  "preEnumerateTheories": true,
+  
+  // 執行行為
+  "stopOnFail": false,
+  "failSkips": false,
+  "failWarns": false,
+  
+  // 文化設定
+  "culture": "invariant"
+}

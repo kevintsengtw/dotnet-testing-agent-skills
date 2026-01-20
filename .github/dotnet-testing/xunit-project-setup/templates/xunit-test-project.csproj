@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!-- 目標框架版本 -->
+    <TargetFramework>net9.0</TargetFramework>
+    
+    <!-- 啟用隱含的 using 指令，自動匯入常用命名空間 -->
+    <ImplicitUsings>enable</ImplicitUsings>
+    
+    <!-- 啟用可為 Null 的參考型別檢查 -->
+    <Nullable>enable</Nullable>
+
+    <!-- 測試專案不應被打包成 NuGet 套件 -->
+    <IsPackable>false</IsPackable>
+    
+    <!-- 明確標記為測試專案，讓測試工具識別 -->
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- xUnit 核心測試框架 -->
+    <!-- 提供 [Fact]、[Theory]、Assert 等核心功能 -->
+    <PackageReference Include="xunit" Version="2.9.3" />
+    
+    <!-- xUnit Visual Studio 測試執行器 -->
+    <!-- 讓測試能在 Visual Studio、VS Code、Rider 等 IDE 中被探索與執行 -->
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    
+    <!-- .NET 測試平台 SDK -->
+    <!-- 支援 dotnet test 指令與測試結果報告 -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    
+    <!-- Coverlet 程式碼覆蓋率收集器 -->
+    <!-- 與 dotnet test --collect 整合，產生覆蓋率報告 -->
+    <PackageReference Include="coverlet.collector" Version="6.0.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- 專案參考：測試專案參考要測試的主專案 -->
+  <!-- 將下方路徑改為你的主專案路徑 -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\YourProject.Core\YourProject.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <RootNamespace>YourProject.Integration.Tests</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- MongoDB 相關套件 -->
+    <PackageReference Include="MongoDB.Driver" Version="3.0.0" />
+    <PackageReference Include="MongoDB.Bson" Version="3.0.0" />
+
+    <!-- Redis 相關套件 -->
+    <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
+
+    <!-- Testcontainers 核心與 NoSQL 容器 -->
+    <PackageReference Include="Testcontainers" Version="4.0.0" />
+    <PackageReference Include="Testcontainers.MongoDb" Version="4.0.0" />
+    <PackageReference Include="Testcontainers.Redis" Version="4.0.0" />
+
+    <!-- 測試框架 -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <!-- 斷言庫 -->
+    <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+
+    <!-- JSON 序列化 -->
+    <PackageReference Include="System.Text.Json" Version="9.0.0" />
+
+    <!-- 時間測試支援 -->
+    <PackageReference Include="Microsoft.Bcl.TimeProvider" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.0.0" />
+
+    <!-- 日誌與設定 -->
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0" />
+
+    <!-- 程式碼覆蓋率 -->
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 專案參考 - 請依實際專案結構調整 -->
+    <!-- <ProjectReference Include="..\..\src\YourProject.Core\YourProject.Core.csproj" /> -->
+  </ItemGroup>
+
+</Project>

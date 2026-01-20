@@ -1,0 +1,63 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- 測試框架 -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.9.3">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    
+    <!-- 斷言庫 -->
+    <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+    
+    <!-- Testcontainers 核心套件 -->
+    <PackageReference Include="Testcontainers" Version="3.10.0" />
+    
+    <!-- 資料庫容器模組 -->
+    <PackageReference Include="Testcontainers.PostgreSql" Version="3.10.0" />
+    <PackageReference Include="Testcontainers.MsSql" Version="3.10.0" />
+    
+    <!-- Entity Framework Core -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
+    
+    <!-- Dapper -->
+    <PackageReference Include="Dapper" Version="2.1.35" />
+    <!-- 重要：使用新版 Microsoft.Data.SqlClient 而非舊版 System.Data.SqlClient -->
+    <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+  </ItemGroup>
+
+  <!-- SQL 腳本外部化設定 -->
+  <ItemGroup>
+    <!-- Tables -->
+    <Content Include="SqlScripts\Tables\*.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    
+    <!-- Stored Procedures -->
+    <Content Include="SqlScripts\StoredProcedures\*.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <!-- 專案參考 -->
+  <ItemGroup>
+    <ProjectReference Include="..\YourProject.Core\YourProject.Core.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,81 @@
+<!-- ============================================================================
+     ASP.NET Core 整合測試專案範本
+     ============================================================================
+     用途：建立整合測試專案時的 csproj 範本
+     使用方式：複製此內容到專案檔案，根據需求調整套件版本
+     ============================================================================ -->
+
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <!-- ========================================
+       測試框架套件
+       ======================================== -->
+  <ItemGroup>
+    <!-- xUnit 測試框架 -->
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+
+    <!-- .NET 測試 SDK -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+
+    <!-- 程式碼覆蓋率 -->
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!-- ========================================
+       ASP.NET Core 整合測試套件
+       ======================================== -->
+  <ItemGroup>
+    <!-- 核心整合測試套件 -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
+
+    <!-- Entity Framework InMemory 資料庫 (可選) -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.0" />
+  </ItemGroup>
+
+  <!-- ========================================
+       斷言與模擬套件
+       ======================================== -->
+  <ItemGroup>
+    <!-- AwesomeAssertions 流暢斷言 -->
+    <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+    
+    <!-- AwesomeAssertions.Web HTTP 回應斷言 -->
+    <!-- 重要：必須與 AwesomeAssertions 搭配使用，不要使用 FluentAssertions.Web -->
+    <PackageReference Include="AwesomeAssertions.Web" Version="1.9.6" />
+
+    <!-- NSubstitute 模擬框架 (可選，用於服務替身) -->
+    <PackageReference Include="NSubstitute" Version="5.3.0" />
+  </ItemGroup>
+
+  <!-- ========================================
+       JSON 處理套件
+       ======================================== -->
+  <ItemGroup>
+    <!-- System.Net.Http.Json 簡化 HTTP JSON 操作 -->
+    <PackageReference Include="System.Net.Http.Json" Version="9.0.0" />
+  </ItemGroup>
+
+  <!-- ========================================
+       專案參考
+       ======================================== -->
+  <ItemGroup>
+    <!-- 參考要測試的 Web 應用程式專案 -->
+    <ProjectReference Include="..\..\src\YourProject.WebApplication\YourProject.WebApplication.csproj" />
+  </ItemGroup>
+
+</Project>

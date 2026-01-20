@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <!-- 
+    Coverlet 覆蓋率設定範本
+    用於設定程式碼覆蓋率的進階選項
+    
+    使用方式：
+    dotnet test --settings coverage.runsettings
+  -->
+  
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat code coverage">
+        <Configuration>
+          
+          <!-- 覆蓋率輸出格式 -->
+          <!-- 支援格式: json, lcov, opencover, cobertura, teamcity -->
+          <Format>cobertura,opencover,lcov</Format>
+          
+          <!-- 
+            排除特定檔案或命名空間
+            使用 Glob 模式或正規表示式
+          -->
+          <Exclude>
+            <!-- 排除測試專案 -->
+            [*.Tests]*
+            [*.Test]*
+            
+            <!-- 排除自動產生的程式碼 -->
+            [*]*.Designer
+            [*]*.g.cs
+            [*]*.g.i.cs
+            
+            <!-- 排除特定命名空間 -->
+            [*]*.Migrations.*
+            [*]Program
+            [*]Startup
+          </Exclude>
+          
+          <!-- 
+            明確包含要分析的程式碼
+            如果不設定，預設包含所有程式碼
+          -->
+          <Include>
+            <!-- 僅包含主專案 -->
+            [MyProject.Core]*
+            [MyProject.Services]*
+          </Include>
+          
+          <!-- 排除特定檔案 -->
+          <ExcludeByFile>
+            <!-- 排除特定檔案路徑 -->
+            <!-- 使用 Glob 模式 -->
+            **/Migrations/**/*.cs
+            **/obj/**/*.cs
+            **/*.Designer.cs
+          </ExcludeByFile>
+          
+          <!-- 排除使用特定屬性標記的程式碼 -->
+          <ExcludeByAttribute>
+            Obsolete
+            GeneratedCode
+            ExcludeFromCodeCoverage
+            CompilerGenerated
+          </ExcludeByAttribute>
+          
+          <!-- 
+            覆蓋率閾值設定
+            當覆蓋率低於此值時，測試會失敗
+          -->
+          <Threshold>60</Threshold>
+          
+          <!-- 
+            閾值類型
+            可選值: line, branch, method
+          -->
+          <ThresholdType>line,branch</ThresholdType>
+          
+          <!-- 
+            閾值統計方式
+            可選值: total, individual
+            - total: 整體專案覆蓋率
+            - individual: 每個模組都要達到閾值
+          -->
+          <ThresholdStat>total</ThresholdStat>
+          
+          <!-- 是否使用源碼連結 -->
+          <UseSourceLink>true</UseSourceLink>
+          
+          <!-- 是否包含測試組件 -->
+          <IncludeTestAssembly>false</IncludeTestAssembly>
+          
+          <!-- 單行覆蓋率設定 -->
+          <SingleHit>false</SingleHit>
+          
+          <!-- 是否在建置後收集覆蓋率 -->
+          <IncludeDirectory>../</IncludeDirectory>
+          
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+  
+  <!-- 測試執行設定 -->
+  <RunConfiguration>
+    <!-- 測試結果輸出目錄 -->
+    <ResultsDirectory>./TestResults</ResultsDirectory>
+    
+    <!-- 目標平台 (x64, x86, ARM) -->
+    <TargetPlatform>x64</TargetPlatform>
+    
+    <!-- 目標框架 -->
+    <TargetFrameworkVersion>net9.0</TargetFrameworkVersion>
+    
+    <!-- 測試執行超時時間 (毫秒) -->
+    <TestSessionTimeout>600000</TestSessionTimeout>
+    
+    <!-- 是否收集執行資訊 -->
+    <CollectSourceInformation>true</CollectSourceInformation>
+  </RunConfiguration>
+  
+  <!-- 
+    MSTest 特定設定
+    如果使用 MSTest，可以設定這些選項
+  -->
+  <MSTest>
+    <!-- 平行執行測試 -->
+    <Parallelize>
+      <Workers>4</Workers>
+      <Scope>MethodLevel</Scope>
+    </Parallelize>
+    
+    <!-- 測試超時時間 (毫秒) -->
+    <TestTimeout>60000</TestTimeout>
+    
+    <!-- 是否保留測試結果 -->
+    <KeepExecutorAliveAfterLegacyRun>false</KeepExecutorAliveAfterLegacyRun>
+  </MSTest>
+  
+</RunSettings>

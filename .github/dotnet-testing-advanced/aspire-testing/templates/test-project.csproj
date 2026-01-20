@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- .NET Aspire Testing 核心套件 -->
+    <PackageReference Include="Aspire.Hosting.Testing" Version="9.1.0" />
+    
+    <!-- 測試框架 -->
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    
+    <!-- ASP.NET Core 測試支援 -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
+    
+    <!-- 斷言庫 -->
+    <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+    
+    <!-- URL 建構工具 -->
+    <PackageReference Include="Flurl.Http" Version="4.0.2" />
+    
+    <!-- 資料庫測試 -->
+    <PackageReference Include="Npgsql" Version="9.0.2" />
+    <PackageReference Include="Respawn" Version="6.2.1" />
+    
+    <!-- Redis 測試 (如需要) -->
+    <PackageReference Include="StackExchange.Redis" Version="2.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- 參考 AppHost 專案 -->
+    <ProjectReference Include="..\..\MyApp.AppHost\MyApp.AppHost.csproj" />
+    
+    <!-- 參考應用程式專案 (如需要存取 DTO 等) -->
+    <ProjectReference Include="..\..\src\MyApp.Application\MyApp.Application.csproj" />
+    <ProjectReference Include="..\..\src\MyApp.Domain\MyApp.Domain.csproj" />
+  </ItemGroup>
+
+  <!-- SQL 腳本設定 (如使用外部 SQL 檔案) -->
+  <ItemGroup>
+    <None Update="SqlScripts\**\*.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

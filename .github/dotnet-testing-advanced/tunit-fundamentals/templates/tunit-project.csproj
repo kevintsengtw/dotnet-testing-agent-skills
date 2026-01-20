@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    
+    <!-- 可選：啟用 AOT 支援 -->
+    <!-- <PublishAot>true</PublishAot> -->
+    <!-- <InvariantGlobalization>true</InvariantGlobalization> -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- TUnit 核心套件 -->
+    <PackageReference Include="TUnit" Version="0.57.24" />
+    
+    <!-- 程式碼覆蓋率支援 -->
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.4" />
+    
+    <!-- TRX 報告支援 -->
+    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
+    
+    <!-- 可選：時間測試支援 -->
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.0.0" />
+  </ItemGroup>
+
+  <!-- 注意：不要安裝 Microsoft.NET.Test.Sdk，TUnit 使用新的測試平台 -->
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MyApp.Core\MyApp.Core.csproj" />
+  </ItemGroup>
+
+</Project>

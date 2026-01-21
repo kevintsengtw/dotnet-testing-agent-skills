@@ -324,10 +324,19 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ### 學習路徑
 
-```text
-閱讀文章 → 執行範例 → 使用 Agent Skills
-   ↓           ↓              ↓
-  理解概念    實作練習      AI 輔助開發
+```mermaid
+graph LR
+    A[📖 閱讀文章] --> B[💻 執行範例] --> C[🤖 使用 Agent Skills]
+    A --> D[理解概念]
+    B --> E[實作練習]
+    C --> F[AI 輔助開發]
+    
+    style A fill:#e1f5ff
+    style B fill:#fff4e1
+    style C fill:#e8f5e9
+    style D fill:#f3e5f5
+    style E fill:#fff9c4
+    style F fill:#f1f8e9
 ```
 
 ---
@@ -371,21 +380,45 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 ## 🛠️ 技能組合建議
 
 ### 新手入門
-```text
-unit-test-fundamentals → test-naming-conventions 
-→ xunit-project-setup → awesome-assertions-guide
+
+```mermaid
+graph LR
+    A[unit-test-fundamentals] --> B[test-naming-conventions]
+    B --> C[xunit-project-setup]
+    C --> D[awesome-assertions-guide]
+    
+    style A fill:#e3f2fd
+    style B fill:#e8f5e9
+    style C fill:#fff3e0
+    style D fill:#f3e5f5
 ```
 
 ### 效率提升
-```text
-autofixture-basics → autofixture-customization 
-→ autofixture-nsubstitute-integration → autodata-xunit-integration
+
+```mermaid
+graph LR
+    A[autofixture-basics] --> B[autofixture-customization]
+    B --> C[autofixture-nsubstitute-integration]
+    C --> D[autodata-xunit-integration]
+    
+    style A fill:#e1f5ff
+    style B fill:#e8f5e9
+    style C fill:#fff9c4
+    style D fill:#f1f8e9
 ```
 
 ### 整合測試
-```text
-aspnet-integration-testing → testcontainers-database 
-→ webapi-integration-testing → aspire-testing
+
+```mermaid
+graph LR
+    A[aspnet-integration-testing] --> B[testcontainers-database]
+    B --> C[webapi-integration-testing]
+    C --> D[aspire-testing]
+    
+    style A fill:#e8eaf6
+    style B fill:#e0f2f1
+    style C fill:#fff8e1
+    style D fill:#fce4ec
 ```
 
 ---

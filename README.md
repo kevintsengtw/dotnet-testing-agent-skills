@@ -2,6 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![.NET](https://img.shields.io/badge/.NET-8.0+-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
+[![xUnit](https://img.shields.io/badge/xUnit-2.x-5C2D91)](https://xunit.net/)
 [![xUnit](https://img.shields.io/badge/xUnit-3.x-5C2D91)](https://xunit.net/)
 
 > 🏆 基於 **2025 iThome 鐵人賽 Software Development 組冠軍作品**「老派軟體工程師的測試修練 - 30 天挑戰」提煉而成
@@ -24,6 +25,8 @@
 
 ### 方法一：直接複製（推薦）
 
+#### Linux / macOS (Bash)
+
 ```bash
 # 1. Clone 此 repo
 git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
@@ -35,7 +38,22 @@ cp -r dotnet-testing-agent-skills/.github/skills /your-project/.github/
 # 設定 → 搜尋 "chat.useAgentSkills" → 勾選啟用
 ```
 
+#### Windows (PowerShell)
+
+```powershell
+# 1. Clone 此 repo
+git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
+
+# 2. 複製到您的專案
+Copy-Item -Path "dotnet-testing-agent-skills\.github\skills" -Destination "\your-project\.github\" -Recurse
+
+# 3. 開始使用！在 VS Code 中啟用 Agent Skills
+# 設定 → 搜尋 "chat.useAgentSkills" → 勾選啟用
+```
+
 ### 方法二：Git Submodule
+
+#### Linux / macOS (Bash)
 
 ```bash
 cd /your-project
@@ -48,9 +66,24 @@ ln -s .github/skills-source/.github/skills/dotnet-testing .github/skills/dotnet-
 ln -s .github/skills-source/.github/skills/dotnet-testing-advanced .github/skills/dotnet-testing-advanced
 ```
 
+#### Windows (PowerShell)
+
+```powershell
+cd \your-project
+
+# 加入 submodule
+git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .github/skills-source
+
+# 建立符號連結 (需要系統管理員權限)
+New-Item -ItemType SymbolicLink -Path ".github\skills\dotnet-testing" -Target ".github\skills-source\.github\skills\dotnet-testing"
+New-Item -ItemType SymbolicLink -Path ".github\skills\dotnet-testing-advanced" -Target ".github\skills-source\.github\skills\dotnet-testing-advanced"
+```
+
 ### 方法三：選擇性複製
 
 只需要特定技能？
+
+#### Linux / macOS (Bash)
 
 ```bash
 # 只複製單元測試基礎
@@ -58,6 +91,16 @@ cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/unit-test-fundam
 
 # 只複製 AutoFixture 系列
 cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/autofixture-* /your-project/.github/skills/
+```
+
+#### Windows (PowerShell)
+
+```powershell
+# 只複製單元測試基礎
+Copy-Item -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\unit-test-fundamentals" -Destination "\your-project\.github\skills\" -Recurse
+
+# 只複製 AutoFixture 系列
+Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\autofixture-*" | Copy-Item -Destination "\your-project\.github\skills\" -Recurse
 ```
 
 ---

@@ -105,7 +105,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ---
 
-## � 目錄結構
+## 目錄結構
 
 ```text
 .github/skills/
@@ -145,7 +145,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ---
 
-## �📦 技能清單
+## 技能清單
 
 ### 基礎技能 (19 個)
 
@@ -220,7 +220,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ---
 
-## 💡 使用範例
+## 使用範例
 
 設定完成後，您只需要自然地對話：
 
@@ -246,7 +246,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ---
 
-## 🎓 學習資源
+## 學習資源
 
 ### 原始內容
 
@@ -332,7 +332,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ---
 
-## 📋 環境需求
+## 環境需求
 
 ### 基礎技能
 
@@ -348,7 +348,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ---
 
-## 🤖 支援的 AI 平台
+## 支援的 AI 平台
 
 | 平台 | 支援狀態 | 說明 |
 |------|---------|------|
@@ -360,7 +360,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ---
 
-## 🔗 相關連結
+## 相關連結
 
 - **完整使用手冊**：[SKILLS_USAGE_GUIDE.md](SKILLS_USAGE_GUIDE.md)
 - **Agent Skills 標準**：[agentskills.io](https://agentskills.io)
@@ -370,19 +370,19 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ## 🛠️ 技能組合建議
 
-### 🆕 新手入門
+### 新手入門
 ```text
 unit-test-fundamentals → test-naming-conventions 
 → xunit-project-setup → awesome-assertions-guide
 ```
 
-### 🚀 效率提升
+### 效率提升
 ```text
 autofixture-basics → autofixture-customization 
 → autofixture-nsubstitute-integration → autodata-xunit-integration
 ```
 
-### 🔗 整合測試
+### 整合測試
 ```text
 aspnet-integration-testing → testcontainers-database 
 → webapi-integration-testing → aspire-testing
@@ -390,7 +390,7 @@ aspnet-integration-testing → testcontainers-database
 
 ---
 
-## 🤝 貢獻
+## 貢獻
 
 歡迎提交 Issues 和 Pull Requests！
 
@@ -401,13 +401,13 @@ aspnet-integration-testing → testcontainers-database
 
 ---
 
-## 📄 授權
+## 授權
 
 MIT License - 自由使用與修改
 
 ---
 
-## 🙏 致謝
+## 致謝
 
 感謝所有在 iThome 鐵人賽期間給予支持與回饋的讀者們！
 

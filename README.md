@@ -105,7 +105,47 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ---
 
-## 📦 技能清單
+## � 目錄結構
+
+```text
+.github/skills/
+├── dotnet-testing/                    # 基礎技能 (19 個)
+│   ├── unit-test-fundamentals/
+│   ├── test-naming-conventions/
+│   ├── xunit-project-setup/
+│   ├── awesome-assertions-guide/
+│   ├── complex-object-comparison/
+│   ├── code-coverage-analysis/
+│   ├── nsubstitute-mocking/
+│   ├── test-output-logging/
+│   ├── private-internal-testing/
+│   ├── fluentvalidation-testing/
+│   ├── datetime-testing-timeprovider/
+│   ├── filesystem-testing-abstractions/
+│   ├── test-data-builder-pattern/
+│   ├── autofixture-basics/
+│   ├── autofixture-customization/
+│   ├── autodata-xunit-integration/
+│   ├── autofixture-nsubstitute-integration/
+│   ├── bogus-fake-data/
+│   ├── autofixture-bogus-integration/
+│   └── README.md
+│
+└── dotnet-testing-advanced/           # 進階技能 (8 個)
+    ├── aspnet-integration-testing/
+    ├── testcontainers-database/
+    ├── testcontainers-nosql/
+    ├── webapi-integration-testing/
+    ├── aspire-testing/
+    ├── xunit-upgrade-guide/
+    ├── tunit-fundamentals/
+    ├── tunit-advanced/
+    └── README.md
+```
+
+---
+
+## �📦 技能清單
 
 ### 基礎技能 (19 個)
 
@@ -218,9 +258,73 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 - 💻 **完整範例程式碼**：[30Days_in_Testing_Samples](https://github.com/kevintsengtw/30Days_in_Testing_Samples)  
   包含所有範例專案的可執行程式碼
 
+### 30 天挑戰完整索引
+
+<details>
+<summary>📚 第一階段：測試基礎與斷言 (Day 01-09)</summary>
+
+| Day | 主題 | 文章 | 範例 |
+|-----|------|------|------|
+| 01 | 老派工程師的測試啟蒙 - 為什麼我們需要測試？ | [連結](https://ithelp.ithome.com.tw/articles/10373888) | [day01/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day01) |
+| 02 | xUnit 框架深度解析 - 從生態概觀到實戰專案 | [連結](https://ithelp.ithome.com.tw/articles/10373952) | [day02/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day02) |
+| 03 | xUnit 進階功能與測試資料管理 | [連結](https://ithelp.ithome.com.tw/articles/10374064) | [day03/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day03) |
+| 04 | AwesomeAssertions 基礎應用與實戰技巧 | [連結](https://ithelp.ithome.com.tw/articles/10374188) | [day04/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day04) |
+| 05 | AwesomeAssertions 進階技巧與複雜情境應用 | [連結](https://ithelp.ithome.com.tw/articles/10374425) | [day05/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day05) |
+| 06 | Code Coverage 程式碼涵蓋範圍實戰指南 | [連結](https://ithelp.ithome.com.tw/articles/10374467) | - |
+| 07 | 依賴替代入門 - 使用 NSubstitute | [連結](https://ithelp.ithome.com.tw/articles/10374593) | [day07/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day07) |
+| 08 | 測試輸出與記錄 - xUnit ITestOutputHelper 與 ILogger | [連結](https://ithelp.ithome.com.tw/articles/10374711) | [day08/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day08) |
+| 09 | 測試私有與內部成員 - Private 與 Internal 的測試策略 | [連結](https://ithelp.ithome.com.tw/articles/10374866) | [day09/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day09) |
+
+</details>
+
+<details>
+<summary>🔧 第二階段：測試資料生成 (Day 10-18)</summary>
+
+| Day | 主題 | 文章 | 範例 |
+|-----|------|------|------|
+| 10 | AutoFixture 基礎：自動產生測試資料 | [連結](https://ithelp.ithome.com.tw/articles/10375018) | [day10/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day10) |
+| 11 | AutoFixture 進階：自訂化測試資料生成策略 | [連結](https://ithelp.ithome.com.tw/articles/10375153) | [day11/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day11) |
+| 12 | 結合 AutoData：xUnit 與 AutoFixture 的整合應用 | [連結](https://ithelp.ithome.com.tw/articles/10375296) | [day12/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day12) |
+| 13 | NSubstitute 與 AutoFixture 的整合應用 | [連結](https://ithelp.ithome.com.tw/articles/10375419) | [day13/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day13) |
+| 14 | Bogus 入門：與 AutoFixture 的差異比較 | [連結](https://ithelp.ithome.com.tw/articles/10375501) | [day14/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day14) |
+| 15 | AutoFixture 與 Bogus 的整合應用 | [連結](https://ithelp.ithome.com.tw/articles/10375620) | [day15/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day15) |
+| 16 | 測試日期與時間：Microsoft.Bcl.TimeProvider 取代 DateTime | [連結](https://ithelp.ithome.com.tw/articles/10375821) | [day16/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day16) |
+| 17 | 檔案與 IO 測試：使用 System.IO.Abstractions 模擬檔案系統 | [連結](https://ithelp.ithome.com.tw/articles/10375981) | [day17/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day17) |
+| 18 | 驗證測試：FluentValidation Test Extensions | [連結](https://ithelp.ithome.com.tw/articles/10376147) | [day18/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day18) |
+
+</details>
+
+<details>
+<summary>🔗 第三階段：整合測試 (Day 19-25)</summary>
+
+| Day | 主題 | 文章 | 範例 |
+|-----|------|------|------|
+| 19 | 整合測試入門：基礎架構與應用場景 | [連結](https://ithelp.ithome.com.tw/articles/10376335) | [day19/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day19) |
+| 20 | Testcontainers 初探：使用 Docker 架設測試環境 | [連結](https://ithelp.ithome.com.tw/articles/10376401) | [day20/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day20) |
+| 21 | Testcontainers 整合測試：MSSQL + EF Core 以及 Dapper | [連結](https://ithelp.ithome.com.tw/articles/10376524) | [day21/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day21) |
+| 22 | Testcontainers 整合測試：MongoDB 及 Redis 基礎到進階 | [連結](https://ithelp.ithome.com.tw/articles/10376740) | [day22/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day22) |
+| 23 | 整合測試實戰：WebApi 服務的整合測試 | [連結](https://ithelp.ithome.com.tw/articles/10376873) | [day23/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day23) |
+| 24 | .NET Aspire Testing 入門基礎介紹 | [連結](https://ithelp.ithome.com.tw/articles/10377071) | [day24/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day24) |
+| 25 | .NET Aspire 整合測試實戰：從 Testcontainers 到 Aspire | [連結](https://ithelp.ithome.com.tw/articles/10377197) | [day25/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day25) |
+
+</details>
+
+<details>
+<summary>🚀 第四階段：框架遷移與進階應用 (Day 26-30)</summary>
+
+| Day | 主題 | 文章 | 範例 |
+|-----|------|------|------|
+| 26 | xUnit 升級指南：從 2.9.x 到 3.x 的轉換 | [連結](https://ithelp.ithome.com.tw/articles/10377477) | [day26/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day26) |
+| 27 | GitHub Copilot 測試實戰：AI 輔助測試開發指南 | [連結](https://ithelp.ithome.com.tw/articles/10377577) | [day27/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day27) |
+| 28 | TUnit 入門 - 下世代 .NET 測試框架探索 | [連結](https://ithelp.ithome.com.tw/articles/10377828) | [day28/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day28) |
+| 29 | TUnit 進階應用：資料驅動測試與依賴注入深度實戰 | [連結](https://ithelp.ithome.com.tw/articles/10377970) | [day29/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day29) |
+| 30 | TUnit 進階應用 - 執行控制與測試品質和 ASP.NET Core 整合 | [連結](https://ithelp.ithome.com.tw/articles/10378176) | [day30/](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day30) |
+
+</details>
+
 ### 學習路徑
 
-```
+```text
 閱讀文章 → 執行範例 → 使用 Agent Skills
    ↓           ↓              ↓
   理解概念    實作練習      AI 輔助開發
@@ -267,19 +371,19 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 ## 🛠️ 技能組合建議
 
 ### 🆕 新手入門
-```
+```text
 unit-test-fundamentals → test-naming-conventions 
 → xunit-project-setup → awesome-assertions-guide
 ```
 
 ### 🚀 效率提升
-```
+```text
 autofixture-basics → autofixture-customization 
 → autofixture-nsubstitute-integration → autodata-xunit-integration
 ```
 
 ### 🔗 整合測試
-```
+```text
 aspnet-integration-testing → testcontainers-database 
 → webapi-integration-testing → aspire-testing
 ```

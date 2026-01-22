@@ -260,7 +260,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ### 深入學習文件
 
-本專案提供四份完整的 Agent Skills 教學文件，幫助你深入理解如何打造專業的 AI 技能包：
+本專案提供五份完整的 Agent Skills 教學文件，幫助你深入理解如何打造專業的 AI 技能包：
 
 - **[Agent Skills：從架構設計到實戰應用](docs/Agent_Skills_Mastery.pdf)**  
   完整涵蓋 Agent Skills 從理論到實踐的系統性教材。整合架構設計、模組化設計與實戰應用，提供從基礎概念到進階整合的完整學習路徑。
@@ -273,6 +273,10 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 - **[Agent Skills 實戰: 打造 .NET 測試自動化專家](docs/Agent_Skills_.NET_Testing_Expert.pdf)**  
   從零開始的實作教學，一步步引導你建立第一個 Agent Skill。涵蓋完整的開發流程、觸發機制、以及如何在 VS Code 中成功啟用並測試你的技能。
+
+- **[.NET Testing：寫得更好、跑得更快](docs/NET_Testing_Write_Better_Run_Faster.pdf)**  
+  結合 NikiforovAll 的 `dotnet-test` skill，專注於測試執行優化與除錯。教你如何使用 Build-First 策略提升效能、透過精準過濾執行特定測試案例、以及運用 Blame Mode (`--blame-hang` / `--blame-crash`) 診斷測試卡死或崩潰問題。此技能可與 `kevintsengtw/dotnet-testing-agent-skills` 互補，前者專注於「如何執行測試」，後者專注於「如何撰寫測試」。  
+  **相關資源**：[NikiforovAll dotnet-test skill](https://github.com/NikiforovAll/claude-code-rules/tree/main/plugins/handbook-dotnet/skills/dotnet-test) | [2 MUST USE features for dotnet test debugging](https://www.youtube.com/watch?v=JTmIO21KmGw)
 
 ### 30 天挑戰完整索引
 

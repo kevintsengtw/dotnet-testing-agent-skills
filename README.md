@@ -137,16 +137,16 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-a
 
 | 技能 | 說明 |
 |------|------|
-| `unit-test-fundamentals` | FIRST 原則、3A Pattern、測試金字塔 |
-| `test-naming-conventions` | 三段式命名法、中文命名建議 |
-| `xunit-project-setup` | xUnit 專案結構、配置、套件管理 |
-| `awesome-assertions-guide` | FluentAssertions 流暢斷言 |
-| `complex-object-comparison` | 深層物件比對技巧 |
-| `code-coverage-analysis` | Coverlet 覆蓋率分析與報告 |
-| `nsubstitute-mocking` | Mock/Stub/Spy 測試替身 |
-| `test-output-logging` | ITestOutputHelper 與 ILogger 整合 |
-| `private-internal-testing` | Private/Internal 成員測試策略 |
-| `fluentvalidation-testing` | FluentValidation 驗證器測試 |
+| `dotnet-testing-unit-test-fundamentals` | FIRST 原則、3A Pattern、測試金字塔 |
+| `dotnet-testing-test-naming-conventions` | 三段式命名法、中文命名建議 |
+| `dotnet-testing-xunit-project-setup` | xUnit 專案結構、配置、套件管理 |
+| `dotnet-testing-awesome-assertions-guide` | FluentAssertions 流暢斷言 |
+| `dotnet-testing-complex-object-comparison` | 深層物件比對技巧 |
+| `dotnet-testing-code-coverage-analysis` | Coverlet 覆蓋率分析與報告 |
+| `dotnet-testing-nsubstitute-mocking` | Mock/Stub/Spy 測試替身 |
+| `dotnet-testing-test-output-logging` | ITestOutputHelper 與 ILogger 整合 |
+| `dotnet-testing-private-internal-testing` | Private/Internal 成員測試策略 |
+| `dotnet-testing-fluentvalidation-testing` | FluentValidation 驗證器測試 |
 
 </details>
 
@@ -155,8 +155,8 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-a
 
 | 技能 | 說明 |
 |------|------|
-| `datetime-testing-timeprovider` | TimeProvider 時間抽象化 |
-| `filesystem-testing-abstractions` | System.IO.Abstractions 檔案系統測試 |
+| `dotnet-testing-datetime-testing-timeprovider` | TimeProvider 時間抽象化 |
+| `dotnet-testing-filesystem-testing-abstractions` | System.IO.Abstractions 檔案系統測試 |
 
 </details>
 
@@ -165,13 +165,13 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-a
 
 | 技能 | 說明 |
 |------|------|
-| `test-data-builder-pattern` | 手動 Builder Pattern |
-| `autofixture-basics` | AutoFixture 基礎與匿名測試資料 |
-| `autofixture-customization` | AutoFixture 自訂化策略 |
-| `autodata-xunit-integration` | AutoData 與 xUnit Theory 整合 |
-| `autofixture-nsubstitute-integration` | AutoFixture + NSubstitute 自動模擬 |
-| `bogus-fake-data` | Bogus 擬真資料產生 |
-| `autofixture-bogus-integration` | AutoFixture 與 Bogus 整合 |
+| `dotnet-testing-test-data-builder-pattern` | 手動 Builder Pattern |
+| `dotnet-testing-autofixture-basics` | AutoFixture 基礎與匿名測試資料 |
+| `dotnet-testing-autofixture-customization` | AutoFixture 自訂化策略 |
+| `dotnet-testing-autodata-xunit-integration` | AutoData 與 xUnit Theory 整合 |
+| `dotnet-testing-autofixture-nsubstitute-integration` | AutoFixture + NSubstitute 自動模擬 |
+| `dotnet-testing-bogus-fake-data` | Bogus 擬真資料產生 |
+| `dotnet-testing-autofixture-bogus-integration` | AutoFixture 與 Bogus 整合 |
 
 </details>
 
@@ -182,11 +182,11 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-a
 
 | 技能 | 說明 |
 |------|------|
-| `aspnet-integration-testing` | WebApplicationFactory 整合測試 |
-| `testcontainers-database` | PostgreSQL/MSSQL 容器化測試 |
-| `testcontainers-nosql` | MongoDB/Redis 容器化測試 |
-| `webapi-integration-testing` | WebAPI 完整整合測試流程 |
-| `aspire-testing` | .NET Aspire Testing 框架 |
+| `dotnet-testing-advanced-aspnet-integration-testing` | WebApplicationFactory 整合測試 |
+| `dotnet-testing-advanced-testcontainers-database` | PostgreSQL/MSSQL 容器化測試 |
+| `dotnet-testing-advanced-testcontainers-nosql` | MongoDB/Redis 容器化測試 |
+| `dotnet-testing-advanced-webapi-integration-testing` | WebAPI 完整整合測試流程 |
+| `dotnet-testing-advanced-aspire-testing` | .NET Aspire Testing 框架 |
 
 </details>
 
@@ -195,9 +195,9 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-a
 
 | 技能 | 說明 |
 |------|------|
-| `xunit-upgrade-guide` | xUnit 2.9.x → 3.x 升級指南 |
-| `tunit-fundamentals` | TUnit 新世代測試框架入門 |
-| `tunit-advanced` | TUnit 進階應用 |
+| `dotnet-testing-advanced-xunit-upgrade-guide` | xUnit 2.9.x → 3.x 升級指南 |
+| `dotnet-testing-advanced-tunit-fundamentals` | TUnit 新世代測試框架入門 |
+| `dotnet-testing-advanced-tunit-advanced` | TUnit 進階應用 |
 
 </details>
 
@@ -210,7 +210,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-a
 ```text
 👤：幫我建立一個 xUnit 測試專案
 
-🤖：[自動載入 xunit-project-setup 技能]
+🤖：[自動載入 dotnet-testing-xunit-project-setup 技能]
     我將協助您建立標準的 xUnit 測試專案結構...
     
     1. 建立專案檔案
@@ -221,7 +221,7 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-a
 ```text
 👤：為這個 Service 寫單元測試，它有依賴需要 Mock
 
-🤖：[自動載入 unit-test-fundamentals + nsubstitute-mocking 技能]
+🤖：[自動載入 dotnet-testing-unit-test-fundamentals + dotnet-testing-nsubstitute-mocking 技能]
     根據測試最佳實踐，我將建立符合 3A Pattern 的測試...
 ```
 
@@ -386,9 +386,9 @@ graph LR
 
 ```mermaid
 graph LR
-    A[unit-test-fundamentals] --> B[test-naming-conventions]
-    B --> C[xunit-project-setup]
-    C --> D[awesome-assertions-guide]
+    A[dotnet-testing-unit-test-fundamentals] --> B[dotnet-testing-test-naming-conventions]
+    B --> C[dotnet-testing-xunit-project-setup]
+    C --> D[dotnet-testing-awesome-assertions-guide]
     
     style A fill:#e3f2fd
     style B fill:#e8f5e9
@@ -400,9 +400,9 @@ graph LR
 
 ```mermaid
 graph LR
-    A[autofixture-basics] --> B[autofixture-customization]
-    B --> C[autofixture-nsubstitute-integration]
-    C --> D[autodata-xunit-integration]
+    A[dotnet-testing-autofixture-basics] --> B[dotnet-testing-autofixture-customization]
+    B --> C[dotnet-testing-autofixture-nsubstitute-integration]
+    C --> D[dotnet-testing-autodata-xunit-integration]
     
     style A fill:#e1f5ff
     style B fill:#e8f5e9
@@ -414,9 +414,9 @@ graph LR
 
 ```mermaid
 graph LR
-    A[aspnet-integration-testing] --> B[testcontainers-database]
-    B --> C[webapi-integration-testing]
-    C --> D[aspire-testing]
+    A[dotnet-testing-advanced-aspnet-integration-testing] --> B[dotnet-testing-advanced-testcontainers-database]
+    B --> C[dotnet-testing-advanced-webapi-integration-testing]
+    C --> D[dotnet-testing-advanced-aspire-testing]
     
     style A fill:#e8eaf6
     style B fill:#e0f2f1

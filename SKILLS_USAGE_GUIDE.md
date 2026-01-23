@@ -90,12 +90,17 @@ git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
 # 2. 複製整個 skills 資料夾
 cp -r dotnet-testing-agent-skills/.github/skills /your-project/.github/
 
-# 結構應如下：
+# 結構應如下（扁平結構，27 個技能資料夾）：
 # your-project/
 # └── .github/
 #     └── skills/
-#         ├── dotnet-testing/
-#         └── dotnet-testing-advanced/
+#         ├── dotnet-testing-unit-test-fundamentals/
+#         ├── dotnet-testing-test-naming-conventions/
+#         ├── dotnet-testing-xunit-project-setup/
+#         ├── ... (共 19 個基礎技能)
+#         ├── dotnet-testing-advanced-aspire-testing/
+#         ├── dotnet-testing-advanced-aspnet-integration-testing/
+#         └── ... (共 8 個進階技能)
 ```
 
 ### 方法二：Git Submodule
@@ -143,57 +148,57 @@ cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-autofixture-* /y
 
 #### 第一階段：測試基礎與斷言
 
-| 技能名稱                    | 說明                                    | 來源       |
-| --------------------------- | --------------------------------------- | ---------- |
-| `unit-test-fundamentals`    | 單元測試基礎、FIRST 原則、3A Pattern    | Day 01     |
-| `test-naming-conventions`   | 三段式測試命名規範                      | Day 01     |
-| `xunit-project-setup`       | xUnit 測試專案設定與結構                | Day 02, 03 |
-| `awesome-assertions-guide`  | AwesomeAssertions 流暢斷言指南          | Day 04, 05 |
-| `complex-object-comparison` | 複雜物件深層比對技巧                    | Day 05     |
-| `code-coverage-analysis`    | 程式碼覆蓋率分析與報告                  | Day 06     |
-| `nsubstitute-mocking`       | NSubstitute 測試替身 (Mock/Stub/Spy)    | Day 07     |
-| `test-output-logging`       | xUnit ITestOutputHelper 與 ILogger 整合 | Day 08     |
-| `private-internal-testing`  | Private/Internal 成員測試策略           | Day 09     |
-| `fluentvalidation-testing`  | FluentValidation 驗證器測試             | Day 18     |
+| 技能名稱                                   | 說明                                    | 來源       |
+| ------------------------------------------ | --------------------------------------- | ---------- |
+| `dotnet-testing-unit-test-fundamentals`    | 單元測試基礎、FIRST 原則、3A Pattern    | Day 01     |
+| `dotnet-testing-test-naming-conventions`   | 三段式測試命名規範                      | Day 01     |
+| `dotnet-testing-xunit-project-setup`       | xUnit 測試專案設定與結構                | Day 02, 03 |
+| `dotnet-testing-awesome-assertions-guide`  | AwesomeAssertions 流暢斷言指南          | Day 04, 05 |
+| `dotnet-testing-complex-object-comparison` | 複雜物件深層比對技巧                    | Day 05     |
+| `dotnet-testing-code-coverage-analysis`    | 程式碼覆蓋率分析與報告                  | Day 06     |
+| `dotnet-testing-nsubstitute-mocking`       | NSubstitute 測試替身 (Mock/Stub/Spy)    | Day 07     |
+| `dotnet-testing-test-output-logging`       | xUnit ITestOutputHelper 與 ILogger 整合 | Day 08     |
+| `dotnet-testing-private-internal-testing`  | Private/Internal 成員測試策略           | Day 09     |
+| `dotnet-testing-fluentvalidation-testing`  | FluentValidation 驗證器測試             | Day 18     |
 
 #### 第二階段：可測試性抽象化
 
-| 技能名稱                          | 說明                                | 來源   |
-| --------------------------------- | ----------------------------------- | ------ |
-| `datetime-testing-timeprovider`   | TimeProvider 時間抽象化測試         | Day 16 |
-| `filesystem-testing-abstractions` | System.IO.Abstractions 檔案系統測試 | Day 17 |
+| 技能名稱                                         | 說明                                | 來源   |
+| ------------------------------------------------ | ----------------------------------- | ------ |
+| `dotnet-testing-datetime-testing-timeprovider`   | TimeProvider 時間抽象化測試         | Day 16 |
+| `dotnet-testing-filesystem-testing-abstractions` | System.IO.Abstractions 檔案系統測試 | Day 17 |
 
 #### 第三階段：測試資料生成與整合
 
-| 技能名稱                              | 說明                               | 來源   |
-| ------------------------------------- | ---------------------------------- | ------ |
-| `test-data-builder-pattern`           | 手動 Builder Pattern 測試資料建構  | Day 03 |
-| `autofixture-basics`                  | AutoFixture 基礎與匿名測試資料     | Day 10 |
-| `autofixture-customization`           | AutoFixture 自訂化策略             | Day 11 |
-| `autodata-xunit-integration`          | AutoData 與 xUnit 整合             | Day 12 |
-| `autofixture-nsubstitute-integration` | AutoFixture + NSubstitute 自動模擬 | Day 13 |
-| `bogus-fake-data`                     | Bogus 擬真測試資料產生             | Day 14 |
-| `autofixture-bogus-integration`       | AutoFixture 與 Bogus 整合應用      | Day 15 |
+| 技能名稱                                             | 說明                               | 來源   |
+| ---------------------------------------------------- | ---------------------------------- | ------ |
+| `dotnet-testing-test-data-builder-pattern`           | 手動 Builder Pattern 測試資料建構  | Day 03 |
+| `dotnet-testing-autofixture-basics`                  | AutoFixture 基礎與匿名測試資料     | Day 10 |
+| `dotnet-testing-autofixture-customization`           | AutoFixture 自訂化策略             | Day 11 |
+| `dotnet-testing-autodata-xunit-integration`          | AutoData 與 xUnit 整合             | Day 12 |
+| `dotnet-testing-autofixture-nsubstitute-integration` | AutoFixture + NSubstitute 自動模擬 | Day 13 |
+| `dotnet-testing-bogus-fake-data`                     | Bogus 擬真測試資料產生             | Day 14 |
+| `dotnet-testing-autofixture-bogus-integration`       | AutoFixture 與 Bogus 整合應用      | Day 15 |
 
 ### 進階技能 (dotnet-testing-advanced)
 
 #### 第四階段：整合測試
 
-| 技能名稱                     | 說明                                        | 來源       |
-| ---------------------------- | ------------------------------------------- | ---------- |
-| `aspnet-integration-testing` | ASP.NET Core WebApplicationFactory 整合測試 | Day 19     |
-| `testcontainers-database`    | Testcontainers 資料庫容器化測試             | Day 20, 21 |
-| `testcontainers-nosql`       | Testcontainers MongoDB/Redis 測試           | Day 22     |
-| `webapi-integration-testing` | WebAPI 完整整合測試流程                     | Day 23     |
-| `aspire-testing`             | .NET Aspire Testing 框架                    | Day 24, 25 |
+| 技能名稱                                             | 說明                                        | 來源       |
+| ---------------------------------------------------- | ------------------------------------------- | ---------- |
+| `dotnet-testing-advanced-aspnet-integration-testing` | ASP.NET Core WebApplicationFactory 整合測試 | Day 19     |
+| `dotnet-testing-advanced-testcontainers-database`    | Testcontainers 資料庫容器化測試             | Day 20, 21 |
+| `dotnet-testing-advanced-testcontainers-nosql`       | Testcontainers MongoDB/Redis 測試           | Day 22     |
+| `dotnet-testing-advanced-webapi-integration-testing` | WebAPI 完整整合測試流程                     | Day 23     |
+| `dotnet-testing-advanced-aspire-testing`             | .NET Aspire Testing 框架                    | Day 24, 25 |
 
 #### 第五階段：框架遷移指南
 
-| 技能名稱              | 說明                         | 來源       |
-| --------------------- | ---------------------------- | ---------- |
-| `xunit-upgrade-guide` | xUnit 2.9.x 到 3.x 升級指南  | Day 26     |
-| `tunit-fundamentals`  | TUnit 新世代測試框架入門     | Day 28     |
-| `tunit-advanced`      | TUnit 資料驅動與整合測試進階 | Day 29, 30 |
+| 技能名稱                                      | 說明                         | 來源       |
+| --------------------------------------------- | ---------------------------- | ---------- |
+| `dotnet-testing-advanced-xunit-upgrade-guide` | xUnit 2.9.x 到 3.x 升級指南  | Day 26     |
+| `dotnet-testing-advanced-tunit-fundamentals`  | TUnit 新世代測試框架入門     | Day 28     |
+| `dotnet-testing-advanced-tunit-advanced`      | TUnit 資料驅動與整合測試進階 | Day 29, 30 |
 
 ---
 
@@ -203,40 +208,40 @@ cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-autofixture-* /y
 
 技能會根據您的對話內容自動載入。您只需要自然地提問：
 
-```textv
+```text
 👤：幫我建立一個 xUnit 測試專案
 
-🤖：[自動載入 xunit-project-setup 技能]
+🤖：[自動載入 dotnet-testing-xunit-project-setup 技能]
    我將協助您建立標準的 xUnit 測試專案結構...
 ```
 
 ### 常見觸發語句
 
-| 您說的話                 | 觸發的技能                                          |
-| ------------------------ | --------------------------------------------------- |
-| "建立測試專案"           | `xunit-project-setup`                               |
-| "為這個方法寫單元測試"   | `unit-test-fundamentals`, `test-naming-conventions` |
-| "產生測試資料"           | `autofixture-basics` 或 `bogus-fake-data`           |
-| "這個類別有 Mock 需求"   | `nsubstitute-mocking`                               |
-| "檢查程式碼覆蓋率"       | `code-coverage-analysis`                            |
-| "建立整合測試"           | `aspnet-integration-testing`                        |
-| "使用 Docker 測試資料庫" | `testcontainers-database`                           |
+| 您說的話                 | 觸發的技能                                                                        |
+| ------------------------ | --------------------------------------------------------------------------------- |
+| "建立測試專案"           | `dotnet-testing-xunit-project-setup`                                              |
+| "為這個方法寫單元測試"   | `dotnet-testing-unit-test-fundamentals`, `dotnet-testing-test-naming-conventions` |
+| "產生測試資料"           | `dotnet-testing-autofixture-basics` 或 `dotnet-testing-bogus-fake-data`           |
+| "這個類別有 Mock 需求"   | `dotnet-testing-nsubstitute-mocking`                                              |
+| "檢查程式碼覆蓋率"       | `dotnet-testing-code-coverage-analysis`                                           |
+| "建立整合測試"           | `dotnet-testing-advanced-aspnet-integration-testing`                              |
+| "使用 Docker 測試資料庫" | `dotnet-testing-advanced-testcontainers-database`                                 |
 
 ### 明確指定技能
 
 您也可以明確要求使用特定技能：
 
 ```text
-👤：使用 test-naming-conventions 技能來檢查我的測試命名
+👤：使用 dotnet-testing-test-naming-conventions 技能來檢查我的測試命名
 
-👤：參考 autofixture-nsubstitute-integration 技能來重構這個測試
+👤：參考 dotnet-testing-autofixture-nsubstitute-integration 技能來重構這個測試
 ```
 
 ---
 
 ## 技能詳細說明
 
-### unit-test-fundamentals
+### dotnet-testing-unit-test-fundamentals
 
 **用途**：建立符合最佳實踐的單元測試
 
@@ -255,7 +260,7 @@ cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-autofixture-* /y
 
 ---
 
-### test-naming-conventions
+### dotnet-testing-test-naming-conventions
 
 **用途**：建立清晰且一致的測試命名
 
@@ -277,7 +282,7 @@ public void TestAdd()
 
 ---
 
-### xunit-project-setup
+### dotnet-testing-xunit-project-setup
 
 **用途**：建立標準化的 xUnit 測試專案
 
@@ -296,7 +301,7 @@ public void TestAdd()
 
 ---
 
-### nsubstitute-mocking
+### dotnet-testing-nsubstitute-mocking
 
 **用途**：使用 NSubstitute 建立測試替身
 
@@ -318,7 +323,7 @@ repository.Received(1).GetById(1);
 
 ---
 
-### autofixture-basics
+### dotnet-testing-autofixture-basics
 
 **用途**：使用 AutoFixture 自動產生測試資料
 
@@ -337,7 +342,7 @@ repository.Received(1).GetById(1);
 
 ---
 
-### testcontainers-database
+### dotnet-testing-advanced-testcontainers-database
 
 **用途**：使用 Testcontainers 進行容器化資料庫測試
 
@@ -367,7 +372,7 @@ repository.Received(1).GetById(1);
 ```text
 👤：我想為 MyProject 建立測試專案
 
-🤖：我將協助您建立測試專案。根據 xunit-project-setup 技能的指導...
+🤖：我將協助您建立測試專案。根據 dotnet-testing-xunit-project-setup 技能的指導...
 
     1. 建立專案結構
     2. 配置 csproj 檔案
@@ -385,7 +390,7 @@ repository.Received(1).GetById(1);
 👤：幫我為這個方法寫單元測試
     public int Add(int a, int b) => a + b;
 
-🤖：根據 unit-test-fundamentals 與 test-naming-conventions 技能，
+🤖：根據 dotnet-testing-unit-test-fundamentals 與 dotnet-testing-test-naming-conventions 技能，
     我將建立符合 3A Pattern 的測試...
 
     [Fact]
@@ -411,7 +416,7 @@ repository.Received(1).GetById(1);
 ```text
 👤：這個測試有太多手動設定，可以簡化嗎？
 
-🤖：根據 autofixture-basics 技能，我們可以使用 AutoFixture 
+🤖：根據 dotnet-testing-autofixture-basics 技能，我們可以使用 AutoFixture 
     自動產生不重要的測試資料...
 
     [Theory, AutoData]
@@ -432,7 +437,7 @@ repository.Received(1).GetById(1);
 ```text
 👤：我想用真實資料庫來測試 Repository
 
-🤖：根據 testcontainers-database 技能，我將協助您設定 
+🤖：根據 dotnet-testing-advanced-testcontainers-database 技能，我將協助您設定 
     Testcontainers 環境...
 
     1. 安裝 Testcontainers.PostgreSql 套件
@@ -450,10 +455,10 @@ repository.Received(1).GetById(1);
 適合剛開始學習 .NET 測試的開發者：
 
 ```text
-1. unit-test-fundamentals    → 理解測試基礎
-2. test-naming-conventions   → 建立命名習慣
-3. xunit-project-setup       → 設定測試環境
-4. awesome-assertions-guide  → 學習流暢斷言
+1. dotnet-testing-unit-test-fundamentals    → 理解測試基礎
+2. dotnet-testing-test-naming-conventions   → 建立命名習慣
+3. dotnet-testing-xunit-project-setup       → 設定測試環境
+4. dotnet-testing-awesome-assertions-guide  → 學習流暢斷言
 ```
 
 ### 🎯 品質保證組合
@@ -461,10 +466,10 @@ repository.Received(1).GetById(1);
 適合需要提升測試品質的團隊：
 
 ```text
-1. code-coverage-analysis       → 監控覆蓋率
-2. complex-object-comparison    → 精準斷言
-3. test-output-logging          → 除錯支援
-4. fluentvalidation-testing     → 驗證邏輯測試
+1. dotnet-testing-code-coverage-analysis       → 監控覆蓋率
+2. dotnet-testing-complex-object-comparison    → 精準斷言
+3. dotnet-testing-test-output-logging          → 除錯支援
+4. dotnet-testing-fluentvalidation-testing     → 驗證邏輯測試
 ```
 
 ### 🚀 效率提升組合
@@ -472,10 +477,10 @@ repository.Received(1).GetById(1);
 適合想要加速測試開發的開發者：
 
 ```text
-1. autofixture-basics                    → 自動化測試資料
-2. autofixture-customization             → 自訂化策略
-3. autofixture-nsubstitute-integration   → 自動 Mock
-4. autodata-xunit-integration            → Theory 整合
+1. dotnet-testing-autofixture-basics                    → 自動化測試資料
+2. dotnet-testing-autofixture-customization             → 自訂化策略
+3. dotnet-testing-autofixture-nsubstitute-integration   → 自動 Mock
+4. dotnet-testing-autodata-xunit-integration            → Theory 整合
 ```
 
 ### 🔗 整合測試組合
@@ -483,10 +488,10 @@ repository.Received(1).GetById(1);
 適合需要建立整合測試的專案：
 
 ```text
-1. aspnet-integration-testing    → API 測試基礎
-2. testcontainers-database       → 資料庫容器化
-3. testcontainers-nosql          → NoSQL 測試
-4. webapi-integration-testing    → 完整流程
+1. dotnet-testing-advanced-aspnet-integration-testing    → API 測試基礎
+2. dotnet-testing-advanced-testcontainers-database       → 資料庫容器化
+3. dotnet-testing-advanced-testcontainers-nosql          → NoSQL 測試
+4. dotnet-testing-advanced-webapi-integration-testing    → 完整流程
 ```
 
 ### 🔄 框架遷移組合
@@ -494,9 +499,9 @@ repository.Received(1).GetById(1);
 適合計畫升級或遷移測試框架的團隊：
 
 ```text
-1. xunit-upgrade-guide   → xUnit 3.x 升級
-2. tunit-fundamentals    → TUnit 入門
-3. tunit-advanced        → TUnit 進階
+1. dotnet-testing-advanced-xunit-upgrade-guide   → xUnit 3.x 升級
+2. dotnet-testing-advanced-tunit-fundamentals    → TUnit 入門
+3. dotnet-testing-advanced-tunit-advanced        → TUnit 進階
 ```
 
 ---
@@ -518,9 +523,9 @@ repository.Received(1).GetById(1);
 
 **A**：是的，AI 會根據對話內容自動組合相關技能。例如，當您詢問「為這個服務寫單元測試」時，可能同時觸發：
 
-- `unit-test-fundamentals` - 測試結構
-- `test-naming-conventions` - 命名規範
-- `nsubstitute-mocking` - 依賴模擬
+- `dotnet-testing-unit-test-fundamentals` - 測試結構
+- `dotnet-testing-test-naming-conventions` - 命名規範
+- `dotnet-testing-nsubstitute-mocking` - 依賴模擬
 
 ---
 
@@ -630,10 +635,10 @@ description: 完整的測試工作流程，從單元測試到整合測試
 # 完整測試工作流程
 
 本技能整合以下技能的精華：
-- unit-test-fundamentals
-- autofixture-basics
-- nsubstitute-mocking
-- testcontainers-database
+- dotnet-testing-unit-test-fundamentals
+- dotnet-testing-autofixture-basics
+- dotnet-testing-nsubstitute-mocking
+- dotnet-testing-advanced-testcontainers-database
 
 ## 工作流程步驟
 1. 確認測試類型(單元/整合)
@@ -649,11 +654,9 @@ description: 完整的測試工作流程，從單元測試到整合測試
 
 ### 原始內容
 
-- **iThome 鐵人賽文章*公開 Repository
-
-- **公開 Repo**：[dotnet-testing-agent-skills](https://github.com/kevintsengtw/dotnet-testing-agent-skills)
-- **基礎技能**：[dotnet-testing](https://github.com/kevintsengtw/dotnet-testing-agent-skills/tree/main/.github/skills/dotnet-testing)
-- **進階技能**：[dotnet-testing-advanced](https://github.com/kevintsengtw/dotnet-testing-agent-skills/tree/main/.github/skills/dotnet-testing-advanced)
+- **iThome 鐵人賽文章**：[老派軟體工程師的測試修練 - 30 天挑戰](https://ithelp.ithome.com.tw/users/20066083/ironman/8276)
+- **完整範例程式碼**：[30Days_in_Testing_Samples](https://github.com/kevintsengtw/30Days_in_Testing_Samples)
+- **公開 Repository**：[dotnet-testing-agent-skills](https://github.com/kevintsengtw/dotnet-testing-agent-skills)
 
 ### Agent Skills 標準
 

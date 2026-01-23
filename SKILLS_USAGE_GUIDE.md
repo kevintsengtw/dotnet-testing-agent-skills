@@ -60,8 +60,6 @@
 | **Cursor**                     | ✅ 完整支援 | 複製到 `.cursor/skills/`                 |
 | **其他支援 Agent Skills 工具** | ✅ 通用     | 符合 agentskills.io 標準，查閱該工具文件 |
 
-> 📖 詳細的跨平台使用說明請參考公開 repo 的 [PLATFORM_GUIDE.md](https://github.com/kevintsengtw/dotnet-testing-agent-skills/blob/main/PLATFORM_GUIDE.md)
-
 ### 環境需求
 
 #### 基礎技能

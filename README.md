@@ -53,31 +53,17 @@ Copy-Item -Path "dotnet-testing-agent-skills\.github\skills" -Destination "\your
 
 ### 方法二：Git Submodule
 
-#### Linux / macOS (Bash)
-
 ```bash
 cd /your-project
 
-# 加入 submodule
-git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .github/skills-source
+# 加入 submodule 到 skills 目錄
+git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .github/skills
 
-# 建立符號連結
-ln -s .github/skills-source/.github/skills/dotnet-testing .github/skills/dotnet-testing
-ln -s .github/skills-source/.github/skills/dotnet-testing-advanced .github/skills/dotnet-testing-advanced
+# 更新 submodule
+git submodule update --init --recursive
 ```
 
-#### Windows (PowerShell)
-
-```powershell
-cd \your-project
-
-# 加入 submodule
-git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .github/skills-source
-
-# 建立符號連結 (需要系統管理員權限)
-New-Item -ItemType SymbolicLink -Path ".github\skills\dotnet-testing" -Target ".github\skills-source\.github\skills\dotnet-testing"
-New-Item -ItemType SymbolicLink -Path ".github\skills\dotnet-testing-advanced" -Target ".github\skills-source\.github\skills\dotnet-testing-advanced"
-```
+> **注意**：使用 Submodule 方式時，Skills 會直接放在 `.github/skills/` 目錄下，無需建立符號連結。
 
 ### 方法三：選擇性複製
 
@@ -87,20 +73,20 @@ New-Item -ItemType SymbolicLink -Path ".github\skills\dotnet-testing-advanced" -
 
 ```bash
 # 只複製單元測試基礎
-cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/unit-test-fundamentals /your-project/.github/skills/
+cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-unit-test-fundamentals /your-project/.github/skills/
 
 # 只複製 AutoFixture 系列
-cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/autofixture-* /your-project/.github/skills/
+cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-autofixture-* /your-project/.github/skills/
 ```
 
 #### Windows (PowerShell)
 
 ```powershell
 # 只複製單元測試基礎
-Copy-Item -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\unit-test-fundamentals" -Destination "\your-project\.github\skills\" -Recurse
+Copy-Item -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-unit-test-fundamentals" -Destination "\your-project\.github\skills\" -Recurse
 
 # 只複製 AutoFixture 系列
-Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\autofixture-*" | Copy-Item -Destination "\your-project\.github\skills\" -Recurse
+Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-autofixture-*" | Copy-Item -Destination "\your-project\.github\skills\" -Recurse
 ```
 
 ---
@@ -109,39 +95,36 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing\a
 
 ```text
 .github/skills/
-├── dotnet-testing/                    # 基礎技能 (19 個)
-│   ├── unit-test-fundamentals/
-│   ├── test-naming-conventions/
-│   ├── xunit-project-setup/
-│   ├── awesome-assertions-guide/
-│   ├── complex-object-comparison/
-│   ├── code-coverage-analysis/
-│   ├── nsubstitute-mocking/
-│   ├── test-output-logging/
-│   ├── private-internal-testing/
-│   ├── fluentvalidation-testing/
-│   ├── datetime-testing-timeprovider/
-│   ├── filesystem-testing-abstractions/
-│   ├── test-data-builder-pattern/
-│   ├── autofixture-basics/
-│   ├── autofixture-customization/
-│   ├── autodata-xunit-integration/
-│   ├── autofixture-nsubstitute-integration/
-│   ├── bogus-fake-data/
-│   ├── autofixture-bogus-integration/
-│   └── README.md
-│
-└── dotnet-testing-advanced/           # 進階技能 (8 個)
-    ├── aspnet-integration-testing/
-    ├── testcontainers-database/
-    ├── testcontainers-nosql/
-    ├── webapi-integration-testing/
-    ├── aspire-testing/
-    ├── xunit-upgrade-guide/
-    ├── tunit-fundamentals/
-    ├── tunit-advanced/
-    └── README.md
+├── dotnet-testing-unit-test-fundamentals/
+├── dotnet-testing-test-naming-conventions/
+├── dotnet-testing-xunit-project-setup/
+├── dotnet-testing-awesome-assertions-guide/
+├── dotnet-testing-complex-object-comparison/
+├── dotnet-testing-code-coverage-analysis/
+├── dotnet-testing-nsubstitute-mocking/
+├── dotnet-testing-test-output-logging/
+├── dotnet-testing-private-internal-testing/
+├── dotnet-testing-fluentvalidation-testing/
+├── dotnet-testing-datetime-testing-timeprovider/
+├── dotnet-testing-filesystem-testing-abstractions/
+├── dotnet-testing-test-data-builder-pattern/
+├── dotnet-testing-autofixture-basics/
+├── dotnet-testing-autofixture-customization/
+├── dotnet-testing-autodata-xunit-integration/
+├── dotnet-testing-autofixture-nsubstitute-integration/
+├── dotnet-testing-bogus-fake-data/
+├── dotnet-testing-autofixture-bogus-integration/
+├── dotnet-testing-advanced-aspnet-integration-testing/
+├── dotnet-testing-advanced-testcontainers-database/
+├── dotnet-testing-advanced-testcontainers-nosql/
+├── dotnet-testing-advanced-webapi-integration-testing/
+├── dotnet-testing-advanced-aspire-testing/
+├── dotnet-testing-advanced-xunit-upgrade-guide/
+├── dotnet-testing-advanced-tunit-fundamentals/
+└── dotnet-testing-advanced-tunit-advanced/
 ```
+
+> **注意**：Skills 採用扁平結構，使用前綴命名來區分基礎技能 (`dotnet-testing-*`) 與進階技能 (`dotnet-testing-advanced-*`)。
 
 ---
 

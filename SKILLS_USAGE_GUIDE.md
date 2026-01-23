@@ -103,13 +103,14 @@ cp -r dotnet-testing-agent-skills/.github/skills /your-project/.github/
 ```bash
 cd /your-project
 
-# 加入 submodule
-git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .github/skills-source
+# 加入 submodule 到 skills 目錄
+git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .github/skills
 
-# 建立符號連結
-ln -s .github/skills-source/.github/skills/dotnet-testing .github/skills/dotnet-testing
-ln -s .github/skills-source/.github/skills/dotnet-testing-advanced .github/skills/dotnet-testing-advanced
+# 更新 submodule
+git submodule update --init --recursive
 ```
+
+> **注意**：使用 Submodule 方式時，Skills 會直接放在 `.github/skills/` 目錄下，無需建立符號連結。
 
 ### 方法三：僅複製需要的技能
 
@@ -120,10 +121,10 @@ ln -s .github/skills-source/.github/skills/dotnet-testing-advanced .github/skill
 git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
 
 # 2. 只複製單元測試基礎技能
-cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/unit-test-fundamentals /your-project/.github/skills/
+cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-unit-test-fundamentals /your-project/.github/skills/
 
 # 3. 只複製 AutoFixture 相關技能
-cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing/autofixture-* /your-project/.github/skills/
+cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-autofixture-* /your-project/.github/skills/
 ```
 
 ### VS Code 設定
@@ -570,7 +571,7 @@ cp -r path/to/new-skills/.github/skills /your-project/.github/
 **Git Submodule**：
 
 ```bash
-cd .github/skills-source
+cd .github/skills
 git pull origin main
 ```
 
@@ -658,10 +659,14 @@ description: 完整的測試工作流程，從單元測試到整合測試
 
 - **官方網站**：[agentskills.io](https://agentskills.io)
 - **GitHub 文件**：[About Agent Skills](https://docs.github.com/copilot/using-github-copilot/using-github-copilot-agent-skills)
-- **Anthropic Skills**：[anthropics/skills](https://github.com/anthropics/skills
+- **Anthropic Skills**：[anthropics/skills](https://github.com/anthropics/skills)
 
-- **基礎技能**：[.github/skills/dotnet-testing](.github/skills/dotnet-testing/README.md)
-- **進階技能**：[.github/skills/dotnet-testing-advanced](.github/skills/dotnet-testing-advanced/README.md)
+### 技能檔案位置
+
+所有技能以扁平結構存放於 `.github/skills/` 目錄下：
+
+- **基礎技能** (19 個)：所有 `dotnet-testing-*` 開頭的資料夾（例如：`dotnet-testing-unit-test-fundamentals`）
+- **進階技能** (8 個)：所有 `dotnet-testing-advanced-*` 開頭的資料夾（例如：`dotnet-testing-advanced-aspire-testing`）
 
 ---
 

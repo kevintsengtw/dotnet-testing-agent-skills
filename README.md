@@ -128,6 +128,200 @@ Get-ChildItem -Path "dotnet-testing-agent-skills\.github\skills\dotnet-testing-a
 
 ---
 
+## 🧑‍💻 輔助檔案（強烈建議）
+
+為了讓 AI 更主動且準確地使用這些 skills，我們提供了兩個輔助檔案：
+
+### 1️⃣ `.github/copilot-instructions.md` 
+
+**GitHub Copilot 專案指示檔** - 讓 AI 自動識別正確的 skills
+
+- 🎯 **自動識別**：GitHub Copilot 會自動讀取此檔，知道何時使用哪些 skills
+- 📝 **6 大任務映射**：
+  - 📦 建立測試專案
+  - ✍️ 撰寫單元測試
+  - 🎭 Mock 外部依賴
+  - 🔧 產生測試資料
+  - 🔗 整合測試
+  - 📊 程式碼覆蓋率
+- ⚡ **觸發關鍵字**：每個任務的常見語句清單
+- 📦 **Skills 組合建議**：複雜任務的多 skill 搭配
+
+**使用方式**：
+
+<details>
+<summary>📋 點擊查看完整內容（可直接複製到您的專案）</summary>
+
+```markdown
+# GitHub Copilot 專案指示
+
+---
+
+> 🎯 **適用範圍**：本指示專為使用 [kevintsengtw/dotnet-testing-agent-skills](https://github.com/kevintsengtw/dotnet-testing-agent-skills) 的專案設計
+> 
+> 📦 **Skills 來源**：基於「老派軟體工程師的測試修練 - 30 天挑戰」(2025 iThome 鐵人賽作品) 提煉的 27 個 .NET 測試技能
+
+本專案是 .NET 測試相關的 Agent Skills 開發專案。
+
+## Agent Skills 使用規則
+
+當用戶請求與 .NET 測試相關的任務時，**請優先參考並明確載入對應的 Agent Skills**。
+
+### 常見任務與 Skills 映射
+
+#### 📦 建立測試專案
+
+**觸發關鍵字**：「建立測試專案」、「設定測試環境」、「新增測試專案」
+
+**必須使用的 Skills**：
+- `dotnet-testing-xunit-project-setup` - 專案結構與設定
+- `dotnet-testing-test-naming-conventions` - 命名規範
+
+**參考流程**：
+1. 使用 `dotnet-testing-xunit-project-setup` 建立專案結構
+2. 配置 `.csproj` 檔案
+3. 安裝必要 NuGet 套件
+4. 設定 `xunit.runner.json`
+
+---
+
+#### ✍️ 撰寫單元測試
+
+**觸發關鍵字**：「寫測試」、「為這個方法建立測試」、「單元測試」
+
+**必須使用的 Skills**：
+- `dotnet-testing-unit-test-fundamentals` - FIRST 原則與 3A Pattern
+- `dotnet-testing-test-naming-conventions` - 測試命名
+- `dotnet-testing-awesome-assertions-guide` - 斷言撰寫
+
+**額外考量**：
+- 如果有外部依賴 → 加入 `dotnet-testing-nsubstitute-mocking`
+- 如果需要測試資料 → 加入 `dotnet-testing-autofixture-basics` 或 `dotnet-testing-bogus-fake-data`
+
+---
+
+#### 🎭 Mock 外部依賴
+
+**觸發關鍵字**：「Mock」、「模擬」、「測試替身」、「有外部依賴」
+
+**必須使用的 Skills**：
+- `dotnet-testing-nsubstitute-mocking` - NSubstitute 使用方式
+
+**進階組合**：
+- 與 AutoFixture 整合 → `dotnet-testing-autofixture-nsubstitute-integration`
+
+---
+
+#### 🔧 產生測試資料
+
+**觸發關鍵字**：「測試資料」、「假資料」、「產生資料」、「Builder Pattern」
+
+**必須使用的 Skills**：
+- 基礎：`dotnet-testing-autofixture-basics` 或 `dotnet-testing-bogus-fake-data`
+- 自訂化：`dotnet-testing-autofixture-customization`
+- xUnit 整合：`dotnet-testing-autodata-xunit-integration`
+- 擬真資料：`dotnet-testing-bogus-fake-data`
+
+---
+
+#### 🔗 整合測試
+
+**觸發關鍵字**：「整合測試」、「API 測試」、「資料庫測試」、「容器測試」
+
+**必須使用的 Skills**：
+- API 測試：`dotnet-testing-advanced-aspnet-integration-testing`
+- 資料庫容器：`dotnet-testing-advanced-testcontainers-database`
+- NoSQL 測試：`dotnet-testing-advanced-testcontainers-nosql`
+- 完整流程：`dotnet-testing-advanced-webapi-integration-testing`
+
+---
+
+#### 📊 程式碼覆蓋率
+
+**觸發關鍵字**：「覆蓋率」、「code coverage」、「測試覆蓋」
+
+**必須使用的 Skills**：
+- `dotnet-testing-code-coverage-analysis`
+
+---
+
+#### 🔄 框架升級/遷移
+
+**觸發關鍵字**：「xUnit 升級」、「遷移到 TUnit」、「測試框架」
+
+**必須使用的 Skills**：
+- xUnit 升級：`dotnet-testing-advanced-xunit-upgrade-guide`
+- TUnit 入門：`dotnet-testing-advanced-tunit-fundamentals`
+- TUnit 進階：`dotnet-testing-advanced-tunit-advanced`
+
+---
+
+## 重要提醒
+
+⚠️ **在回答任何 .NET 測試相關問題前**：
+
+1. **先分析任務類型**：判斷屬於上述哪個類別
+2. **明確載入 Skills**：在回應中說明「根據 XXX skill 的指導...」
+3. **組合多個 Skills**：複雜任務可能需要多個 skills 搭配
+4. **提供完整範例**：不要只給概念，要提供可執行的程式碼
+
+---
+
+## Skills 優先順序
+
+當多個 skills 可能適用時：
+
+1. **專案設定** → `dotnet-testing-xunit-project-setup`
+2. **基礎測試** → `dotnet-testing-unit-test-fundamentals`
+3. **命名規範** → `dotnet-testing-test-naming-conventions`
+4. **依賴模擬** → `dotnet-testing-nsubstitute-mocking`
+5. **測試資料** → `dotnet-testing-autofixture-basics`
+6. **整合測試** → `dotnet-testing-advanced-*` 系列
+
+---
+
+## 最後更新
+
+2026-01-23
+```
+
+</details>
+
+⚠️ **重要**：
+- 如果您的專案**已有** `.github/copilot-instructions.md`，請手動將上述內容**合併**到既有檔案中
+- 如果您的專案**沒有** `.github/copilot-instructions.md`，可以直接複製上述內容建立新檔案
+
+### 2️⃣ `SKILLS_QUICK_REFERENCE.md`
+
+**Skills 快速參考指南** - 給開發者的速查手冊
+
+- 📊 **快速查詢表**：任務 → Skills → 範例 Prompt
+- 🎯 **情境組合**：3 個完整的實際使用情境
+- 💬 **Prompt 模板**：可直接複製使用的對話範例
+- 📚 **完整清單**：所有 27 個 skills 的索引
+
+**使用方式**：
+```bash
+# 方法 1：複製為參考檔（推薦）
+cp SKILLS_QUICK_REFERENCE.md /your-project/SKILLS_QUICK_REFERENCE.md
+
+# 方法 2：整合到既有文件
+# 如果專案已有類似的參考文件，建議手動將內容整合進去
+```
+
+**👉 為什麼需要這些檔案？**
+
+Agent Skills 雖然強大，但 AI 不總是能主動識別何時使用。這兩個檔案能：
+
+1. ✅ **提高 AI 主動性**：明確告訴 AI「應該」使用哪些 skills
+2. ✅ **降低學習門檻**：用戶不需記住所有 skill 名稱
+3. ✅ **確保品質一致**：每次都使用正確的 skills 組合
+4. ✅ **加速開發**：提供現成的 prompt 範例
+
+---
+
+## 📁 目錄結構
+
 ## 技能清單
 
 ### 基礎技能 (19 個)

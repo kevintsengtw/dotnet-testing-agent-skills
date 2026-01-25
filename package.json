@@ -1,0 +1,61 @@
+{
+  "name": "@kevintsengtw/dotnet-testing-agent-skills",
+  "version": "1.0.0",
+  "description": ".NET Testing Agent Skills - 基於「老派軟體工程師的測試修練 - 30 天挑戰」提煉的 27 個 .NET 測試技能 + 2 個總覽技能",
+  "keywords": [
+    ".NET",
+    "testing",
+    "xUnit",
+    "TUnit",
+    "agent-skills",
+    "claude-code",
+    "github-copilot",
+    "testing-best-practices",
+    "AutoFixture",
+    "NSubstitute",
+    "FluentAssertions",
+    "Testcontainers",
+    "integration-testing",
+    "unit-testing"
+  ],
+  "author": "Kevin Tseng",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevintsengtw/dotnet-testing-agent-skills.git"
+  },
+  "homepage": "https://github.com/kevintsengtw/dotnet-testing-agent-skills#readme",
+  "bugs": {
+    "url": "https://github.com/kevintsengtw/dotnet-testing-agent-skills/issues"
+  },
+  "scripts": {
+    "list": "ls -la skills/",
+    "count": "ls -d skills/*/ | wc -l"
+  },
+  "agentSkills": {
+    "skillsDirectory": "skills",
+    "totalSkills": 29,
+    "categories": {
+      "overview": 2,
+      "fundamentals": 19,
+      "advanced": 8
+    },
+    "skills": [
+      {
+        "name": "dotnet-testing",
+        "type": "overview",
+        "description": "基礎測試技能總覽 (19 個子技能)",
+        "path": "skills/dotnet-testing"
+      },
+      {
+        "name": "dotnet-testing-advanced",
+        "type": "overview",
+        "description": "進階測試技能總覽 (8 個子技能)",
+        "path": "skills/dotnet-testing-advanced"
+      }
+    ]
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

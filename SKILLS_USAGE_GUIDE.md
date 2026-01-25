@@ -39,9 +39,10 @@
 
 | 類別                               | 技能數量  | 涵蓋主題                           |
 | ---------------------------------- | --------- | ---------------------------------- |
+| 總覽技能                           | 2 個      | 智能導航與技能推薦                 |
 | 基礎技能 (dotnet-testing)          | 19 個     | 單元測試、斷言、模擬、測試資料生成 |
 | 進階技能 (dotnet-testing-advanced) | 8 個      | 整合測試、容器化測試、框架遷移     |
-| **總計**                           | **27 個** | Day 01-30 完整內容                 |
+| **總計**                           | **29 個** | 總覽引導 + Day 01-30 完整內容      |
 
 ---
 
@@ -77,57 +78,108 @@
 
 ## 安裝與設定
 
-### 方法一：直接複製 (推薦)
-
-將 `.github/skills` 資料夾複製到您的專案中：
+### 方法一：使用 npx skills install（推薦）
 
 ```bash
-# 1. Clone Agent Skills repo
-git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
+# 從 GitHub 直接安裝到 Claude Code 全域 skills
+npx skills install https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
 
-# 2. 複製整個 skills 資料夾
-cp -r dotnet-testing-agent-skills/.github/skills /your-project/.github/
-
-# 結構應如下（扁平結構，27 個技能資料夾）：
-# your-project/
-# └── .github/
-#     └── skills/
-#         ├── dotnet-testing-unit-test-fundamentals/
-#         ├── dotnet-testing-test-naming-conventions/
-#         ├── dotnet-testing-xunit-project-setup/
-#         ├── ... (共 19 個基礎技能)
-#         ├── dotnet-testing-advanced-aspire-testing/
-#         ├── dotnet-testing-advanced-aspnet-integration-testing/
-#         └── ... (共 8 個進階技能)
+# 或安裝到當前工作區
+npx skills install https://github.com/kevintsengtw/dotnet-testing-agent-skills.git --workspace
 ```
 
-### 方法二：Git Submodule
+### 方法二：直接複製
+
+#### 複製到 GitHub Copilot（VS Code）
+
+**Linux / macOS (Bash)**
+```bash
+# 1. Clone 此 repo
+git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
+
+# 2. 複製到您的專案（GitHub Copilot 使用 .github/skills）
+cp -r dotnet-testing-agent-skills/skills /your-project/.github/
+
+# 3. 在 VS Code 中啟用 Agent Skills
+# 設定 → 搜尋 "chat.useAgentSkills" → 勾選啟用
+```
+
+**Windows (PowerShell)**
+```powershell
+# 1. Clone 此 repo
+git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
+
+# 2. 複製到您的專案（GitHub Copilot 使用 .github/skills）
+Copy-Item -Path "dotnet-testing-agent-skills\skills" -Destination "\your-project\.github\" -Recurse
+
+# 3. 在 VS Code 中啟用 Agent Skills
+# 設定 → 搜尋 "chat.useAgentSkills" → 勾選啟用
+```
+
+#### 複製到 Claude Code
+
+**Linux / macOS (Bash)**
+```bash
+# 複製到 Claude Code 工作區 skills
+cp -r dotnet-testing-agent-skills/skills /your-project/.claude/
+
+# 或複製到全域 skills
+cp -r dotnet-testing-agent-skills/skills ~/.config/claude/
+```
+
+**Windows (PowerShell)**
+```powershell
+# 複製到 Claude Code 工作區 skills
+Copy-Item -Path "dotnet-testing-agent-skills\skills" -Destination "\your-project\.claude\" -Recurse
+
+# 或複製到全域 skills
+Copy-Item -Path "dotnet-testing-agent-skills\skills" -Destination "$env:APPDATA\claude\" -Recurse
+```
+
+### 方法三：Git Submodule
 
 ```bash
 cd /your-project
 
-# 加入 submodule 到 skills 目錄
+# 對 GitHub Copilot：加入 submodule 到 .github/skills
 git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .github/skills
+cd .github/skills && cp -r skills/* . && cd ../..
 
-# 更新 submodule
-git submodule update --init --recursive
+# 對 Claude Code：加入 submodule 到 .claude/skills
+git submodule add https://github.com/kevintsengtw/dotnet-testing-agent-skills .claude/skills
+cd .claude/skills && cp -r skills/* . && cd ../..
 ```
 
-> **注意**：使用 Submodule 方式時，Skills 會直接放在 `.github/skills/` 目錄下，無需建立符號連結。
+### 方法四：選擇性複製
 
-### 方法三：僅複製需要的技能
+只需要特定技能？
 
-如果只需要特定技能：
+#### Linux / macOS (Bash)
 
 ```bash
-# 1. Clone Agent Skills repo
-git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
+# 只複製單元測試基礎
+cp -r dotnet-testing-agent-skills/skills/dotnet-testing-unit-test-fundamentals /your-project/.github/skills/
 
-# 2. 只複製單元測試基礎技能
-cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-unit-test-fundamentals /your-project/.github/skills/
+# 只複製 AutoFixture 系列
+cp -r dotnet-testing-agent-skills/skills/dotnet-testing-autofixture-* /your-project/.github/skills/
 
-# 3. 只複製 AutoFixture 相關技能
-cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-autofixture-* /your-project/.github/skills/
+# 只複製總覽 skills
+cp -r dotnet-testing-agent-skills/skills/dotnet-testing /your-project/.github/skills/
+cp -r dotnet-testing-agent-skills/skills/dotnet-testing-advanced /your-project/.github/skills/
+```
+
+#### Windows (PowerShell)
+
+```powershell
+# 只複製單元測試基礎
+Copy-Item -Path "dotnet-testing-agent-skills\skills\dotnet-testing-unit-test-fundamentals" -Destination "\your-project\.github\skills\" -Recurse
+
+# 只複製 AutoFixture 系列
+Get-ChildItem -Path "dotnet-testing-agent-skills\skills\dotnet-testing-autofixture-*" | Copy-Item -Destination "\your-project\.github\skills\" -Recurse
+
+# 只複製總覽 skills
+Copy-Item -Path "dotnet-testing-agent-skills\skills\dotnet-testing" -Destination "\your-project\.github\skills\" -Recurse
+Copy-Item -Path "dotnet-testing-agent-skills\skills\dotnet-testing-advanced" -Destination "\your-project\.github\skills\" -Recurse
 ```
 
 ### VS Code 設定
@@ -142,7 +194,24 @@ cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-autofixture-* /y
 
 ## 技能清單總覽
 
-### 基礎技能 (dotnet-testing)
+### 🎯 總覽技能 (2 個) - 新增！
+
+> **NEW!** 兩個總覽 skills 提供智能導航，當您不確定使用哪個技能時，它們會自動分析需求並推薦適合的技能組合。
+
+| 技能 | 說明 | 何時使用 |
+|------|------|---------|
+| `dotnet-testing` | 基礎測試技能總覽與引導中心 | 詢問「如何寫 .NET 測試」、「測試入門」等一般性問題時自動觸發 |
+| `dotnet-testing-advanced` | 進階測試技能總覽與引導中心 | 詢問「整合測試」、「API 測試」、「微服務測試」等進階需求時自動觸發 |
+
+**總覽 skills 的價值**：
+- ✅ **智能推薦**：根據您的具體需求，推薦 1-4 個最適合的子技能組合
+- ✅ **學習路徑**：提供循序漸進的學習建議（新手路徑、進階路徑）
+- ✅ **決策支援**：透過決策樹快速找到需要的技能
+- ✅ **範例導向**：每個任務都有完整的提示詞範例
+
+---
+
+### 基礎技能 (dotnet-testing) - 19 個
 
 #### 第一階段：測試基礎與斷言
 
@@ -215,6 +284,20 @@ cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-autofixture-* /y
 
 ### 常見觸發語句
 
+#### 總覽技能觸發
+
+| 您說的話                 | 觸發的技能                    |
+| ------------------------ | ----------------------------- |
+| "我想學習 .NET 測試"     | `dotnet-testing`              |
+| "如何寫 .NET 測試"       | `dotnet-testing`              |
+| "測試入門"               | `dotnet-testing`              |
+| "建立整合測試"           | `dotnet-testing-advanced`     |
+| "API 測試怎麼做"         | `dotnet-testing-advanced`     |
+| "微服務測試"             | `dotnet-testing-advanced`     |
+| "使用 Testcontainers"    | `dotnet-testing-advanced`     |
+
+#### 專業技能觸發
+
 | 您說的話                 | 觸發的技能                                                                        |
 | ------------------------ | --------------------------------------------------------------------------------- |
 | "建立測試專案"           | `dotnet-testing-xunit-project-setup`                                              |
@@ -222,7 +305,6 @@ cp -r dotnet-testing-agent-skills/.github/skills/dotnet-testing-autofixture-* /y
 | "產生測試資料"           | `dotnet-testing-autofixture-basics` 或 `dotnet-testing-bogus-fake-data`           |
 | "這個類別有 Mock 需求"   | `dotnet-testing-nsubstitute-mocking`                                              |
 | "檢查程式碼覆蓋率"       | `dotnet-testing-code-coverage-analysis`                                           |
-| "建立整合測試"           | `dotnet-testing-advanced-aspnet-integration-testing`                              |
 | "使用 Docker 測試資料庫" | `dotnet-testing-advanced-testcontainers-database`                                 |
 
 ### 明確指定技能
@@ -448,6 +530,8 @@ repository.Received(1).GetById(1);
 
 ## 技能組合建議
 
+> 💡 **提示**：不確定該用哪些技能？可以直接詢問總覽技能（`dotnet-testing` 或 `dotnet-testing-advanced`），它們會根據您的需求自動推薦最適合的技能組合！
+
 ### 🆕 新手入門組合
 
 適合剛開始學習 .NET 測試的開發者：
@@ -510,10 +594,10 @@ repository.Received(1).GetById(1);
 
 **A**：確認以下事項：
 
-1. `.github/skills` 資料夾結構正確
-2. VS Code 已啟用 `chat.useAgentSkills` 設定
+1. 技能目錄結構正確（GitHub Copilot 使用 `.github/skills/`，Claude Code 使用 `.claude/skills/`）
+2. VS Code 已啟用 `chat.useAgentSkills` 設定（僅 GitHub Copilot 需要）
 3. 每個技能資料夾都有 `SKILL.md` 檔案
-4. 嘗試更明確地描述您的需求
+4. 嘗試更明確地描述您的需求，或直接詢問「我想學習 .NET 測試」來觸發總覽技能
 
 ---
 
@@ -565,16 +649,30 @@ repository.Received(1).GetById(1);
 
 **A**：根據您的安裝方式：
 
+**npx skills install**：重新執行安裝指令
+
+```bash
+# 更新全域 skills
+npx skills install https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
+
+# 更新工作區 skills
+npx skills install https://github.com/kevintsengtw/dotnet-testing-agent-skills.git --workspace
+```
+
 **直接複製**：重新下載並複製
 
 ```bash
-cp -r path/to/new-skills/.github/skills /your-project/.github/
+# 對 GitHub Copilot
+cp -r dotnet-testing-agent-skills/skills /your-project/.github/
+
+# 對 Claude Code
+cp -r dotnet-testing-agent-skills/skills /your-project/.claude/
 ```
 
 **Git Submodule**：
 
 ```bash
-cd .github/skills
+cd .github/skills  # 或 .claude/skills
 git pull origin main
 ```
 
@@ -662,12 +760,45 @@ description: 完整的測試工作流程，從單元測試到整合測試
 - **GitHub 文件**：[About Agent Skills](https://docs.github.com/copilot/using-github-copilot/using-github-copilot-agent-skills)
 - **Anthropic Skills**：[anthropics/skills](https://github.com/anthropics/skills)
 
-### 技能檔案位置
+### 技能目錄結構
 
-所有技能以扁平結構存放於 `.github/skills/` 目錄下：
+```text
+skills/
+├── dotnet-testing/                              # ⭐ 總覽：基礎技能導航（19 個子技能）
+├── dotnet-testing-advanced/                     # ⭐ 總覽：進階技能導航（8 個子技能）
+├── dotnet-testing-unit-test-fundamentals/
+├── dotnet-testing-test-naming-conventions/
+├── dotnet-testing-xunit-project-setup/
+├── dotnet-testing-awesome-assertions-guide/
+├── dotnet-testing-complex-object-comparison/
+├── dotnet-testing-code-coverage-analysis/
+├── dotnet-testing-nsubstitute-mocking/
+├── dotnet-testing-test-output-logging/
+├── dotnet-testing-private-internal-testing/
+├── dotnet-testing-fluentvalidation-testing/
+├── dotnet-testing-datetime-testing-timeprovider/
+├── dotnet-testing-filesystem-testing-abstractions/
+├── dotnet-testing-test-data-builder-pattern/
+├── dotnet-testing-autofixture-basics/
+├── dotnet-testing-autofixture-customization/
+├── dotnet-testing-autodata-xunit-integration/
+├── dotnet-testing-autofixture-nsubstitute-integration/
+├── dotnet-testing-bogus-fake-data/
+├── dotnet-testing-autofixture-bogus-integration/
+├── dotnet-testing-advanced-aspnet-integration-testing/
+├── dotnet-testing-advanced-testcontainers-database/
+├── dotnet-testing-advanced-testcontainers-nosql/
+├── dotnet-testing-advanced-webapi-integration-testing/
+├── dotnet-testing-advanced-aspire-testing/
+├── dotnet-testing-advanced-xunit-upgrade-guide/
+├── dotnet-testing-advanced-tunit-fundamentals/
+└── dotnet-testing-advanced-tunit-advanced/
+```
 
-- **基礎技能** (19 個)：所有 `dotnet-testing-*` 開頭的資料夾（例如：`dotnet-testing-unit-test-fundamentals`）
-- **進階技能** (8 個)：所有 `dotnet-testing-advanced-*` 開頭的資料夾（例如：`dotnet-testing-advanced-aspire-testing`）
+> **注意**：
+> - Skills 採用扁平結構，使用前綴命名來區分基礎技能 (`dotnet-testing-*`) 與進階技能 (`dotnet-testing-advanced-*`)
+> - ⭐ 兩個總覽 skills 提供智能導航，自動推薦適合的子技能組合
+> - 安裝後，skills 會根據目標環境複製到對應位置（`.github/skills/` 或 `.claude/skills/`）
 
 ---
 
@@ -677,4 +808,4 @@ MIT License
 
 ---
 
-**最後更新**：2026-01-19
+**最後更新**：2026-01-25

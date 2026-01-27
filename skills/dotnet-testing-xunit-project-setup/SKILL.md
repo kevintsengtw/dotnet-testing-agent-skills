@@ -1,7 +1,46 @@
 ---
 name: dotnet-testing-xunit-project-setup
-description: 協助建立與設定 xUnit 測試專案的完整指南。當使用者要求建立 xUnit 測試專案、設定測試專案結構、配置測試相依套件，或詢問 xUnit 專案最佳實踐時使用此技能。
+description: |
+  xUnit 測試專案建立與設定的專門技能。
+  當需要建立測試專案、設定專案結構、配置 NuGet 套件、組織測試資料夾時使用。
+  涵蓋 csproj 設定、套件管理、專案結構、xunit.runner.json 配置等。
+
+triggers:
+  # 核心關鍵字
+  - xunit project
+  - xunit setup
+  - 測試專案建立
+  - test project setup
+  - 建立測試專案
+  - create test project
+
+  # 專案結構
+  - project structure
+  - 專案結構
+  - test organization
+  - 測試組織
+  - folder structure
+  - 資料夾結構
+
+  # 套件配置
+  - xunit package
+  - nuget packages
+  - test dependencies
+  - 測試套件
+  - package references
+
+  # 使用情境
+  - 如何建立測試專案
+  - how to create test project
+  - xUnit 設定
+  - xunit configuration
+  - test project best practices
+
 license: MIT
+metadata:
+  author: Kevin Tseng
+  version: "1.0.0"
+  tags: ".NET, testing, xUnit, project setup, configuration"
 ---
 
 # xUnit 測試專案設定指南

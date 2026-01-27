@@ -1,12 +1,39 @@
 ---
 name: dotnet-testing-autofixture-nsubstitute-integration
-description: 協助在 .NET 測試中整合 AutoFixture 與 NSubstitute，實現自動模擬（Auto-Mocking）功能。當使用者需要測試有多個相依性的服務類別、建立自訂 AutoData 屬性、或使用 Frozen 機制確保測試一致性時，請使用此技能。
+description: |
+  AutoFixture 與 NSubstitute 整合指南 - 實現自動模擬 (Auto-Mocking)。
+  涵蓋 AutoNSubstituteDataAttribute、Frozen 機制、Greedy 建構策略。
+  適用於複雜相依性注入測試、Mock 驗證與行為設定。
+
+triggers:
+  # 核心關鍵字
+  - autofixture nsubstitute
+  - auto mocking autofixture
+  - AutoNSubstituteDataAttribute
+  - 自動模擬
+
+  # 技術術語
+  - Frozen
+  - [Frozen]
+  - AutoNSubstituteCustomization
+  - AutoFixture.AutoNSubstitute
+  - Greedy
+  - ISpecimenBuilder
+
+  # 使用情境
+  - mock 一致性
+  - 複雜相依性
+  - 自動注入 mock
+  - fixture.Freeze
+  - Received().method
+  - Returns()
+  - auto-mocking
+
 license: MIT
 metadata:
-  author: Kevin Tsen
+  author: Kevin Tseng
   version: "1.0.0"
   tags: "autofixture, nsubstitute, auto-mocking, dependency-injection, xunit, testing"
-  related_skills: "autofixture-basics, autofixture-customization, autodata-xunit-integration, nsubstitute-mocking"
 ---
 
 # AutoFixture + NSubstitute 自動模擬整合

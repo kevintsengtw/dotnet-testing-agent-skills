@@ -1,6 +1,6 @@
 {
   "name": "@kevintsengtw/dotnet-testing-agent-skills",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": ".NET Testing Agent Skills - 基於「老派軟體工程師的測試修練 - 30 天挑戰」提煉的 27 個 .NET 測試技能 + 2 個總覽技能",
   "keywords": [
     ".NET",

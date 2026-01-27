@@ -1,10 +1,50 @@
 ---
 name: dotnet-testing-advanced-aspnet-integration-testing
 description: |
-  ASP.NET Core 整合測試完整指南。當使用者需要測試 Web API 端點、驗證完整的 HTTP 請求/回應流程、測試中介軟體 (Middleware) 運作、驗證依賴注入設定、或詢問如何使用 WebApplicationFactory 進行整合測試時，請使用此技能。涵蓋 TestServer 設定、HttpClient 測試模式、AwesomeAssertions.Web HTTP 回應斷言、記憶體資料庫配置、服務依賴替換策略，以及三個層級 (Level 1/2/3) 的整合測試實作模式。
+  ASP.NET Core 整合測試的專門技能。
+  當需要測試 Web API 端點、HTTP 請求/回應、中介軟體、依賴注入時使用。
+  涵蓋 WebApplicationFactory、TestServer、HttpClient 測試、記憶體資料庫配置等。
+
+triggers:
+  # 核心關鍵字
+  - integration testing
+  - 整合測試
+  - web api testing
+  - api 測試
+  - WebApplicationFactory
+  - TestServer
+  - HttpClient testing
+
+  # Controller 測試
+  - controller testing
+  - endpoint testing
+  - 端點測試
+  - API endpoint
+  - RESTful API testing
+
+  # 技術術語
+  - Microsoft.AspNetCore.Mvc.Testing
+  - CreateClient
+  - ConfigureWebHost
+  - WithWebHostBuilder
+  - AwesomeAssertions.Web
+  - Be200Ok
+  - Be404NotFound
+
+  # 使用情境
+  - 測試 API
+  - 測試控制器
+  - HTTP 測試
+  - middleware testing
+  - 中介軟體測試
+  - dependency injection testing
+  - 依賴注入測試
+
 license: MIT
 metadata:
+  author: Kevin Tseng
   version: "1.0.0"
+  tags: ".NET, testing, ASP.NET Core, integration testing, WebApplicationFactory"
 ---
 
 # ASP.NET Core 整合測試指南

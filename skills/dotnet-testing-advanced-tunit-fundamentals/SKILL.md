@@ -1,12 +1,46 @@
 ---
 name: dotnet-testing-advanced-tunit-fundamentals
 description: |
-  TUnit 新世代 .NET 測試框架入門基礎。
-  提供 Source Generator 驅動的測試發現、AOT 編譯支援、流暢式斷言語法。
-  涵蓋 TUnit 專案建立、[Test] 屬性使用、非同步斷言、參數化測試。
-  包含測試生命週期管理、並行執行控制、與 xUnit 語法對照。
-  適用於 .NET 8+ 專案,追求高效能測試執行的現代化開發環境。
+  TUnit 新世代測試框架入門完整指南。
+  涵蓋 Source Generator 驅動測試發現、AOT 編譯支援、流暢式非同步斷言。
+  包含專案建立、[Test] 屬性、生命週期管理、並行控制與 xUnit 語法對照。
+
+triggers:
+  # 核心關鍵字
+  - TUnit
+  - tunit testing
+  - source generator testing
+  - AOT testing
+  - 新世代測試框架
+
+  # 技術術語
+  - [Test]
+  - [Arguments]
+  - TUnit.Assertions
+  - Assert.That().IsEqualTo
+  - await Assert.That
+  - async Task test
+
+  # 生命週期
+  - [Before(Test)]
+  - [Before(Class)]
+  - [After(Test)]
+  - [After(Class)]
+  - NotInParallel
+
+  # 使用情境
+  - TUnit.Templates
+  - Microsoft.Testing.Platform
+  - PublishAot
+  - TUnit vs xUnit
+  - 並行執行
+  - Source Generated
+
 license: MIT
+metadata:
+  author: Kevin Tseng
+  version: "1.0.0"
+  tags: "tunit, testing-framework, source-generator, aot, modern-testing, performance"
 ---
 
 # TUnit 新世代測試框架入門基礎

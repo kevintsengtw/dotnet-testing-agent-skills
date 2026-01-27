@@ -1,12 +1,50 @@
 ---
 name: dotnet-testing-filesystem-testing-abstractions
 description: |
-  協助使用 System.IO.Abstractions 建立可測試的檔案系統操作程式碼。
-  當使用者需要測試涉及 File、Directory、Path 等靜態類別的程式碼，
-  或者詢問如何模擬檔案系統操作、使用 MockFileSystem 進行測試時，請使用此技能。
+  使用 System.IO.Abstractions 測試檔案系統操作的專門技能。
+  當需要測試 File、Directory、Path 等操作、模擬檔案系統時使用。
+  涵蓋 IFileSystem、MockFileSystem、檔案讀寫測試、目錄操作測試等。
+
+triggers:
+  # 核心關鍵字
+  - file testing
+  - filesystem
+  - 檔案測試
+  - 檔案系統測試
+  - IFileSystem
+  - MockFileSystem
+  - System.IO.Abstractions
+
+  # 常見類別
+  - File.ReadAllText
+  - File.WriteAllText
+  - Directory.CreateDirectory
+  - Directory.Exists
+  - Path.Combine
+  - FileInfo
+  - DirectoryInfo
+
+  # 使用情境
+  - 測試檔案操作
+  - 模擬檔案系統
+  - 檔案讀寫測試
+  - 目錄操作測試
+  - mock file system
+  - file operations testing
+  - directory testing
+
+  # 技術術語
+  - file abstraction
+  - 檔案抽象化
+  - mock file
+  - 模擬檔案
+  - file system mock
+
 license: MIT
 metadata:
+  author: Kevin Tseng
   version: "1.0.0"
+  tags: ".NET, testing, IFileSystem, MockFileSystem, file testing"
 ---
 
 # 檔案系統測試：使用 System.IO.Abstractions 模擬檔案操作

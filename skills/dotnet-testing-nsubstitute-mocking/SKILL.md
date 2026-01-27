@@ -1,7 +1,52 @@
 ---
 name: dotnet-testing-nsubstitute-mocking
-description: 協助使用 NSubstitute 建立測試替身(Test Double),包含 Mock、Stub、Spy。當使用者需要隔離外部相依、模擬介面行為、驗證方法呼叫、測試相依注入,或需要建立假物件時,請使用此技能。
+description: |
+  使用 NSubstitute 建立測試替身(Mock、Stub、Spy)的專門技能。
+  當需要隔離外部依賴、模擬介面行為、驗證方法呼叫時使用。
+  涵蓋 Substitute.For、Returns、Received、Throws 等完整指引。
+
+triggers:
+  # 核心關鍵字
+  - mock
+  - stub
+  - spy
+  - nsubstitute
+  - 模擬
+  - 假物件
+  - test double
+  - 測試替身
+
+  # 常見依賴類型
+  - IRepository
+  - IService
+  - IUserRepository
+  - IOrderService
+  - mock repository
+  - mock service
+
+  # 技術術語
+  - Substitute.For
+  - Returns
+  - Received
+  - Throws
+  - Arg.Any
+  - Arg.Is
+  - 模擬介面
+  - 驗證呼叫
+
+  # 使用情境
+  - 隔離依賴
+  - 外部依賴
+  - 模擬外部服務
+  - mock external service
+  - 測試依賴注入
+  - dependency injection testing
+
 license: MIT
+metadata:
+  author: Kevin Tseng
+  version: "1.0.0"
+  tags: ".NET, testing, NSubstitute, mock, stub, test double"
 ---
 
 # NSubstitute Mocking Skill

@@ -1,6 +1,18 @@
 ---
 name: dotnet-testing-advanced
 description: .NET 進階測試技能總覽與引導中心。當使用者詢問「整合測試」、「API 測試」、「容器化測試」、「微服務測試」、「測試框架遷移」、「Testcontainers」、「Aspire 測試」等進階測試需求時觸發。會根據具體需求推薦適合的子技能組合，涵蓋整合測試、Testcontainers、Aspire 測試、框架升級等 8 個進階技能。
+
+triggers:
+  # 入口關鍵字
+  - integration testing
+  - 整合測試
+  - API testing
+  - API 測試
+  - advanced testing
+  - 進階測試
+  - testcontainers
+  - aspire testing
+
 license: MIT
 metadata:
   author: Kevin Tseng
@@ -12,6 +24,101 @@ metadata:
 ---
 
 # .NET 進階測試技能總覽
+
+---
+
+## 🤖 AI Agent 重要提示
+
+**當您（AI Agent）被載入此進階入口 skill 時，請先閱讀以下指引**：
+
+### 📋 本技能的定位
+
+本檔案是「進階測試導航中心」，用於幫助找到正確的**進階子技能**。
+
+#### 您的任務是
+
+1. ✅ 根據使用者需求匹配對應的進階子技能
+2. ✅ 使用 `Skill` tool 載入具體的子技能
+3. ✅ 讓子技能提供專業的整合測試指引
+
+#### 禁止行為
+
+- ❌ 不要在本入口 skill 中直接提供整合測試程式碼
+- ❌ 不要在沒有載入子技能的情況下開始實作測試
+- ❌ 不要跳過子技能直接提供「一般性」整合測試建議
+
+---
+
+## 🎯 快速技能對照表（AI Agent 必讀）
+
+**使用者提到的關鍵字 → 應載入的進階子技能**
+
+### 整合測試技能
+
+| 使用者說... | 載入指令 | 用途說明 |
+|------------|----------|----------|
+| **API 測試**、Controller 測試、端點測試 | `/skill dotnet-testing-advanced-aspnet-integration-testing` | 基礎 API 整合測試 |
+| **完整 CRUD**、WebAPI 測試、業務流程測試 | `/skill dotnet-testing-advanced-webapi-integration-testing` | 完整 API 流程測試 |
+| **WebApplicationFactory**、TestServer | `/skill dotnet-testing-advanced-aspnet-integration-testing` | WebApplicationFactory 使用 |
+
+### 容器化測試技能
+
+| 使用者說... | 載入指令 | 用途說明 |
+|------------|----------|----------|
+| **SQL Server 容器**、PostgreSQL、MySQL | `/skill dotnet-testing-advanced-testcontainers-database` | 關聯式資料庫容器測試 |
+| **MongoDB**、Redis、Elasticsearch | `/skill dotnet-testing-advanced-testcontainers-nosql` | NoSQL 資料庫容器測試 |
+| **真實資料庫**、EF Core 測試、Dapper 測試 | `/skill dotnet-testing-advanced-testcontainers-database` | 真實資料庫行為測試 |
+| **Testcontainers**、容器測試、Docker 測試 | `/skill dotnet-testing-advanced-testcontainers-database` | Testcontainers 基礎 |
+
+### 微服務測試技能
+
+| 使用者說... | 載入指令 | 用途說明 |
+|------------|----------|----------|
+| **.NET Aspire**、微服務測試、分散式測試 | `/skill dotnet-testing-advanced-aspire-testing` | Aspire 微服務測試 |
+| **DistributedApplication**、服務間通訊 | `/skill dotnet-testing-advanced-aspire-testing` | Aspire 應用測試 |
+
+### 框架升級技能
+
+| 使用者說... | 載入指令 | 用途說明 |
+|------------|----------|----------|
+| **xUnit 升級**、xUnit 3.x、版本升級 | `/skill dotnet-testing-advanced-xunit-upgrade-guide` | xUnit 2.x → 3.x 升級 |
+| **TUnit**、新測試框架、TUnit 基礎 | `/skill dotnet-testing-advanced-tunit-fundamentals` | TUnit 基礎與遷移 |
+| **TUnit 進階**、TUnit DI、平行執行 | `/skill dotnet-testing-advanced-tunit-advanced` | TUnit 進階功能 |
+
+---
+
+## ⚠️ 使用流程範例
+
+### ✅ 正確流程
+
+```
+使用者：請幫我建立 ProductsController 的 API 整合測試
+
+AI：我注意到您需要進行 API 整合測試。根據快速對照表，
+    我應該載入 dotnet-testing-advanced-aspnet-integration-testing skill。
+
+    [使用 Skill tool 載入子技能]
+
+AI：現在按照 ASP.NET Core Integration Testing skill 的指引為您建立測試...
+```
+
+### ❌ 錯誤流程
+
+```
+使用者：請幫我建立 ProductsController 的 API 整合測試
+
+AI：好的，我來寫整合測試...（直接開始寫程式碼，沒有載入子技能）
+```
+
+---
+
+## 📚 完整技能清單
+
+如需查看完整的 8 個進階技能清單、詳細決策樹、學習路徑建議，請繼續閱讀本檔案後續內容。
+
+**人類開發者參考**：如需快速查找，請查看 [SKILLS_QUICK_INDEX.md](/SKILLS_QUICK_INDEX.md)
+
+---
 
 ## 適用情境
 

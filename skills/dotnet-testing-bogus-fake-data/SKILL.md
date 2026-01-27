@@ -1,11 +1,53 @@
 ---
 name: dotnet-testing-bogus-fake-data
-description: 協助使用 Bogus 假資料產生函式庫在 .NET 測試中產生真實感的測試資料。當使用者需要產生擬真的姓名、地址、電話、公司資訊等測試資料，或需要多語言支援的測試資料時，請使用此技能。
+description: |
+  使用 Bogus 產生擬真假資料的專門技能。
+  當需要產生真實感的姓名、地址、電話、Email、公司資訊等測試資料時使用。
+  涵蓋 Faker 類別、多語言支援、自訂規則、大量資料產生等。
+
+triggers:
+  # 核心關鍵字
+  - bogus
+  - faker
+  - fake data
+  - 假資料
+  - 擬真資料
+  - realistic data
+  - test data
+
+  # 資料類型
+  - fake name
+  - fake address
+  - fake email
+  - fake phone
+  - 假姓名
+  - 假地址
+  - 假電話
+  - 假公司
+
+  # 技術術語
+  - Faker<T>
+  - RuleFor
+  - Generate
+  - Bogus.Faker
+  - faker.Name
+  - faker.Address
+  - faker.Internet
+  - faker.Company
+
+  # 使用情境
+  - 擬真測試資料
+  - 真實感資料
+  - 產生假資料
+  - generate fake data
+  - realistic test data
+  - seed data
+
 license: MIT
 metadata:
-  author: Kevin Tsen
+  author: Kevin Tseng
   version: "1.0.0"
-  tags: "bogus, fake-data, test-data, realistic-data, faker, xunit, testing"
+  tags: "bogus, fake-data, test-data, realistic-data, faker, testing"
   related_skills: "autofixture-basics, autofixture-bogus-integration, test-data-builder-pattern"
 ---
 

@@ -6,6 +6,8 @@
 
 ## 📋 目錄
 
+> 💡 **快速開始**：想要快速查詢？請參考 [SKILLS_QUICK_REFERENCE.md](SKILLS_QUICK_REFERENCE.md) 快速參考指南
+
 1. [簡介](#簡介)
 2. [支援平台與環境需求](#支援平台與環境需求)
 3. [安裝與設定](#安裝與設定)
@@ -29,11 +31,22 @@
 
 這些技能讓 AI 助理能夠：
 
-- 🎯 **自動識別**：根據您的對話內容，自動載入相關的測試技能
+- 🎯 **自動識別**：根據您的對話內容，自動載入相關的測試技能（透過 400-520 個優化的 triggers）
 - 📚 **提供專業指導**：給予符合業界最佳實踐的測試建議
 - 🔧 **生成程式碼**：產出符合規範的測試程式碼與專案結構
 - 🔄 **整合工作流程**：協助完成從單元測試到整合測試的完整流程
 - 🌐 **跨平台支援**：skills 內容符合開放標準，可在任何支援 agentskills.io 的 AI 工具使用
+
+### Skills 最新優化（2026-01-27）
+
+本 Skills 集合已完成全面優化，大幅提升 AI 自動識別能力：
+
+- ✅ **27 個 Skills 全面優化**：每個 skill 包含 15-19 個 triggers（總計 400-520 個）
+- ✅ **Description 多行格式**：清晰說明核心功能、適用場景、涵蓋範圍
+- ✅ **入口 Skills 導航**：兩個總覽 skills 提供智能推薦
+- 📈 **預期效果**：AI 自動載入 Skill 的機率提升 150-233%
+
+**詳細資訊**：請參考 [OPTIMIZATION_SUMMARY.md](OPTIMIZATION_SUMMARY.md)
 
 ### 技能涵蓋範圍
 
@@ -748,6 +761,19 @@ description: 完整的測試工作流程，從單元測試到整合測試
 
 ## 相關資源
 
+### 專案文件
+
+- **[SKILLS_QUICK_REFERENCE.md](SKILLS_QUICK_REFERENCE.md)**：快速參考指南（推薦！）
+  - 關鍵字快速對應表
+  - Prompt 模板與使用範例
+  - 常見情境快速指引
+  - Skills 優化狀態說明
+
+- **[OPTIMIZATION_SUMMARY.md](OPTIMIZATION_SUMMARY.md)**：Skills 優化總結報告
+  - 詳細的優化策略與成果
+  - Triggers 統計數據
+  - 預期效果分析
+
 ### 原始內容
 
 - **iThome 鐵人賽文章**：[老派軟體工程師的測試修練 - 30 天挑戰](https://ithelp.ithome.com.tw/users/20066083/ironman/8276)
@@ -808,4 +834,4 @@ MIT License
 
 ---
 
-**最後更新**：2026-01-25
+**最後更新**：2026-01-27

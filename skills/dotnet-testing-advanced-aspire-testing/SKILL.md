@@ -1,7 +1,40 @@
 ---
 name: dotnet-testing-advanced-aspire-testing
-description: 協助使用 .NET Aspire Testing 框架建立分散式應用的整合測試。當使用者要求建立 Aspire 測試、從 Testcontainers 遷移到 Aspire Testing、或需要測試雲原生 .NET 應用時使用此技能。
+description: |
+  .NET Aspire Testing 整合測試框架完整指南。
+  涵蓋 AppHost 專案設定、DistributedApplicationTestingBuilder、容器生命週期管理。
+  包含從 Testcontainers 遷移、多服務編排、Respawn 配置與時間可測試性設計。
+
+triggers:
+  # 核心關鍵字
+  - aspire testing
+  - .NET Aspire
+  - DistributedApplicationTestingBuilder
+  - AppHost testing
+  - 分散式測試
+
+  # 技術術語
+  - AspireAppFixture
+  - IAsyncLifetime
+  - ContainerLifetime.Session
+  - WithWebHostBuilder
+  - PostgreSqlContainer AspireContainer
+  - RedisContainer Aspire
+
+  # 使用情境
+  - 雲原生測試
+  - 多服務整合
+  - AppHost 編排
+  - Aspire.Hosting.Testing
+  - WaitForPostgreSqlReadyAsync
+  - EnsureDatabaseExistsAsync
+  - Respawn DbAdapter.Postgres
+
 license: MIT
+metadata:
+  author: Kevin Tseng
+  version: "1.0.0"
+  tags: "aspire, distributed-testing, cloud-native, testcontainers, integration-testing"
 ---
 
 # .NET Aspire Testing 整合測試框架

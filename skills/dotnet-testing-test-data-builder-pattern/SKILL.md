@@ -1,7 +1,43 @@
 ---
 name: dotnet-testing-test-data-builder-pattern
-description: 使用 Test Data Builder Pattern 建構可維護、可讀、流暢的測試資料。當需要建立測試物件、管理複雜測試資料、或改善測試可讀性時使用此技能。適用於單元測試與整合測試的測試資料準備階段。
+description: |
+  Test Data Builder Pattern 完整實作指南。
+  使用建構者模式建立可維護、可讀性高的測試資料。
+  涵蓋流暢介面、語意化方法、預設值設計與 Builder 組合模式。
+
+triggers:
+  # 核心關鍵字
+  - test data builder
+  - builder pattern test
+  - 測試資料建構器
+  - object mother
+
+  # 技術術語
+  - fluent interface
+  - with method
+  - build method
+  - 流暢介面
+
+  # 類別/方法名稱
+  - UserBuilder
+  - ProductBuilder
+  - .With()
+  - .Build()
+  - AUser()
+  - AnAdminUser()
+
+  # 使用情境
+  - 測試資料準備
+  - 複雜物件建立
+  - 測試可讀性
+  - builder 組合
+  - 語意化測試
+
 license: MIT
+metadata:
+  author: Kevin Tseng
+  version: "1.0.0"
+  tags: "test-data-builder, builder-pattern, fluent-interface, test-readability"
 ---
 
 # Test Data Builder Pattern 測試資料建構器模式

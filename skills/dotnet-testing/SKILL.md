@@ -1,6 +1,18 @@
 ---
 name: dotnet-testing
 description: .NET 測試基礎技能總覽與引導中心。當使用者詢問「如何寫 .NET 測試」、「.NET 測試入門」、「需要哪些測試工具」、「測試最佳實踐」、「從零開始學測試」等一般性測試需求時觸發。會根據具體需求推薦適合的子技能組合，涵蓋測試基礎、測試資料、斷言、模擬、特殊場景等 19 個基礎技能。
+
+triggers:
+  # 入口關鍵字
+  - dotnet testing
+  - .NET 測試
+  - 測試入門
+  - testing guide
+  - 如何寫測試
+  - 測試最佳實踐
+  - testing overview
+  - test fundamentals overview
+
 license: MIT
 metadata:
   author: Kevin Tseng
@@ -12,6 +24,101 @@ metadata:
 ---
 
 # .NET 測試基礎技能總覽
+
+---
+
+## 🤖 AI Agent 重要提示
+
+**當您（AI Agent）被載入此入口 skill 時，請先閱讀以下指引**：
+
+### 📋 本技能的定位
+
+本檔案是「導航中心」，用於幫助找到正確的**子技能**。
+
+#### 您的任務是
+
+1. ✅ 根據使用者需求匹配對應的子技能
+2. ✅ 使用 `Skill` tool 載入具體的子技能
+3. ✅ 讓子技能提供專業的測試指引
+
+#### 禁止行為
+
+- ❌ 不要在本入口 skill 中直接提供測試程式碼
+- ❌ 不要在沒有載入子技能的情況下開始實作測試
+- ❌ 不要跳過子技能直接提供「一般性」測試建議
+
+---
+
+## 🎯 快速技能對照表（AI Agent 必讀）
+
+**使用者提到的關鍵字 → 應載入的子技能**
+
+### 最常用技能（必須熟記）
+
+| 使用者說... | 載入指令 | 用途說明 |
+|------------|----------|----------|
+| **Validator**、驗證器、CreateUserValidator | `/skill dotnet-testing-fluentvalidation-testing` | FluentValidation 測試 |
+| **Mock**、模擬、IRepository、IService | `/skill dotnet-testing-nsubstitute-mocking` | 模擬外部依賴 |
+| **AutoFixture**、測試資料生成 | `/skill dotnet-testing-autofixture-basics` | 自動產生測試資料 |
+| **斷言**、Should()、BeEquivalentTo | `/skill dotnet-testing-awesome-assertions-guide` | 流暢斷言（必學） |
+| **DateTime**、時間測試、TimeProvider | `/skill dotnet-testing-datetime-testing-timeprovider` | 時間相關測試 |
+| **File**、檔案系統、IFileSystem | `/skill dotnet-testing-filesystem-testing-abstractions` | 檔案系統測試 |
+| **Bogus**、假資料、Faker | `/skill dotnet-testing-bogus-fake-data` | 擬真資料生成 |
+| **Builder Pattern**、WithXxx | `/skill dotnet-testing-test-data-builder-pattern` | Test Data Builder |
+| **深層比對**、DTO 比對、Excluding | `/skill dotnet-testing-complex-object-comparison` | 複雜物件比對 |
+
+### 基礎入門技能
+
+| 使用者說... | 載入指令 | 用途說明 |
+|------------|----------|----------|
+| **從零開始**、測試基礎、FIRST 原則 | `/skill dotnet-testing-unit-test-fundamentals` | 單元測試基礎 |
+| **測試命名**、如何命名測試 | `/skill dotnet-testing-test-naming-conventions` | 命名規範 |
+| **建立測試專案**、xUnit 設定 | `/skill dotnet-testing-xunit-project-setup` | 專案建置 |
+
+### 進階技能組合
+
+| 使用者說... | 載入指令 | 用途說明 |
+|------------|----------|----------|
+| AutoFixture + Bogus | `/skill dotnet-testing-autofixture-bogus-integration` | 自動化+擬真資料 |
+| AutoFixture + NSubstitute | `/skill dotnet-testing-autofixture-nsubstitute-integration` | 自動建立 Mock |
+| AutoData、Theory 測試 | `/skill dotnet-testing-autodata-xunit-integration` | 參數化測試 |
+| 測試輸出、ITestOutputHelper | `/skill dotnet-testing-test-output-logging` | 測試日誌 |
+| 覆蓋率、Coverlet | `/skill dotnet-testing-code-coverage-analysis` | 程式碼覆蓋率 |
+
+---
+
+## ⚠️ 使用流程範例
+
+### ✅ 正確流程
+
+```
+使用者：請幫我建立 CreateUserValidator 的測試
+
+AI：我注意到您需要測試 Validator。根據快速對照表，
+    我應該載入 dotnet-testing-fluentvalidation-testing skill。
+
+    [使用 Skill tool 載入子技能]
+
+AI：現在按照 FluentValidation Testing skill 的指引為您建立測試...
+```
+
+### ❌ 錯誤流程
+
+```
+使用者：請幫我建立 CreateUserValidator 的測試
+
+AI：好的，我來寫測試...（直接開始寫程式碼，沒有載入子技能）
+```
+
+---
+
+## 📚 完整技能清單
+
+如需查看完整的 19 個基礎技能清單、詳細決策樹、學習路徑建議，請繼續閱讀本檔案後續內容。
+
+**人類開發者參考**：如需快速查找，請查看 [SKILLS_QUICK_INDEX.md](/SKILLS_QUICK_INDEX.md)
+
+---
 
 ## 適用情境
 

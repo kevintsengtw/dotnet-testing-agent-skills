@@ -1,25 +1,48 @@
 ---
 name: dotnet-testing-autofixture-basics
-description: 使用 AutoFixture 自動產生測試資料的基礎技術,包括匿名測試概念、Fixture 類別使用、Create<T>() 與 CreateMany<T>() 方法、複雜物件自動建構、循環參考處理,以及與 xUnit 的整合應用
+description: |
+  使用 AutoFixture 自動產生測試資料的基礎技能。
+  當需要快速產生測試物件、減少樣板程式碼、實現匿名測試時使用。
+  涵蓋 Fixture.Create、CreateMany、循環參考處理、與 xUnit 整合等。
+
+triggers:
+  # 核心關鍵字
+  - autofixture
+  - auto fixture
+  - fixture
+  - 自動產生測試資料
+  - test data generation
+  - anonymous testing
+  - 匿名測試
+
+  # 方法名稱
+  - fixture.Create
+  - CreateMany
+  - fixture.Build
+  - Create<T>
+  - CreateMany<T>
+
+  # 技術術語
+  - AutoFixture.Xunit2
+  - OmitOnRecursionBehavior
+  - ThrowingRecursionBehavior
+  - IFixture
+  - Fixture class
+
+  # 使用情境
+  - 產生測試資料
+  - 測試資料產生
+  - generate test data
+  - 自動化測試資料
+
 license: MIT
+metadata:
+  author: Kevin Tseng
+  version: "1.0.0"
+  tags: ".NET, testing, AutoFixture, test data, anonymous testing"
 ---
 
 # AutoFixture 基礎:自動產生測試資料
-
-## 觸發關鍵字
-
-- autofixture
-- auto fixture
-- fixture.Create
-- CreateMany
-- anonymous testing
-- 匿名測試
-- 自動產生測試資料
-- test data generation
-- AutoFixture.Xunit2
-- OmitOnRecursionBehavior
-- ThrowingRecursionBehavior
-- fixture.Build
 
 ## 概述
 

@@ -1,7 +1,49 @@
 ---
 name: dotnet-testing-complex-object-comparison
-description: 協助處理複雜物件比對與驗證。當使用者需要比對深層物件結構、處理循環參照、排除動態欄位(如時間戳記、自動生成 ID)、處理大量資料比對,或最佳化物件比對效能時,請使用此技能。
+description: |
+  處理複雜物件比對與深層驗證的專門技能。
+  當需要比對深層物件、排除特定屬性、處理循環參照、驗證 DTO/Entity 時使用。
+  涵蓋 BeEquivalentTo、Excluding、Including、自訂比對規則等。
+
+triggers:
+  # 核心關鍵字
+  - object comparison
+  - 物件比對
+  - deep comparison
+  - 深層比對
+  - BeEquivalentTo
+  - complex object
+
+  # 使用情境
+  - DTO 比對
+  - Entity 驗證
+  - 深層物件比對
+  - 排除屬性
+  - exclude property
+  - 循環參照
+  - circular reference
+
+  # 技術術語
+  - Excluding
+  - Including
+  - ExcludingNestedObjects
+  - RespectingRuntimeTypes
+  - WithStrictOrdering
+  - object graph
+
+  # 常見問題
+  - 比對複雜物件
+  - 忽略時間戳記
+  - 忽略 ID
+  - exclude timestamp
+  - exclude auto-generated
+  - 物件比對效能
+
 license: MIT
+metadata:
+  author: Kevin Tseng
+  version: "1.0.0"
+  tags: ".NET, testing, object comparison, BeEquivalentTo, AwesomeAssertions"
 ---
 
 # Complex Object Comparison Skill

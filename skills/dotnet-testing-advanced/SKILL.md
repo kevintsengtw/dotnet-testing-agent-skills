@@ -13,6 +13,68 @@ triggers:
   - testcontainers
   - aspire testing
 
+  # API 與 Web 測試
+  - WebApplicationFactory
+  - TestServer
+  - Controller test
+  - endpoint test
+  - HttpClient test
+  - API 端點測試
+  - Web API test
+  - HTTP test
+  - REST API test
+  - 控制器測試
+
+  # 資料庫測試
+  - database test
+  - 資料庫測試
+  - SQL Server test
+  - PostgreSQL test
+  - MySQL test
+  - EF Core test
+  - Entity Framework test
+  - Dapper test
+  - database integration
+  - 資料庫整合測試
+
+  # NoSQL 資料庫
+  - MongoDB test
+  - Redis test
+  - Elasticsearch test
+  - NoSQL test
+  - cache test
+  - 快取測試
+  - document database
+
+  # 容器化測試
+  - Docker test
+  - container test
+  - 容器測試
+  - TestcontainersBuilder
+  - Docker container
+  - 容器化測試
+  - containerized testing
+
+  # 微服務與分散式
+  - microservice test
+  - 微服務測試
+  - distributed test
+  - 分散式測試
+  - .NET Aspire
+  - DistributedApplication
+  - service communication
+  - 服務間通訊
+
+  # 框架升級與遷移
+  - xUnit upgrade
+  - xUnit 3
+  - xUnit 3.x
+  - TUnit
+  - framework migration
+  - 框架遷移
+  - test framework upgrade
+  - 測試框架升級
+
 license: MIT
 metadata:
   author: Kevin Tseng

@@ -13,6 +13,104 @@ triggers:
   - testing overview
   - test fundamentals overview
 
+  # 測試基礎
+  - unit test
+  - 單元測試
+  - xunit
+  - test project
+  - 測試專案
+  - 3A pattern
+  - FIRST principles
+  - FIRST 原則
+  - test fundamentals
+  - 測試基礎
+
+  # 斷言相關
+  - assertion
+  - 斷言
+  - Should()
+  - FluentAssertions
+  - BeEquivalentTo
+  - 流暢斷言
+  - assert
+  - verify
+
+  # 模擬與測試替身
+  - mock
+  - stub
+  - spy
+  - NSubstitute
+  - Substitute.For
+  - 模擬
+  - 測試替身
+  - mock object
+  - test double
+
+  # 測試資料生成
+  - test data
+  - 測試資料
+  - AutoFixture
+  - Bogus
+  - Builder Pattern
+  - Create<>
+  - CreateMany
+  - Faker
+  - fake data
+  - 假資料
+  - test data builder
+  - 測試資料生成
+
+  # 驗證器測試
+  - validator
+  - 驗證器
+  - FluentValidation
+  - CreateUserValidator
+  - UpdateValidator
+  - validation testing
+  - 驗證測試
+
+  # 時間測試
+  - DateTime
+  - TimeProvider
+  - FakeTimeProvider
+  - 時間測試
+  - DateTime.Now
+  - time testing
+
+  # 檔案系統測試
+  - IFileSystem
+  - MockFileSystem
+  - 檔案測試
+  - 檔案系統
+  - file testing
+  - filesystem
+
+  # 程式碼覆蓋率
+  - code coverage
+  - 覆蓋率
+  - Coverlet
+  - coverage report
+
+  # 測試輸出與日誌
+  - ITestOutputHelper
+  - ILogger
+  - test output
+  - 測試輸出
+  - logging
+
+  # 私有成員測試
+  - Private method
+  - Internal class
+  - InternalsVisibleTo
+  - 私有方法
+  - 內部類別
+
+  # 測試命名
+  - test naming
+  - 測試命名
+  - naming convention
+  - 命名規範
+
 license: MIT
 metadata:
   author: Kevin Tseng

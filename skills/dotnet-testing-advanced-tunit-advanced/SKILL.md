@@ -1079,11 +1079,11 @@ tunit.enable_verbose_diagnostics = true
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 29 - TUnit 進階應用：資料驅動測試與依賴注入深度實戰**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376862
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10377970
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day29
 
 - **Day 30 - TUnit 進階應用 - 執行控制與測試品質和 ASP.NET Core 整合測試實戰**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376992
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10378176
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day30
 
 ### TUnit 官方資源

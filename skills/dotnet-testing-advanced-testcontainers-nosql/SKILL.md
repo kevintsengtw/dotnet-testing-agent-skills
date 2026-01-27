@@ -1194,7 +1194,7 @@ _container = new MongoDbBuilder()
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 22 - Testcontainers 整合測試：MongoDB 及 Redis 基礎到進階**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376114
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376740
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day22
 
 ### 官方文件

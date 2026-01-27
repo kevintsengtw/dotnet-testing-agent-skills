@@ -647,7 +647,7 @@ public void Process_使用部分模擬_應成功處理()
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 09 - 測試私有與內部成員：Private 與 Internal 的測試策略**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374690
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374866
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day09
 
 ### 官方文件

@@ -557,7 +557,7 @@ jobs:
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 06 - Code Coverage 程式碼涵蓋範圍實戰指南**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374355
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374467
   - 範例程式碼：無（本章節為概念說明）
 
 ### 官方文件

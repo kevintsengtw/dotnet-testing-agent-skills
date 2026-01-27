@@ -401,7 +401,7 @@ public void GetTimeBasedDiscount_週五_應回傳九折優惠(
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 16 - 測試日期與時間：Microsoft.Bcl.TimeProvider 取代 DateTime**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375431
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375821
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day16
 
 ### 官方文件

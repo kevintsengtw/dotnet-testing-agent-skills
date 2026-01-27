@@ -300,5 +300,10 @@ public void IsValidEmail_輸入無效Email格式_應回傳False(string invalidEm
 
 ## 參考資源
 
-- [原始文章 - Day 01：老派工程師的測試啟蒙](https://ithelp.ithome.com.tw/articles/10373888)
-- [範例程式碼](https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day01)
+### 原始文章
+
+本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
+
+- **Day 01 - 老派工程師的測試啟蒙**
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10373888
+  - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day01

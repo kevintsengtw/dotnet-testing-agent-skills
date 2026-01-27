@@ -503,7 +503,7 @@ public void 多重數值型別範圍控制()
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 11 - AutoFixture 進階：自訂化測試資料生成策略**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374913
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375153
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day11
 
 ### 官方文件

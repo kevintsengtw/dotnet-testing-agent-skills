@@ -539,7 +539,7 @@ xUnit 3.x 帶來的效能改進：
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 26 - xUnit 升級指南：從 2.9.x 到 3.x 的轉換**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376546
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10377477
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day26
 
 ### 官方文件

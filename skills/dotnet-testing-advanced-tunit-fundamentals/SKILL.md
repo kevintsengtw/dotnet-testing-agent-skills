@@ -734,7 +734,7 @@ dotnet publish -c Release -p:PublishAot=true
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 28 - TUnit 入門 - 下世代 .NET 測試框架探索**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376756
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10377828
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day28
 
 ### 官方資源

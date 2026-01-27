@@ -788,7 +788,7 @@ _fakeTimeProvider.SetUtcNow(new DateTime(2024, 1, 1));
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 18 - 驗證測試：FluentValidation Test Extensions**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375667
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376147
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day18
 
 ### 官方文件

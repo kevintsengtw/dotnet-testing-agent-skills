@@ -646,11 +646,11 @@ public void Dispose()
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 20 - Testcontainers 初探：使用 Docker 架設測試環境**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375882
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376401
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day20
 
 - **Day 21 - Testcontainers 整合測試：MSSQL + EF Core 以及 Dapper 基礎應用**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375990
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376524
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day21
 
 ### 官方文件

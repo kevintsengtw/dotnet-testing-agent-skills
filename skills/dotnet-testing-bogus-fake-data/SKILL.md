@@ -595,7 +595,7 @@ MyProject.Tests/
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 14 - 使用 Bogus 產生假資料**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375208
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375501
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day14
 
 ### 官方文件

@@ -344,11 +344,11 @@ const string sql = @"
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 24 - .NET Aspire Testing 入門基礎介紹**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376333
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10377071
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day24
 
 - **Day 25 - .NET Aspire 整合測試實戰：從 Testcontainers 到 .NET Aspire Testing**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376439
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10377197
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day25
 
 ### 官方文件

@@ -464,7 +464,7 @@ mockFileSystem.AddFile("test.txt", new MockFileData(testContent));
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 17 - 檔案與 IO 測試：使用 System.IO.Abstractions 模擬檔案系統**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375556
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375981
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day17
 
 ### 官方文件

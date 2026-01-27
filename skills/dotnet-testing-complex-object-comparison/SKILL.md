@@ -546,7 +546,7 @@ options.WithTracing()  // 產生詳細的比對追蹤資訊
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 05 - AwesomeAssertions 進階技巧與複雜情境應用**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374283
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374425
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day05
 
 ### 官方文件

@@ -578,7 +578,7 @@ public void 工廠_應能建立完整的測試場景()
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 15 - AutoFixture 與 Bogus 整合：結合兩者優勢**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375317
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375620
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day15
 
 ### 官方文件

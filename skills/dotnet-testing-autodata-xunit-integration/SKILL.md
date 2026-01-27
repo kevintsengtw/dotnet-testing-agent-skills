@@ -872,7 +872,7 @@ private static decimal CalculateDiscount(string customerType, decimal orderAmoun
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 12 - 結合 AutoData：xUnit 與 AutoFixture 的整合應用**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375014
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375296
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day12
 
 ### 官方文件

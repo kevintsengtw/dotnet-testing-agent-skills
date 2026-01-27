@@ -564,7 +564,7 @@ tests/
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 23 - 整合測試實戰：WebApi 服務的整合測試**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376221
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376873
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day23
 
 ### 官方文件

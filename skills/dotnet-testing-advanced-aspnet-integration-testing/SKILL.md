@@ -643,7 +643,7 @@ error CS1061: 'ObjectAssertions' 未包含 'Be200Ok' 的定義
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 19 - 整合測試入門：基礎架構與應用場景**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375767
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10376335
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day19
 
 ### 官方文件

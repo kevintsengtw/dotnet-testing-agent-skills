@@ -334,7 +334,7 @@ public abstract class DiagnosticTestBase
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 08 - 測試輸出與記錄：xUnit ITestOutputHelper 與 ILogger**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374584
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374711
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day08
 
 ### 官方文件

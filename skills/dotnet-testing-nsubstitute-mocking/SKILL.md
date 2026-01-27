@@ -803,7 +803,7 @@ _service.TryGetValue("key", out Arg.Any<string>())
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
 - **Day 07 - 依賴替代入門：使用 NSubstitute**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374508
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374593
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day07
 
 ### NSubstitute 官方

@@ -500,9 +500,9 @@ public void ProcessOrder_有效訂單_應成功處理()
 
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
 
-- **Day 03 - 測試資料的準備方式：Test Data Builder Pattern**
-  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10374064
-  - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day03
+- **Day 10 - AutoFixture 基礎：自動產生測試資料** (Builder Pattern 概念)
+  - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375018
+  - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day10
 
 ### 延伸閱讀
 

@@ -3,6 +3,7 @@ name: dotnet-testing-autofixture-nsubstitute-integration
 description: |
   AutoFixture 與 NSubstitute 整合指南 - 實現自動模擬 (Auto-Mocking)。
   涵蓋 AutoNSubstituteDataAttribute、Frozen 機制、Greedy 建構策略。
+  包含 IMapper (AutoMapper/Mapster) 等特殊相依性的客製化處理。
   適用於複雜相依性注入測試、Mock 驗證與行為設定。
 
 triggers:
@@ -28,6 +29,14 @@ triggers:
   - Received().method
   - Returns()
   - auto-mocking
+
+  # 特殊相依性處理
+  - IMapper
+  - AutoMapper
+  - Mapster
+  - mapper testing
+  - mapper 測試
+  - mapper customization
 
 license: MIT
 metadata:

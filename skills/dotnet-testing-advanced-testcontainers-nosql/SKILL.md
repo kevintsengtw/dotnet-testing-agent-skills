@@ -1,43 +1,8 @@
 ---
 name: dotnet-testing-advanced-testcontainers-nosql
 description: |
-  Testcontainers NoSQL 整合測試完整指南。
-  涵蓋 MongoDB 文件操作、Redis 五種資料結構、Collection Fixture 模式。
-  包含 BSON 序列化、索引效能測試、資料隔離策略與容器生命週期管理。
-
-triggers:
-  # 核心關鍵字
-  - testcontainers mongodb
-  - testcontainers redis
-  - mongodb integration test
-  - redis integration test
-  - nosql testing
-
-  # 技術術語
-  - MongoDbContainer
-  - RedisContainer
-  - IMongoDatabase
-  - IConnectionMultiplexer
-  - BSON serialization
-
-  # 類別/方法
-  - MongoDbContainerFixture
-  - RedisContainerFixture
-  - BsonDocument
-  - BsonElement
-  - SetStringAsync
-  - ListLeftPushAsync
-  - SortedSetAddAsync
-
-  # 使用情境
-  - 文件模型測試
-  - 快取測試
-  - 五種資料結構
-  - String Hash List Set SortedSet
-  - 複合索引
-  - 唯一索引
-  - Collection Fixture
-
+  Testcontainers NoSQL 整合測試完整指南。涵蓋 MongoDB 文件操作、Redis 五種資料結構、Collection Fixture 模式。包含 BSON 序列化、索引效能測試、資料隔離策略與容器生命週期管理。
+  Keywords: testcontainers mongodb, testcontainers redis, mongodb integration test, redis integration test, nosql testing, MongoDbContainer, RedisContainer, IMongoDatabase, IConnectionMultiplexer, BSON serialization, BsonDocument, 文件模型測試, 快取測試, Collection Fixture
 license: MIT
 metadata:
   author: Kevin Tseng

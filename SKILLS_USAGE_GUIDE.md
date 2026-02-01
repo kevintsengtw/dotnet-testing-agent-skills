@@ -31,20 +31,20 @@
 
 這些技能讓 AI 助理能夠：
 
-- 🎯 **自動識別**：根據您的對話內容，自動載入相關的測試技能（透過 400-520 個優化的 triggers）
+- 🎯 **自動識別**：根據您的對話內容，自動載入相關的測試技能（透過 description 中的 Keywords 優化關鍵字）
 - 📚 **提供專業指導**：給予符合業界最佳實踐的測試建議
 - 🔧 **生成程式碼**：產出符合規範的測試程式碼與專案結構
 - 🔄 **整合工作流程**：協助完成從單元測試到整合測試的完整流程
 - 🌐 **跨平台支援**：skills 內容符合開放標準，可在任何支援 agentskills.io 的 AI 工具使用
 
-### Skills 最新優化（2026-01-27）
+### Skills 最新優化（2026-02-02）
 
-本 Skills 集合已完成全面優化，大幅提升 AI 自動識別能力：
+本 Skills 集合已完成全面優化，**符合 [agentskills.io](https://agentskills.io/specification) 官方規範**：
 
-- ✅ **27 個 Skills 全面優化**：每個 skill 包含 15-19 個 triggers（總計 400-520 個）
-- ✅ **Description 多行格式**：清晰說明核心功能、適用場景、涵蓋範圍
+- ✅ **29 個 Skills 全面優化**：description 包含核心說明 + Keywords 關鍵字
+- ✅ **Description 多行格式**：清晰說明核心功能、適用場景、涵蓋範圍，並整合觸發關鍵字
 - ✅ **入口 Skills 導航**：兩個總覽 skills 提供智能推薦
-- 📈 **預期效果**：AI 自動載入 Skill 的機率提升 150-233%
+- ✅ **符合官方規範**：移除非標準 `triggers` 欄位，改用 `description` 中的 `Keywords:` 格式
 
 **詳細資訊**：請參考 [OPTIMIZATION_SUMMARY.md](OPTIMIZATION_SUMMARY.md)
 

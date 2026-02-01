@@ -1,42 +1,8 @@
 ---
 name: dotnet-testing-advanced-tunit-advanced
 description: |
-  TUnit 進階應用完整指南 - 資料驅動測試、依賴注入與整合測試實戰。
-  涵蓋 MethodDataSource、ClassDataSource、Matrix Tests、Properties 過濾。
-  包含 Retry/Timeout 控制、WebApplicationFactory 整合、Testcontainers 多服務編排。
-
-triggers:
-  # 核心關鍵字
-  - TUnit advanced
-  - MethodDataSource
-  - ClassDataSource
-  - Matrix Tests
-  - TUnit 進階
-
-  # 技術術語
-  - [MatrixDataSource]
-  - MicrosoftDependencyInjectionDataSource
-  - [Property]
-  - [Retry]
-  - [Timeout]
-  - [DisplayName]
-
-  # 依賴注入
-  - DependencyInjectionDataSourceAttribute
-  - IServiceScope
-  - CreateScope
-  - TUnit DI
-
-  # 使用情境
-  - 資料驅動測試
-  - 測試過濾
-  - treenode-filter
-  - WebApplicationFactory TUnit
-  - Before(Assembly)
-  - After(Assembly)
-  - 複雜基礎設施
-  - 多容器編排
-
+  TUnit 進階應用完整指南 - 資料驅動測試、依賴注入與整合測試實戰。涵蓋 MethodDataSource、ClassDataSource、Matrix Tests、Properties 過濾。包含 Retry/Timeout 控制、WebApplicationFactory 整合、Testcontainers 多服務編排。
+  Keywords: TUnit advanced, TUnit 進階, MethodDataSource, ClassDataSource, Matrix Tests, MatrixDataSource, MicrosoftDependencyInjectionDataSource, Property, Retry, Timeout, 資料驅動測試, 測試過濾, WebApplicationFactory TUnit, 多容器編排
 license: MIT
 metadata:
   author: Kevin Tseng

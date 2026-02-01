@@ -1,45 +1,8 @@
 ---
 name: dotnet-testing-datetime-testing-timeprovider
 description: |
-  使用 TimeProvider 測試時間相依邏輯的專門技能。
-  當需要測試 DateTime、控制時間流逝、處理時區轉換、測試過期邏輯時使用。
-  涵蓋 TimeProvider 抽象化、FakeTimeProvider 時間控制、時間凍結與快轉等。
-
-triggers:
-  # 核心關鍵字
-  - datetime
-  - time testing
-  - 時間測試
-  - TimeProvider
-  - FakeTimeProvider
-  - DateTime.Now
-
-  # 使用情境
-  - 測試時間
-  - 時間相依
-  - 營業時間
-  - 快取過期
-  - token 過期
-  - 排程測試
-  - schedule testing
-
-  # 技術術語
-  - Microsoft.Bcl.TimeProvider
-  - GetUtcNow
-  - GetLocalNow
-  - SetUtcNow
-  - Advance
-  - time freeze
-  - 時間凍結
-  - 時間快轉
-
-  # 常見問題
-  - DateTime.Now 測試
-  - 如何測試時間
-  - how to test datetime
-  - 時間可測試性
-  - testable time
-
+  使用 TimeProvider 測試時間相依邏輯的專門技能。當需要測試 DateTime、控制時間流逝、處理時區轉換、測試過期邏輯時使用。涵蓋 TimeProvider 抽象化、FakeTimeProvider 時間控制、時間凍結與快轉等。
+  Keywords: datetime, time testing, 時間測試, TimeProvider, FakeTimeProvider, DateTime.Now, 時間相依, 快取過期, token 過期, Microsoft.Bcl.TimeProvider, GetUtcNow, SetUtcNow, Advance, time freeze, 時間凍結, 時間快轉
 license: MIT
 metadata:
   author: Kevin Tseng

@@ -1,45 +1,8 @@
 ---
 name: dotnet-testing-advanced-aspnet-integration-testing
 description: |
-  ASP.NET Core 整合測試的專門技能。
-  當需要測試 Web API 端點、HTTP 請求/回應、中介軟體、依賴注入時使用。
-  涵蓋 WebApplicationFactory、TestServer、HttpClient 測試、記憶體資料庫配置等。
-
-triggers:
-  # 核心關鍵字
-  - integration testing
-  - 整合測試
-  - web api testing
-  - api 測試
-  - WebApplicationFactory
-  - TestServer
-  - HttpClient testing
-
-  # Controller 測試
-  - controller testing
-  - endpoint testing
-  - 端點測試
-  - API endpoint
-  - RESTful API testing
-
-  # 技術術語
-  - Microsoft.AspNetCore.Mvc.Testing
-  - CreateClient
-  - ConfigureWebHost
-  - WithWebHostBuilder
-  - AwesomeAssertions.Web
-  - Be200Ok
-  - Be404NotFound
-
-  # 使用情境
-  - 測試 API
-  - 測試控制器
-  - HTTP 測試
-  - middleware testing
-  - 中介軟體測試
-  - dependency injection testing
-  - 依賴注入測試
-
+  ASP.NET Core 整合測試的專門技能。當需要測試 Web API 端點、HTTP 請求/回應、中介軟體、依賴注入時使用。涵蓋 WebApplicationFactory、TestServer、HttpClient 測試、記憶體資料庫配置等。
+  Keywords: integration testing, 整合測試, web api testing, WebApplicationFactory, TestServer, HttpClient testing, controller testing, endpoint testing, 端點測試, RESTful API testing, Microsoft.AspNetCore.Mvc.Testing, CreateClient, ConfigureWebHost, AwesomeAssertions.Web, Be200Ok, Be404NotFound, middleware testing, 中介軟體測試, dependency injection testing
 license: MIT
 metadata:
   author: Kevin Tseng

@@ -1,41 +1,8 @@
 ---
 name: dotnet-testing-advanced-xunit-upgrade-guide
 description: |
-  xUnit 2.9.x 到 3.x 升級完整指南。
-  涵蓋破壞性變更、套件更新、async void 修正、IAsyncLifetime 調整。
-  包含新功能介紹: Assert.Skip、Explicit Tests、Matrix Theory、Assembly Fixtures。
-
-triggers:
-  # 核心關鍵字
-  - xunit upgrade
-  - xunit v3
-  - xunit 3.x
-  - xunit migration
-  - xunit 升級
-
-  # 技術術語
-  - xunit.v3
-  - OutputType Exe
-  - async void issue
-  - IAsyncLifetime v3
-  - SkippableFact removed
-  - Assert.Skip
-
-  # 新功能
-  - SkipUnless
-  - SkipWhen
-  - Explicit attribute
-  - MatrixTheoryData
-  - AssemblyFixture
-  - TestPipelineStartup
-
-  # 使用情境
-  - 破壞性變更
-  - Microsoft.Testing.Platform
-  - SDK-style project
-  - xunit.runner.visualstudio 3.x
-  - 測試不被發現
-
+  xUnit 2.9.x 到 3.x 升級完整指南。涵蓋破壞性變更、套件更新、async void 修正、IAsyncLifetime 調整。包含新功能介紹: Assert.Skip、Explicit Tests、Matrix Theory、Assembly Fixtures。
+  Keywords: xunit upgrade, xunit v3, xunit 3.x, xunit migration, xunit 升級, xunit.v3, OutputType Exe, IAsyncLifetime v3, Assert.Skip, SkipUnless, SkipWhen, Explicit attribute, MatrixTheoryData, AssemblyFixture, 破壞性變更
 license: MIT
 metadata:
   author: Kevin Tseng

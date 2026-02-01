@@ -11,9 +11,9 @@
 - 👨‍💻 **開發者快速參考**：Prompt 模板、情境組合建議
 
 **重要提醒**：
-- ✅ **Triggers 自動匹配**：27 個 skills 已優化，包含 400-520 個 triggers，AI 會根據對話內容自動載入
+- ✅ **Keywords 自動匹配**：29 個 skills 已優化，description 中包含 Keywords 關鍵字，AI 會根據對話內容自動載入
 - ✅ **入口 Skills**：不確定時可使用 `dotnet-testing` 或 `dotnet-testing-advanced` 獲得智能推薦
-- ✅ **本指南僅供參考**：主要用於人類開發者查詢，AI 主要依靠 triggers 自動匹配
+- ✅ **符合官方規範**：遵循 [agentskills.io](https://agentskills.io/specification) 標準格式
 
 ---
 
@@ -30,7 +30,7 @@
 
 ## 🔍 關鍵字快速對應表
 
-> 💡 **給 AI Agent**：這個表格幫助您快速找到對應的 Skill。然而，由於已優化 triggers，大部分情況下會自動匹配。
+> 💡 **給 AI Agent**：這個表格幫助您快速找到對應的 Skill。由於 description 中已包含 Keywords，大部分情況下會自動匹配。
 
 | 當使用者提到... | 應使用的 Skill | Skill 完整路徑 |
 |----------------|---------------|---------------|
@@ -263,7 +263,7 @@
    └─> 說明測試涵蓋的情境
 ```
 
-**重要提醒**：由於 triggers 優化（27 個 skills，總計 400-520 個 triggers），大部分情況下 AI 會自動載入正確的 skill，無需手動指定。
+**重要提醒**：由於 description 中已包含 Keywords 關鍵字（符合官方規範），大部分情況下 AI 會自動載入正確的 skill，無需手動指定。
 
 ---
 
@@ -289,10 +289,10 @@
 ## ⚠️ 重要提醒
 
 ### 對於 AI Agent
-1. **Triggers 自動匹配最重要** - 27 個 skills 已優化 triggers（400-520 個），會自動觸發
+1. **Keywords 自動匹配最重要** - 29 個 skills 的 description 中已包含 Keywords，會自動觸發
 2. **遵循 skill 指引** - 每個 skill 都包含最佳實踐和完整範例
 3. **不確定時使用入口 skill** - `dotnet-testing` 或 `dotnet-testing-advanced` 會提供智能推薦
-4. **本指南僅供參考** - AI 主要依靠 triggers，不會主動讀取此檔案
+4. **符合官方規範** - 遵循 [agentskills.io](https://agentskills.io/specification) 標準
 
 ### 對於開發者
 1. **明確指定 skill** - 如果知道要用哪個 skill，直接在對話中提及
@@ -304,22 +304,25 @@
 
 ## 📊 Skills 優化狀態
 
-本 Skills 集合已完成全面優化（2026-01-27）：
+本 Skills 集合已完成全面優化（2026-02-02），**符合 agentskills.io 官方規範**：
 
-### Triggers 統計
-- **27 個 Skills** 全面優化
-- **400-520 個 Triggers** 涵蓋各種使用場景
-- **平均 15-19 個 Triggers** 每個 skill
+### 格式規範
 
-### 預期效果
-- AI 能找到對應 Skill：**70-85%**（相比優化前提升 100-140%）
-- AI 主動載入 Skill：**50-70%**（相比優化前提升 150-233%）
-- AI 遵循 Skill 指引：**80-90%**（相比優化前提升 50-60%）
+- **29 個 Skills** 全面優化
+- **description** 包含核心說明 + `Keywords:` 關鍵字
+- 移除非標準 `triggers` 欄位，改為整合至 description
+
+### 官方規範欄位
+
+- `name` - skill 名稱
+- `description` - 功能說明與 Keywords 關鍵字（1024 字元內）
+- `license` - 授權資訊
+- `metadata` - 額外元資料
 
 詳細資訊請參考：[OPTIMIZATION_SUMMARY.md](OPTIMIZATION_SUMMARY.md)
 
 ---
 
-**最後更新**：2026-01-27
+**最後更新**：2026-02-02
 **維護者**：Kevin Tseng
-**版本**：2.0.0（合併版）
+**版本**：2.1.0（符合官方規範）

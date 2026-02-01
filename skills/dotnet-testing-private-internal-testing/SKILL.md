@@ -1,35 +1,8 @@
 ---
 name: dotnet-testing-private-internal-testing
 description: |
-  Private 與 Internal 成員測試策略指南。
-  強調設計優先思維，提供 InternalsVisibleTo、反射測試與重構策略。
-  涵蓋策略模式重構、AbstractLogger 模式、測試友善設計與決策框架。
-
-triggers:
-  # 核心關鍵字
-  - private method testing
-  - internal testing
-  - InternalsVisibleTo
-  - 私有方法測試
-  - 內部成員測試
-
-  # 技術術語
-  - 反射測試
-  - reflection testing
-  - GetMethod BindingFlags
-  - Meziantou.MSBuild.InternalsVisibleTo
-  - AbstractLogger
-  - 部分模擬
-
-  # 使用情境
-  - 測試私有方法
-  - internal 可見性
-  - 可測試性設計
-  - 策略模式重構
-  - ReflectionTestHelper
-  - 封裝性破壞
-  - testability
-
+  Private 與 Internal 成員測試策略指南。強調設計優先思維，提供 InternalsVisibleTo、反射測試與重構策略。涵蓋策略模式重構、AbstractLogger 模式、測試友善設計與決策框架。
+  Keywords: private method testing, internal testing, InternalsVisibleTo, 私有方法測試, 內部成員測試, 反射測試, reflection testing, GetMethod BindingFlags, Meziantou.MSBuild.InternalsVisibleTo, 可測試性設計, 策略模式重構, testability
 license: MIT
 metadata:
   author: Kevin Tseng

@@ -1,33 +1,8 @@
 ---
 name: dotnet-testing-autofixture-customization
 description: |
-  AutoFixture 進階自訂化技術完整指南。
-  涵蓋 DataAnnotations 自動整合、ISpecimenBuilder 實作、優先順序管理。
-  包含 DateTime/數值範圍建構器、泛型化設計與流暢式擴充方法。
-
-triggers:
-  # 核心關鍵字
-  - autofixture customization
-  - autofixture customize
-  - autofixture 自訂
-  - specimen builder
-
-  # 技術類別/方法
-  - ISpecimenBuilder
-  - RandomDateTimeSequenceGenerator
-  - NumericRangeBuilder
-  - DataAnnotations autofixture
-
-  # 使用情境
-  - fixture.Customizations
-  - Insert(0)
-  - 屬性範圍控制
-  - 自訂建構器
-  - custom builder autofixture
-  - Random.Shared
-  - NoSpecimen
-  - 泛型化建構器
-
+  AutoFixture 進階自訂化技術完整指南。涵蓋 DataAnnotations 自動整合、ISpecimenBuilder 實作、優先順序管理。包含 DateTime/數值範圍建構器、泛型化設計與流暢式擴充方法。
+  Keywords: autofixture customization, autofixture customize, autofixture 自訂, specimen builder, ISpecimenBuilder, RandomDateTimeSequenceGenerator, NumericRangeBuilder, DataAnnotations autofixture, fixture.Customizations, Insert(0), 自訂建構器, NoSpecimen, 泛型化建構器
 license: MIT
 metadata:
   author: Kevin Tseng

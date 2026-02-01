@@ -1,42 +1,8 @@
 ---
 name: dotnet-testing-code-coverage-analysis
 description: |
-  程式碼覆蓋率分析完整指南。
-  涵蓋 Coverlet 設定、報告產生、指標解讀與循環複雜度整合。
-  包含 Fine Code Coverage、VS Code 內建工具、CI/CD 整合與最佳實踐。
-
-triggers:
-  # 核心關鍵字
-  - code coverage
-  - 程式碼覆蓋率
-  - 覆蓋率分析
-  - coverage report
-
-  # 工具名稱
-  - Coverlet
-  - Fine Code Coverage
-  - dotnet-coverage
-  - ReportGenerator
-  - xunit code coverage
-
-  # 技術術語
-  - line coverage
-  - branch coverage
-  - method coverage
-  - 行覆蓋率
-  - 分支覆蓋率
-  - cyclomatic complexity
-  - 循環複雜度
-
-  # 使用情境
-  - runsettings
-  - coverage threshold
-  - 覆蓋率閾值
-  - 測試盲點
-  - CI/CD coverage
-  - cobertura
-  - opencover
-
+  程式碼覆蓋率分析完整指南。涵蓋 Coverlet 設定、報告產生、指標解讀與循環複雜度整合。包含 Fine Code Coverage、VS Code 內建工具、CI/CD 整合與最佳實踐。
+  Keywords: code coverage, 程式碼覆蓋率, 覆蓋率分析, coverage report, Coverlet, Fine Code Coverage, dotnet-coverage, ReportGenerator, line coverage, branch coverage, 行覆蓋率, 分支覆蓋率, cyclomatic complexity, 循環複雜度, runsettings, cobertura
 license: MIT
 metadata:
   author: Kevin Tseng

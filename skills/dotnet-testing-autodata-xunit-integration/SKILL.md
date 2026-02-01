@@ -1,37 +1,8 @@
 ---
 name: dotnet-testing-autodata-xunit-integration
 description: |
-  AutoFixture 與 xUnit 整合完整指南。
-  涵蓋 AutoData、InlineAutoData、自訂 Customization 與測試資料屬性。
-  簡化參數化測試資料準備，提升測試可讀性與維護性。
-
-triggers:
-  # 核心關鍵字
-  - AutoData
-  - InlineAutoData
-  - AutoFixture xUnit
-  - xUnit AutoFixture
-
-  # 技術術語
-  - [AutoData]
-  - [InlineAutoData]
-  - AutoDataAttribute
-  - ICustomization
-  - DataAttribute
-
-  # 類別名稱
-  - ValidUserCustomization
-  - CustomAutoDataAttribute
-  - DomainCustomization
-
-  # 使用情境
-  - 參數化測試
-  - 自訂測試資料
-  - Theory AutoData
-  - MemberAutoData
-  - 測試資料屬性
-  - fixture.Customize
-
+  AutoFixture 與 xUnit 整合完整指南。涵蓋 AutoData、InlineAutoData、自訂 Customization 與測試資料屬性。簡化參數化測試資料準備，提升測試可讀性與維護性。
+  Keywords: AutoData, InlineAutoData, AutoFixture xUnit, [AutoData], [InlineAutoData], AutoDataAttribute, ICustomization, DataAttribute, 參數化測試, Theory AutoData, MemberAutoData, 測試資料屬性, fixture.Customize
 license: MIT
 metadata:
   author: Kevin Tseng

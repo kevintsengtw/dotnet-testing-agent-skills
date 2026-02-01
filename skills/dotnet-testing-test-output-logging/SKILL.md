@@ -1,34 +1,8 @@
 ---
 name: dotnet-testing-test-output-logging
 description: |
-  xUnit 測試輸出與記錄完整指南。
-  涵蓋 ITestOutputHelper 注入、AbstractLogger 模式、結構化輸出設計。
-  包含 XUnitLogger、CompositeLogger、效能測試診斷工具實作。
-
-triggers:
-  # 核心關鍵字
-  - ITestOutputHelper
-  - ILogger testing
-  - test output xunit
-  - 測試輸出
-  - 測試記錄
-
-  # 技術術語
-  - AbstractLogger
-  - XUnitLogger
-  - CompositeLogger
-  - Log<TState>
-  - testOutputHelper.WriteLine
-
-  # 使用情境
-  - 測試診斷
-  - 記錄驗證
-  - logger mock
-  - 測試日誌
-  - 結構化輸出
-  - 效能測試記錄
-  - Received().Log
-
+  xUnit 測試輸出與記錄完整指南。涵蓋 ITestOutputHelper 注入、AbstractLogger 模式、結構化輸出設計。包含 XUnitLogger、CompositeLogger、效能測試診斷工具實作。
+  Keywords: ITestOutputHelper, ILogger testing, test output xunit, 測試輸出, 測試記錄, AbstractLogger, XUnitLogger, CompositeLogger, testOutputHelper.WriteLine, 測試診斷, logger mock, 測試日誌, 結構化輸出, Received().Log
 license: MIT
 metadata:
   author: Kevin Tseng

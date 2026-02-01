@@ -1,39 +1,8 @@
 ---
 name: dotnet-testing-fluentvalidation-testing
 description: |
-  測試 FluentValidation 驗證器的專門技能。
-  當需要為 Validator 類別建立測試、驗證業務規則、測試錯誤訊息時使用。
-  涵蓋 FluentValidation.TestHelper 完整使用、ShouldHaveValidationErrorFor、非同步驗證、跨欄位邏輯等。
-
-triggers:
-  # 核心關鍵字
-  - validator
-  - 驗證器
-  - fluentvalidation
-  - validation testing
-
-  # 常見類別名稱
-  - CreateUserValidator
-  - UpdateUserValidator
-  - UserValidator
-  - CreateOrderValidator
-  - UpdateProductValidator
-
-  # 技術術語
-  - 驗證測試
-  - 驗證規則
-  - TestHelper
-  - ShouldHaveValidationErrorFor
-  - ShouldNotHaveValidationErrorFor
-  - TestValidate
-  - TestValidateAsync
-
-  # 動作詞
-  - 測試驗證器
-  - test validator
-  - validate rules
-  - 驗證業務規則
-
+  測試 FluentValidation 驗證器的專門技能。當需要為 Validator 類別建立測試、驗證業務規則、測試錯誤訊息時使用。涵蓋 FluentValidation.TestHelper 完整使用、ShouldHaveValidationErrorFor、非同步驗證、跨欄位邏輯等。
+  Keywords: validator, 驗證器, fluentvalidation, validation testing, UserValidator, CreateOrderValidator, TestHelper, ShouldHaveValidationErrorFor, ShouldNotHaveValidationErrorFor, TestValidate, TestValidateAsync, 測試驗證器, 驗證業務規則
 license: MIT
 metadata:
   author: Kevin Tseng

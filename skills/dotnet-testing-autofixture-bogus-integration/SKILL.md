@@ -1,34 +1,8 @@
 ---
 name: dotnet-testing-autofixture-bogus-integration
 description: |
-  AutoFixture 與 Bogus 整合完整指南。
-  結合匿名測試資料與真實感語意化資料產生。
-  涵蓋 SpecimenBuilder 整合、混合產生器、測試資料工廠與循環參考處理。
-
-triggers:
-  # 核心關鍵字
-  - autofixture bogus integration
-  - autofixture bogus
-  - bogus integration
-  - 整合 bogus
-
-  # 技術術語
-  - Faker
-  - EmailSpecimenBuilder
-  - PhoneSpecimenBuilder
-  - NameSpecimenBuilder
-  - AddressSpecimenBuilder
-
-  # 使用情境
-  - 真實感測試資料
-  - 語意化資料
-  - 混合產生器
-  - HybridTestDataGenerator
-  - IntegratedTestDataFactory
-  - OmitOnRecursionBehavior
-  - 循環參考
-  - WithBogus
-
+  AutoFixture 與 Bogus 整合完整指南。結合匿名測試資料與真實感語意化資料產生。涵蓋 SpecimenBuilder 整合、混合產生器、測試資料工廠與循環參考處理。
+  Keywords: autofixture bogus integration, autofixture bogus, bogus integration, Faker, EmailSpecimenBuilder, PhoneSpecimenBuilder, NameSpecimenBuilder, 真實感測試資料, 語意化資料, 混合產生器, HybridTestDataGenerator, OmitOnRecursionBehavior, 循環參考
 license: MIT
 metadata:
   author: Kevin Tseng

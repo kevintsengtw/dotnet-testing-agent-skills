@@ -1,47 +1,8 @@
 ---
 name: dotnet-testing-awesome-assertions-guide
 description: |
-  使用 AwesomeAssertions 進行流暢且可讀的測試斷言技能。
-  當需要撰寫清晰的斷言、比對物件、驗證集合、處理複雜比對時使用。
-  涵蓋 Should()、BeEquivalentTo()、Contain()、ThrowAsync() 等完整 API。
-
-triggers:
-  # 核心關鍵字
-  - assertions
-  - awesome assertions
-  - fluent assertions
-  - 斷言
-  - 流暢斷言
-  - should
-  - assert
-
-  # 方法名稱
-  - Should()
-  - Be()
-  - BeEquivalentTo
-  - Contain
-  - ThrowAsync
-  - NotBeNull
-  - BeTrue
-  - BeFalse
-
-  # 使用情境
-  - 斷言寫法
-  - 物件比對
-  - 集合驗證
-  - 例外斷言
-  - assertion syntax
-  - object comparison
-  - collection assertion
-  - exception testing
-
-  # 技術術語
-  - AwesomeAssertions
-  - FluentAssertions
-  - assertion methods
-  - fluent syntax
-  - 流暢語法
-
+  使用 AwesomeAssertions 進行流暢且可讀的測試斷言技能。當需要撰寫清晰的斷言、比對物件、驗證集合、處理複雜比對時使用。涵蓋 Should()、BeEquivalentTo()、Contain()、ThrowAsync() 等完整 API。
+  Keywords: assertions, awesome assertions, fluent assertions, 斷言, 流暢斷言, Should(), Be(), BeEquivalentTo, Contain, ThrowAsync, NotBeNull, 物件比對, 集合驗證, 例外斷言, AwesomeAssertions, FluentAssertions, fluent syntax
 license: MIT
 metadata:
   author: Kevin Tseng

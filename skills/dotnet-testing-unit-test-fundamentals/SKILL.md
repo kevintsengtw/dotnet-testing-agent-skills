@@ -1,47 +1,8 @@
 ---
 name: dotnet-testing-unit-test-fundamentals
 description: |
-  .NET 單元測試基礎與 FIRST 原則的專門技能。
-  當需要建立單元測試、了解測試基礎、學習 3A Pattern、掌握測試最佳實踐時使用。
-  涵蓋 FIRST 原則、AAA Pattern、Fact/Theory、測試金字塔等。
-
-triggers:
-  # 核心關鍵字
-  - unit test
-  - 單元測試
-  - unit testing
-  - test fundamentals
-  - 測試基礎
-  - testing basics
-
-  # FIRST 原則
-  - FIRST principle
-  - FIRST 原則
-  - fast testing
-  - independent tests
-  - repeatable tests
-
-  # AAA Pattern
-  - 3A pattern
-  - AAA pattern
-  - Arrange Act Assert
-  - 3A 模式
-  - arrange-act-assert
-
-  # xUnit 基礎
-  - Fact
-  - Theory
-  - InlineData
-  - xunit basics
-  - 測試案例
-
-  # 使用情境
-  - 如何寫測試
-  - how to write tests
-  - 測試最佳實踐
-  - testing best practices
-  - 建立單元測試
-
+  .NET 單元測試基礎與 FIRST 原則的專門技能。當需要建立單元測試、了解測試基礎、學習 3A Pattern、掌握測試最佳實踐時使用。涵蓋 FIRST 原則、AAA Pattern、Fact/Theory、測試金字塔等。
+  Keywords: unit test, 單元測試, unit testing, test fundamentals, 測試基礎, FIRST principle, FIRST 原則, 3A pattern, AAA pattern, Arrange Act Assert, Fact, Theory, InlineData, 如何寫測試, testing best practices, 建立單元測試
 license: MIT
 metadata:
   author: Kevin Tseng

@@ -1,40 +1,8 @@
 ---
 name: dotnet-testing-test-naming-conventions
 description: |
-  測試命名規範與最佳實踐的專門技能。
-  當需要為測試方法命名、改進測試可讀性、建立命名標準時使用。
-  涵蓋三段式命名法、中文命名建議、測試類別命名等。
-
-triggers:
-  # 核心關鍵字
-  - test naming
-  - 測試命名
-  - naming conventions
-  - 命名規範
-  - test name
-  - 測試方法名稱
-
-  # 命名模式
-  - 三段式命名
-  - three-part naming
-  - method_scenario_expected
-  - 方法_情境_預期
-  - underscore naming
-
-  # 使用情境
-  - 如何命名測試
-  - how to name tests
-  - 測試可讀性
-  - test readability
-  - 命名最佳實踐
-  - naming best practices
-
-  # 相關問題
-  - 測試報告
-  - test report
-  - 測試文件化
-  - test documentation
-
+  測試命名規範與最佳實踐的專門技能。當需要為測試方法命名、改進測試可讀性、建立命名標準時使用。涵蓋三段式命名法、中文命名建議、測試類別命名等。
+  Keywords: test naming, 測試命名, naming conventions, 命名規範, 三段式命名, three-part naming, method_scenario_expected, 方法_情境_預期, 如何命名測試, 測試可讀性, test readability, 命名最佳實踐, 測試報告, test documentation
 license: MIT
 metadata:
   author: Kevin Tseng

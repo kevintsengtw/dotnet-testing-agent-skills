@@ -37,7 +37,7 @@
 - 🔄 **整合工作流程**：協助完成從單元測試到整合測試的完整流程
 - 🌐 **跨平台支援**：skills 內容符合開放標準，可在任何支援 agentskills.io 的 AI 工具使用
 
-### Skills 最新優化（2026-02-02）
+### Skills 最新優化（2026-02-01）
 
 本 Skills 集合已完成全面優化，**符合 [agentskills.io](https://agentskills.io/specification) 官方規範**：
 
@@ -771,7 +771,7 @@ description: 完整的測試工作流程，從單元測試到整合測試
 
 - **[OPTIMIZATION_SUMMARY.md](OPTIMIZATION_SUMMARY.md)**：Skills 優化總結報告
   - 詳細的優化策略與成果
-  - Triggers 統計數據
+  - Keywords 整合說明
   - 預期效果分析
 
 ### 原始內容

@@ -19,7 +19,7 @@
 - 🌐 **多平台支援**：GitHub Copilot、Claude Code、Cursor 等
 - 📖 **中文友善**：完整的繁體中文文件與命名建議
 - 📦 **標準化結構**：符合 Claude Code skills 標準，支援 npx skills install 安裝
-- 📊 **2026-01-27 全面優化**：Triggers、Description、入口導航全面強化
+- 📊 **2026-02-01 全面優化**：Description（含 Keywords）、入口導航全面強化
 
 ---
 
@@ -189,7 +189,7 @@ skills/
 - 💬 **Prompt 模板**：3 種推薦的對話模板
 - 🎯 **常見情境組合**：3 個完整的使用情境範例
 - 📋 **完整技能目錄**：27 個 skills 分類清單
-- 📊 **Skills 優化狀態**：Triggers 統計、預期效果說明
+- 📊 **Skills 優化狀態**：Keywords 整合、預期效果說明
 
 **使用方式**：
 ```bash

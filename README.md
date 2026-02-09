@@ -47,8 +47,8 @@ git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
 # 2. 複製到您的專案（GitHub Copilot 使用 .github/skills）
 cp -r dotnet-testing-agent-skills/skills /your-project/.github/
 
-# 3. 在 VS Code 中啟用 Agent Skills
-# 設定 → 搜尋 "chat.useAgentSkills" → 勾選啟用
+# 3. VS Code v1.109+ 已預設啟用 Agent Skills，無需手動設定
+#    舊版 VS Code：設定 → 搜尋 "chat.useAgentSkills" → 勾選啟用
 ```
 
 **Windows (PowerShell)**
@@ -59,8 +59,8 @@ git clone https://github.com/kevintsengtw/dotnet-testing-agent-skills.git
 # 2. 複製到您的專案（GitHub Copilot 使用 .github/skills）
 Copy-Item -Path "dotnet-testing-agent-skills\skills" -Destination "\your-project\.github\" -Recurse
 
-# 3. 在 VS Code 中啟用 Agent Skills
-# 設定 → 搜尋 "chat.useAgentSkills" → 勾選啟用
+# 3. VS Code v1.109+ 已預設啟用 Agent Skills，無需手動設定
+#    舊版 VS Code：設定 → 搜尋 "chat.useAgentSkills" → 勾選啟用
 ```
 
 #### 複製到 Claude Code
@@ -462,7 +462,7 @@ graph LR
 
 | 平台 | 支援狀態 | 說明 |
 |------|---------|------|
-| GitHub Copilot (VS Code) | ✅ 完整支援 | 需啟用 Agent Mode |
+| GitHub Copilot (VS Code) | ✅ 完整支援 | v1.109+ 預設啟用，需使用 Agent Mode |
 | GitHub Copilot CLI | ✅ 完整支援 | - |
 | Claude Code CLI | ✅ 完整支援 | 使用 `/plugin` 指令 |
 | Cursor | ✅ 完整支援 | - |
@@ -472,6 +472,9 @@ graph LR
 
 ## 相關連結
 
+> ⚠️ **GitHub Copilot 使用者請務必閱讀**：[GITHUB_COPILOT_UPDATE.md](GITHUB_COPILOT_UPDATE.md) 包含 VS Code v1.109 Agent Skills 正式發佈 (GA) 的重要更新說明，包括預設啟用、彈性搜尋路徑、多 AI 工具共用工作區等關鍵變更。
+
+- **GitHub Copilot 更新紀錄**：[GITHUB_COPILOT_UPDATE.md](GITHUB_COPILOT_UPDATE.md) — Copilot 使用者必讀
 - **完整使用手冊**：[SKILLS_USAGE_GUIDE.md](SKILLS_USAGE_GUIDE.md)
 - **Agent Skills 標準**：[agentskills.io](https://agentskills.io)
 - **GitHub Copilot Agent Skills 文件**：[官方說明](https://docs.github.com/copilot/using-github-copilot/using-github-copilot-agent-skills)
@@ -548,4 +551,4 @@ MIT License - 自由使用與修改
 ---
 
 **作者**：Kevin Tseng  
-**最後更新**：2026-01-27  
+**最後更新**：2026-02-09  

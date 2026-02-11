@@ -1,13 +1,14 @@
 ---
 name: dotnet-testing-advanced-xunit-upgrade-guide
 description: |
-  xUnit 2.9.x 到 3.x 升級完整指南。涵蓋破壞性變更、套件更新、async void 修正、IAsyncLifetime 調整。包含新功能介紹: Assert.Skip、Explicit Tests、Matrix Theory、Assembly Fixtures。
+  xUnit 2.9.x 到 3.x 升級完整指南。當需要將 xUnit v2 升級至 v3 或了解 xUnit v3 新功能與破壞性變更時使用。涵蓋套件更新、async void 修正、IAsyncLifetime 調整。包含新功能介紹: Assert.Skip、Explicit Tests、Matrix Theory、Assembly Fixtures。
   Keywords: xunit upgrade, xunit v3, xunit 3.x, xunit migration, xunit 升級, xunit.v3, OutputType Exe, IAsyncLifetime v3, Assert.Skip, SkipUnless, SkipWhen, Explicit attribute, MatrixTheoryData, AssemblyFixture, 破壞性變更
 license: MIT
 metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: "xunit, upgrade, migration, v3, breaking-changes, testing-framework"
+  related_skills: "xunit-project-setup, unit-test-fundamentals"
 ---
 
 # xUnit 升級指南：從 2.9.x 到 3.x
@@ -392,28 +393,7 @@ dotnet run -- -xml results.xml -ctrf results.json -trx results.trx
 
 ### 問題 2：自訂 DataAttribute 無法運作
 
-```csharp
-// ❌ xUnit 2.x 的實作
-public class CustomDataAttribute : DataAttribute
-{
-    public override IEnumerable<object[]> GetData(MethodInfo testMethod)
-    {
-        // 舊的實作
-    }
-}
-
-// ✅ xUnit 3.x 的實作
-public class CustomDataAttribute : DataAttribute
-{
-    public override async Task<IReadOnlyCollection<ITheoryDataRow>> GetDataAsync(
-        MethodInfo method, 
-        DisposalTracker disposalTracker)
-    {
-        var data = await GenerateDataAsync();
-        return data.Select(item => new TheoryDataRow(item)).ToList();
-    }
-}
-```
+xUnit 3.x 中 `DataAttribute` 方法簽名已變更：`GetData(MethodInfo)` → `GetDataAsync(MethodInfo, DisposalTracker)`，回傳型別改為 `Task<IReadOnlyCollection<ITheoryDataRow>>`。
 
 ### 問題 3：IDE 無法發現測試
 
@@ -515,12 +495,3 @@ xUnit 3.x 帶來的效能改進：
 - [xUnit v3 新功能文件](https://xunit.net/docs/getting-started/v3/whats-new)
 - [xUnit 2.x → 3.x 官方遷移指南](https://xunit.net/docs/getting-started/v3/migration)
 - [xunit.v3 NuGet 套件](https://www.nuget.org/packages/xunit.v3)
-
-## 範例參考
-
-請參考同目錄下的範例檔案：
-
-- `templates/xunit-v3-project.csproj` - xUnit 3.x 專案設定範本
-- `templates/upgrade-checklist.md` - 升級檢查清單
-- `templates/code-migration-examples.cs` - 程式碼遷移範例
-- `templates/new-features-examples.cs` - 新功能使用範例

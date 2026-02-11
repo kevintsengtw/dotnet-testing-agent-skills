@@ -14,12 +14,14 @@
 ## ✨ 特色
 
 - 🎯 **符合官方規範**：29 個 skills 的 description 包含 Keywords 關鍵字，AI 根據對話內容自動載入
+- � **符合 Anthropic 最佳實踐**：依據官方「[The Complete Guide to Building Skills for Claude](https://claude.com/blog/complete-guide-to-building-skills-for-claude)」全面優化，採用漸進式揭露 (Progressive Disclosure) 架構
 - 📚 **29 個精煉技能**：包含 2 個總覽技能 + 27 個專業技能，涵蓋單元測試、模擬、測試資料生成、整合測試等
 - 🔧 **即用範本**：提供完整的專案結構與程式碼範例
 - 🌐 **多平台支援**：GitHub Copilot、Claude Code、Cursor 等
 - 📖 **中文友善**：完整的繁體中文文件與命名建議
 - 📦 **標準化結構**：符合 Claude Code skills 標準，支援 npx skills install 安裝
 - 📊 **2026-02-01 全面優化**：Description（含 Keywords）、入口導航全面強化
+- 📐 **2026-02-11 Anthropic 規範優化**：依據官方 Skill 建立指南，全面調整 29 個 SKILL.md 結構與內容
 
 ---
 
@@ -169,6 +171,7 @@ skills/
 > **注意**：
 > - Skills 採用扁平結構，使用前綴命名來區分基礎技能 (`dotnet-testing-*`) 與進階技能 (`dotnet-testing-advanced-*`)
 > - ⭐ 兩個總覽 skills 提供智能導航，自動推薦適合的子技能組合
+> - 各技能目錄可能包含 `templates/`（範本）與 `references/`（參考文件）子目錄，採用漸進式揭露架構
 > - 安裝後，skills 會根據目標環境複製到對應位置（`.github/skills/` 或 `.claude/skills/`）
 
 ---
@@ -477,11 +480,43 @@ graph LR
 - **GitHub Copilot 更新紀錄**：[GITHUB_COPILOT_UPDATE.md](GITHUB_COPILOT_UPDATE.md) — Copilot 使用者必讀
 - **完整使用手冊**：[SKILLS_USAGE_GUIDE.md](SKILLS_USAGE_GUIDE.md)
 - **Agent Skills 標準**：[agentskills.io](https://agentskills.io)
+- **Anthropic Skill 建立完整指南**：[The Complete Guide to Building Skills for Claude](https://claude.com/blog/complete-guide-to-building-skills-for-claude) — 本專案 2026-02-11 優化依據
+  - [PDF 版本](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf?hsLang=en)
+  - [Anthropic Skill Authoring Best Practices](https://platform.claude.com/docs/agent-skills/skill-authoring-best-practices)
 - **GitHub Copilot Agent Skills 文件**：[官方說明](https://docs.github.com/copilot/using-github-copilot/using-github-copilot-agent-skills)
 
 ---
 
-## 🛠️ 技能組合建議
+## 2026-02-11 Anthropic 規範優化
+
+依據 Anthropic 官方「[The Complete Guide to Building Skills for Claude](https://claude.com/blog/complete-guide-to-building-skills-for-claude)」與「[Skill Authoring Best Practices](https://platform.claude.com/docs/agent-skills/skill-authoring-best-practices)」，對全部 29 個 SKILL.md 進行結構性優化：
+
+| 優化項目 | 說明 | 影響範圍 |
+|---------|------|---------|
+| **漸進式揭露** | 所有 SKILL.md 精簡至 ≤500 行，詳細內容提取至 `references/` 目錄 | 21 個檔案 |
+| **H1 標題中文化** | 統一為中文標題格式 | 3 個檔案 |
+| **首段 H2 標準化** | 統一為 `## 適用情境` 作為首段 | 17 個檔案 |
+| **觸發句描述** | 所有 description 加入「當需要…時使用」觸發句 | 14 個檔案 |
+| **related_skills 元資料** | 所有子技能補上 `related_skills` 欄位 | 26 個檔案 |
+| **末段 H2 標準化** | 統一為 `## 參考資源` 作為末段 | 9 個檔案 |
+| **補建範本檔案** | 為缺少範本的技能新增 templates | 1 個檔案 |
+
+**核心架構變更 — 漸進式揭露 (Progressive Disclosure)**：
+
+```text
+SKILL.md (≤500 行)          ← AI 主要讀取的指令檔
+├── references/              ← 詳細參考內容（按需讀取）
+│   ├── detailed-patterns.md
+│   └── advanced-examples.md
+├── templates/               ← 程式碼範本
+└── scripts/                 ← 輔助腳本
+```
+
+> 此架構確保 AI 的 Context Window 不會被過長的指令檔佔用，同時保留完整的參考資源供需要時存取。
+
+---
+
+## 技能組合建議
 
 ### 新手入門
 
@@ -551,4 +586,4 @@ MIT License - 自由使用與修改
 ---
 
 **作者**：Kevin Tseng  
-**最後更新**：2026-02-09  
+**最後更新**：2026-02-11  

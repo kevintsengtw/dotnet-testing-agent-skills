@@ -1,13 +1,14 @@
 ---
 name: dotnet-testing-code-coverage-analysis
 description: |
-  程式碼覆蓋率分析完整指南。涵蓋 Coverlet 設定、報告產生、指標解讀與循環複雜度整合。包含 Fine Code Coverage、VS Code 內建工具、CI/CD 整合與最佳實踐。
+  程式碼覆蓋率分析完整指南。當需要分析程式碼覆蓋率、產生覆蓋率報告或設定 CI/CD 覆蓋率檢查時使用。涵蓋 Coverlet 設定、報告產生、指標解讀與循環複雜度整合。包含 Fine Code Coverage、VS Code 內建工具與最佳實踐。
   Keywords: code coverage, 程式碼覆蓋率, 覆蓋率分析, coverage report, Coverlet, Fine Code Coverage, dotnet-coverage, ReportGenerator, line coverage, branch coverage, 行覆蓋率, 分支覆蓋率, cyclomatic complexity, 循環複雜度, runsettings, cobertura
 license: MIT
 metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: "code-coverage, coverlet, testing-metrics, quality, ci-cd, analysis"
+  related_skills: "unit-test-fundamentals, xunit-project-setup"
 ---
 
 # 程式碼覆蓋率分析指南
@@ -79,18 +80,9 @@ metadata:
 - 即時顯示覆蓋率
 - 程式碼編輯器直接標示
 
-**安裝方式：**
+**安裝方式：** Visual Studio 延伸模組管理 → 搜尋 "Fine Code Coverage" → 安裝
 
-1. 開啟 Visual Studio
-2. 延伸模組 → 管理延伸模組
-3. 搜尋 "Fine Code Coverage"
-4. 安裝後重新啟動
-
-**必要設定：**
-
-- 工具 → 選項 → Fine Code Coverage
-- Run (Common) → Enable：設為 `True`
-- Editor Colouring Line Highlighting：設為 `True`
+**必要設定：** 工具 → 選項 → Fine Code Coverage → Enable: `True`、Editor Colouring Line Highlighting: `True`
 
 ### 3. .NET CLI 工具
 
@@ -397,51 +389,9 @@ public class GeneratedCode
 
 ## CI/CD 整合
 
-### GitHub Actions 範例
+覆蓋率分析可整合至 CI/CD Pipeline，在 GitHub Actions 中使用 `dotnet test --collect:"XPlat Code Coverage"` 搭配 `reportgenerator` 產生報告；在 Azure DevOps 中使用 `DotNetCoreCLI@2` 任務搭配 `PublishCodeCoverageResults@1`。
 
-```yaml
-name: Test with Coverage
-
-on: [push, pull_request]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '9.0.x'
-      
-      - name: Run tests with coverage
-        run: dotnet test --collect:"XPlat Code Coverage"
-      
-      - name: Generate coverage report
-        run: |
-          dotnet tool install -g dotnet-reportgenerator-globaltool
-          reportgenerator -reports:**/coverage.cobertura.xml -targetdir:coverage -reporttypes:Html
-      
-      - name: Upload coverage
-        uses: codecov/codecov-action@v3
-```
-
-### Azure DevOps 範例
-
-```yaml
-- task: DotNetCoreCLI@2
-  displayName: 'Run tests with coverage'
-  inputs:
-    command: 'test'
-    arguments: '--collect:"XPlat Code Coverage"'
-    publishTestResults: true
-
-- task: PublishCodeCoverageResults@1
-  inputs:
-    codeCoverageTool: 'Cobertura'
-    summaryFileLocation: '$(Agent.TempDirectory)/**/*coverage.cobertura.xml'
-```
+> 📖 完整 YAML 設定範例請參閱 [references/cicd-integration.md](references/cicd-integration.md)
 
 ## 常見問題與解決方案
 

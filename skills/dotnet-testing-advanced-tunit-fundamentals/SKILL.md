@@ -1,18 +1,19 @@
 ---
 name: dotnet-testing-advanced-tunit-fundamentals
 description: |
-  TUnit 新世代測試框架入門完整指南。涵蓋 Source Generator 驅動測試發現、AOT 編譯支援、流暢式非同步斷言。包含專案建立、[Test] 屬性、生命週期管理、並行控制與 xUnit 語法對照。
+  TUnit 新世代測試框架入門完整指南。當需要使用 TUnit 建立測試專案或從 xUnit 遷移至 TUnit 時使用。涵蓋 Source Generator 驅動測試發現、AOT 編譯支援、流暢式非同步斷言。包含專案建立、[Test] 屬性、生命週期管理、並行控制與 xUnit 語法對照。
   Keywords: TUnit, tunit testing, source generator testing, AOT testing, 新世代測試框架, [Test], [Arguments], TUnit.Assertions, Assert.That, Before(Test), After(Test), NotInParallel, TUnit.Templates, Microsoft.Testing.Platform, TUnit vs xUnit, 並行執行
 license: MIT
 metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: "tunit, testing-framework, source-generator, aot, modern-testing, performance"
+  related_skills: "advanced-tunit-advanced, xunit-project-setup, unit-test-fundamentals"
 ---
 
 # TUnit 新世代測試框架入門基礎
 
-## 技能概述
+## 適用情境
 
 本技能涵蓋 TUnit 新世代 .NET 測試框架的入門基礎，從框架特色到實際專案建立與測試撰寫。
 
@@ -264,248 +265,28 @@ public async Task Add_多組輸入_應回傳正確結果(int a, int b, int expec
 
 ## TUnit.Assertions 斷言系統
 
-TUnit 採用流暢式（Fluent）斷言設計，所有斷言都是非同步的：
-
-### 基本相等性斷言
+TUnit 採用流暢式（Fluent）斷言設計，所有斷言都是非同步的。支援相等性、布林值、數值比較、字串、集合、例外等多種斷言，並可透過 `And` / `Or` 組合條件。
 
 ```csharp
-[Test]
-public async Task 基本相等性斷言範例()
-{
-    var expected = 42;
-    var actual = 40 + 2;
-    
-    await Assert.That(actual).IsEqualTo(expected);
-    await Assert.That(actual).IsNotEqualTo(43);
-    
-    // Null 檢查
-    string? nullValue = null;
-    await Assert.That(nullValue).IsNull();
-    await Assert.That("test").IsNotNull();
-}
+// 基本用法示例
+await Assert.That(actual).IsEqualTo(expected);
+await Assert.That(email).Contains("@").And.EndsWith(".com");
+await Assert.That(() => action()).Throws<InvalidOperationException>();
 ```
 
-### 布林值斷言
-
-```csharp
-[Test]
-public async Task 布林值斷言範例()
-{
-    var condition = 1 + 1 == 2;
-    
-    await Assert.That(condition).IsTrue();
-    await Assert.That(1 + 1 == 3).IsFalse();
-    
-    var number = 10;
-    await Assert.That(number > 5).IsTrue();
-}
-```
-
-### 數值比較斷言
-
-```csharp
-[Test]
-public async Task 數值比較斷言範例()
-{
-    var actual = 10;
-    
-    await Assert.That(actual).IsGreaterThan(5);
-    await Assert.That(actual).IsGreaterThanOrEqualTo(10);
-    await Assert.That(actual).IsLessThan(15);
-    await Assert.That(actual).IsBetween(5, 15);
-}
-
-[Test]
-[Arguments(3.14159, 3.14, 0.01)]
-public async Task 浮點數精確度控制(double actual, double expected, double tolerance)
-{
-    await Assert.That(actual)
-        .IsEqualTo(expected)
-        .Within(tolerance);
-}
-```
-
-### 字串斷言
-
-```csharp
-[Test]
-public async Task 字串斷言範例()
-{
-    var email = "user@example.com";
-    
-    await Assert.That(email).Contains("@");
-    await Assert.That(email).StartsWith("user");
-    await Assert.That(email).EndsWith(".com");
-    await Assert.That(email).DoesNotContain(" ");
-    await Assert.That("").IsEmpty();
-    await Assert.That(email).IsNotEmpty();
-}
-```
-
-### 集合斷言
-
-```csharp
-[Test]
-public async Task 集合斷言範例()
-{
-    var numbers = new List<int> { 1, 2, 3, 4, 5 };
-    
-    await Assert.That(numbers).HasCount(5);
-    await Assert.That(numbers).IsNotEmpty();
-    await Assert.That(numbers).Contains(3);
-    await Assert.That(numbers).DoesNotContain(10);
-    await Assert.That(numbers.First()).IsEqualTo(1);
-    await Assert.That(numbers.Last()).IsEqualTo(5);
-}
-```
-
-### 例外斷言
-
-```csharp
-[Test]
-public async Task 例外斷言範例()
-{
-    var calculator = new Calculator();
-    
-    // 檢查特定例外類型
-    await Assert.That(() => calculator.Divide(10, 0))
-        .Throws<DivideByZeroException>();
-    
-    // 檢查例外訊息
-    await Assert.That(() => calculator.Divide(10, 0))
-        .Throws<DivideByZeroException>()
-        .WithMessage("除數不能為零");
-    
-    // 檢查不拋出例外
-    await Assert.That(() => calculator.Add(1, 2))
-        .DoesNotThrow();
-}
-```
-
-### And / Or 條件組合
-
-```csharp
-[Test]
-public async Task 條件組合範例()
-{
-    var number = 10;
-    
-    // And：所有條件都必須成立
-    await Assert.That(number)
-        .IsGreaterThan(5)
-        .And.IsLessThan(15)
-        .And.IsEqualTo(10);
-    
-    // Or：任一條件成立即可
-    await Assert.That(number)
-        .IsEqualTo(5)
-        .Or.IsEqualTo(10)
-        .Or.IsEqualTo(15);
-}
-```
+> 📖 完整斷言類型與範例請參閱 [TUnit 斷言系統詳細說明](references/tunit-assertions-detail.md)
 
 ---
 
 ## 測試生命週期管理
 
-### 建構式與 Dispose 模式
-
-```csharp
-public class BasicLifecycleTests : IDisposable
-{
-    private readonly Calculator _calculator;
-
-    public BasicLifecycleTests()
-    {
-        _calculator = new Calculator();
-    }
-
-    [Test]
-    public async Task Add_基本測試()
-    {
-        await Assert.That(_calculator.Add(1, 2)).IsEqualTo(3);
-    }
-
-    public void Dispose()
-    {
-        // 清理資源
-    }
-}
-```
-
-### Before / After 屬性
-
-TUnit 提供更細緻的生命週期控制：
-
-```csharp
-public class LifecycleTests
-{
-    private static TestDatabase? _database;
-
-    // 類別層級：所有測試執行前只執行一次
-    [Before(Class)]
-    public static async Task ClassSetup()
-    {
-        _database = new TestDatabase();
-        await _database.InitializeAsync();
-    }
-
-    // 測試層級：每個測試執行前都會執行
-    [Before(Test)]
-    public async Task TestSetup()
-    {
-        await _database!.ClearDataAsync();
-    }
-
-    [Test]
-    public async Task 測試使用者建立()
-    {
-        var userService = new UserService(_database!);
-        var user = await userService.CreateUserAsync("test@example.com");
-        await Assert.That(user.Id).IsNotEqualTo(Guid.Empty);
-    }
-
-    // 測試層級：每個測試執行後都會執行
-    [After(Test)]
-    public async Task TestTearDown()
-    {
-        // 記錄測試結果
-    }
-
-    // 類別層級：所有測試執行後只執行一次
-    [After(Class)]
-    public static async Task ClassTearDown()
-    {
-        if (_database != null)
-        {
-            await _database.DisposeAsync();
-        }
-    }
-}
-```
-
-### 生命週期屬性種類
-
-| 屬性                 | 類型     | 說明                     |
-| -------------------- | -------- | ------------------------ |
-| `[Before(Test)]`     | 實例方法 | 每個測試執行前           |
-| `[Before(Class)]`    | 靜態方法 | 類別中第一個測試執行前   |
-| `[Before(Assembly)]` | 靜態方法 | 組件中第一個測試執行前   |
-| `[After(Test)]`      | 實例方法 | 每個測試執行後           |
-| `[After(Class)]`     | 靜態方法 | 類別中最後一個測試執行後 |
-| `[After(Assembly)]`  | 靜態方法 | 組件中最後一個測試執行後 |
-
-### 執行順序
+TUnit 支援建構式 / `Dispose` 模式，以及 `[Before(Test)]`、`[Before(Class)]`、`[After(Test)]`、`[After(Class)]` 等屬性，提供比 xUnit 更細緻的生命週期控制。
 
 ```text
-1. Before(Class)
-2. 建構式
-3. Before(Test)
-4. 測試方法
-5. After(Test)
-6. Dispose
-7. After(Class)
+執行順序：Before(Class) → 建構式 → Before(Test) → 測試方法 → After(Test) → Dispose → After(Class)
 ```
+
+> 📖 完整生命週期範例與屬性對照表請參閱 [生命週期管理詳細說明](references/lifecycle-management.md)
 
 ---
 

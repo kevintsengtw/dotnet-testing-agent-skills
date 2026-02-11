@@ -1,18 +1,29 @@
 ---
 name: dotnet-testing-private-internal-testing
 description: |
-  Private 與 Internal 成員測試策略指南。強調設計優先思維，提供 InternalsVisibleTo、反射測試與重構策略。涵蓋策略模式重構、AbstractLogger 模式、測試友善設計與決策框架。
+  Private 與 Internal 成員測試策略指南。當需要測試私有或內部成員、設定 InternalsVisibleTo 或評估可測試性設計時使用。涵蓋設計優先思維、反射測試、策略模式重構、AbstractLogger 模式與決策框架。
   Keywords: private method testing, internal testing, InternalsVisibleTo, 私有方法測試, 內部成員測試, 反射測試, reflection testing, GetMethod BindingFlags, Meziantou.MSBuild.InternalsVisibleTo, 可測試性設計, 策略模式重構, testability
 license: MIT
 metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: "private-testing, internal-testing, InternalsVisibleTo, reflection, testability, design"
+  related_skills: "nsubstitute-mocking, unit-test-fundamentals, test-naming-conventions"
 ---
 
 # 私有與內部成員測試策略指南
 
 本技能協助您在 .NET 測試中正確處理私有與內部成員的測試，強調設計優先的測試思維。
+
+## 適用情境
+
+當被要求執行以下任務時，請使用此技能：
+
+- 測試 private 或 internal 方法與屬性
+- 設定 InternalsVisibleTo 存取內部成員
+- 評估是否需要測試私有方法或應重構設計
+- 使用反射（Reflection）存取私有成員
+- 提升程式碼的可測試性設計
 
 ## 核心原則：設計優先思維
 
@@ -184,170 +195,9 @@ using System.Runtime.CompilerServices;
 
 ## 私有方法測試技術
 
-### 決策樹：是否應該測試私有方法
+涵蓋決策樹（是否應測試私有方法）、反射測試私有實例方法與靜態方法、`ReflectionTestHelper` 輔助類別封裝，以及反射測試的風險與最佳實踐。
 
-```text
-開始
-  ↓
-是否可以重構為獨立類別？
-  ├─ 是 → 重構並測試新類別 ✅
-  └─ 否 ↓
-      私有方法是否超過 10 行？
-        ├─ 否 → 透過公開方法測試 ✅
-        └─ 是 ↓
-            是否包含複雜演算法/安全邏輯？
-              ├─ 否 → 重新考慮設計 ⚠️
-              └─ 是 → 考慮使用反射測試 ⚠️
-```
-
-### 何時考慮測試私有方法
-
-**必要條件（需同時滿足）：**
-
-1. **複雜度高**：超過 10 行的複雜邏輯
-2. **業務關鍵**：包含重要業務規則或演算法
-3. **難以間接測試**：無法透過公開方法完整驗證
-4. **重構成本高**：短期內無法重構為獨立類別
-
-**典型情境：**
-
-- 複雜的數學運算或演算法
-- 加密、解密等安全相關邏輯
-- 效能關鍵的內部實作
-- 遺留系統重構前的保護網
-
-### 使用反射測試私有方法
-
-當確定需要測試私有方法時，可使用反射技術：
-
-#### 測試私有實例方法
-
-```csharp
-[Theory]
-[InlineData(1000, PaymentMethod.CreditCard, 30)]
-[InlineData(1000, PaymentMethod.DebitCard, 10)]
-public void TestPrivateInstanceMethod_使用反射(
-    decimal amount, PaymentMethod method, decimal expected)
-{
-    // Arrange
-    var processor = new PaymentProcessor();
-    var methodInfo = typeof(PaymentProcessor).GetMethod(
-        "CalculateFee",
-        BindingFlags.NonPublic | BindingFlags.Instance
-    );
-
-    // Act
-    var actual = (decimal)methodInfo.Invoke(processor, new object[] { amount, method });
-
-    // Assert
-    actual.Should().Be(expected);
-}
-```
-
-#### 測試靜態私有方法
-
-```csharp
-[Theory]
-[InlineData("2024-03-15", true)]  // 星期五
-[InlineData("2024-03-16", false)] // 星期六
-public void TestPrivateStaticMethod_使用反射(string dateString, bool expected)
-{
-    // Arrange
-    var date = DateTime.Parse(dateString);
-    var methodInfo = typeof(DateHelper).GetMethod(
-        "IsBusinessDay",
-        BindingFlags.NonPublic | BindingFlags.Static
-    );
-
-    // Act
-    var actual = (bool)methodInfo.Invoke(null, new object[] { date });
-
-    // Assert
-    actual.Should().Be(expected);
-}
-```
-
-#### 反射測試輔助類別
-
-建立輔助方法簡化反射操作：
-
-```csharp
-public static class ReflectionTestHelper
-{
-    /// <summary>
-    /// 呼叫私有實例方法
-    /// </summary>
-    public static object InvokePrivateMethod(
-        object instance, 
-        string methodName, 
-        params object[] parameters)
-    {
-        var methodInfo = instance.GetType().GetMethod(
-            methodName,
-            BindingFlags.NonPublic | BindingFlags.Instance
-        );
-
-        if (methodInfo == null)
-            throw new InvalidOperationException($"找不到私有方法: {methodName}");
-
-        return methodInfo.Invoke(instance, parameters);
-    }
-
-    /// <summary>
-    /// 呼叫靜態私有方法
-    /// </summary>
-    public static object InvokePrivateStaticMethod(
-        Type type,
-        string methodName,
-        params object[] parameters)
-    {
-        var methodInfo = type.GetMethod(
-            methodName,
-            BindingFlags.NonPublic | BindingFlags.Static
-        );
-
-        if (methodInfo == null)
-            throw new InvalidOperationException($"找不到靜態私有方法: {methodName}");
-
-        return methodInfo.Invoke(null, parameters);
-    }
-}
-
-// 使用範例
-[Fact]
-public void TestWithHelper_更簡潔的反射測試()
-{
-    // Arrange
-    var processor = new PaymentProcessor();
-
-    // Act
-    var actual = (decimal)ReflectionTestHelper.InvokePrivateMethod(
-        processor, 
-        "CalculateFee", 
-        1000m, 
-        PaymentMethod.CreditCard
-    );
-
-    // Assert
-    actual.Should().Be(30m);
-}
-```
-
-### 反射測試的注意事項
-
-**風險：**
-
-- ⚠️ 測試脆弱：方法名稱改變會導致測試失敗
-- ⚠️ 重構阻力：增加重構的難度
-- ⚠️ 維護成本：需要額外維護反射代碼
-- ⚠️ 效能影響：反射比直接呼叫慢
-
-**最佳實踐：**
-
-- 使用輔助方法封裝反射邏輯
-- 在測試名稱中明確標示使用反射
-- 定期檢視是否可以重構為更好的設計
-- 考慮使用常數儲存方法名稱
+> 📖 完整程式碼範例與技術細節請參考 [references/private-method-testing.md](references/private-method-testing.md)
 
 ## 測試友善的設計模式
 

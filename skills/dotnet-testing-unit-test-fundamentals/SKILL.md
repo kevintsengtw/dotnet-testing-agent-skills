@@ -8,6 +8,7 @@ metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: ".NET, testing, unit test, FIRST, AAA pattern, xUnit"
+  related_skills: "xunit-project-setup, test-naming-conventions, awesome-assertions-guide"
 ---
 
 # .NET 單元測試基礎指南

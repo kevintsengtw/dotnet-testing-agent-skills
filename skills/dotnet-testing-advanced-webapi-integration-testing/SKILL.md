@@ -1,18 +1,19 @@
 ---
 name: dotnet-testing-advanced-webapi-integration-testing
 description: |
-  ASP.NET Core WebApi 整合測試完整指南。涵蓋 WebApplicationFactory、IExceptionHandler、ProblemDetails 標準格式驗證。包含 Testcontainers 多容器編排、Flurl URL 建構、AwesomeAssertions HTTP 驗證。
+  ASP.NET Core WebApi 整合測試完整指南。當需要對 WebApi 端點進行整合測試或驗證 ProblemDetails 錯誤格式時使用。涵蓋 WebApplicationFactory、IExceptionHandler、Testcontainers 多容器編排、Flurl URL 建構與 AwesomeAssertions HTTP 驗證。
   Keywords: webapi integration testing, WebApplicationFactory, asp.net core integration test, webapi 整合測試, IExceptionHandler, ProblemDetails, ValidationProblemDetails, AwesomeAssertions, Flurl, Respawn, Be201Created, Be400BadRequest, 多容器測試, Collection Fixture, 全域例外處理
 license: MIT
 metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: "webapi, integration-testing, testcontainers, aspnetcore, clean-architecture"
+  related_skills: "advanced-aspnet-integration-testing, advanced-testcontainers-database, advanced-aspire-testing"
 ---
 
 # WebApi 整合測試
 
-## 技能概述
+## 適用情境
 
 **技能等級**: 進階  
 **所需前置知識**: xUnit 基礎、ASP.NET Core 基礎、Testcontainers 基礎、Clean Architecture  
@@ -123,78 +124,9 @@ RFC 7807 定義的統一錯誤回應格式：
 
 ### FluentValidation 異常處理器
 
-```csharp
-/// <summary>
-/// FluentValidation 專用異常處理器
-/// </summary>
-public class FluentValidationExceptionHandler : IExceptionHandler
-{
-    private readonly ILogger<FluentValidationExceptionHandler> _logger;
+FluentValidation 異常處理器實作 `IExceptionHandler` 介面，專門處理 `ValidationException`，將驗證錯誤轉換為標準的 `ValidationProblemDetails` 格式回應。處理器之間按照註冊順序執行，特定處理器（如 FluentValidation）必須在全域處理器之前註冊。
 
-    public FluentValidationExceptionHandler(ILogger<FluentValidationExceptionHandler> logger)
-    {
-        _logger = logger;
-    }
-
-    public async ValueTask<bool> TryHandleAsync(
-        HttpContext httpContext,
-        Exception exception,
-        CancellationToken cancellationToken)
-    {
-        if (exception is not ValidationException validationException)
-        {
-            return false; // 讓下一個處理器處理
-        }
-
-        _logger.LogWarning(validationException, "驗證失敗: {Message}", validationException.Message);
-
-        var problemDetails = new ValidationProblemDetails
-        {
-            Type = "https://tools.ietf.org/html/rfc9110#section-15.5.1",
-            Title = "One or more validation errors occurred.",
-            Status = 400,
-            Detail = "輸入的資料包含驗證錯誤",
-            Instance = httpContext.Request.Path
-        };
-
-        foreach (var error in validationException.Errors)
-        {
-            if (problemDetails.Errors.ContainsKey(error.PropertyName))
-            {
-                var errors = problemDetails.Errors[error.PropertyName].ToList();
-                errors.Add(error.ErrorMessage);
-                problemDetails.Errors[error.PropertyName] = errors.ToArray();
-            }
-            else
-            {
-                problemDetails.Errors.Add(error.PropertyName, new[] { error.ErrorMessage });
-            }
-        }
-
-        httpContext.Response.StatusCode = 400;
-        httpContext.Response.ContentType = "application/problem+json";
-        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-
-        return true;
-    }
-}
-```
-
-### 註冊順序很重要
-
-異常處理器按照註冊順序執行，特定處理器必須在全域處理器之前：
-
-```csharp
-// Program.cs
-builder.Services.AddProblemDetails();
-
-// 順序很重要！特定處理器先註冊
-builder.Services.AddExceptionHandler<FluentValidationExceptionHandler>();
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-
-// Middleware
-app.UseExceptionHandler();
-```
+> 📖 完整實作程式碼請參閱 [references/exception-handler-details.md](references/exception-handler-details.md)
 
 ## 整合測試基礎設施
 

@@ -8,6 +8,7 @@ metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: ".NET, testing, IFileSystem, MockFileSystem, file testing"
+  related_skills: "nsubstitute-mocking, unit-test-fundamentals, datetime-testing-timeprovider"
 ---
 
 # 檔案系統測試：使用 System.IO.Abstractions 模擬檔案操作

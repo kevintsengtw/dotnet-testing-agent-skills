@@ -1,18 +1,19 @@
 ---
 name: dotnet-testing-autodata-xunit-integration
 description: |
-  AutoFixture 與 xUnit 整合完整指南。涵蓋 AutoData、InlineAutoData、自訂 Customization 與測試資料屬性。簡化參數化測試資料準備，提升測試可讀性與維護性。
+  AutoFixture 與 xUnit 整合完整指南。當需要使用 AutoData 或 InlineAutoData 簡化 xUnit 參數化測試資料準備時使用。涵蓋自訂 Customization 與測試資料屬性，提升測試可讀性與維護性。
   Keywords: AutoData, InlineAutoData, AutoFixture xUnit, [AutoData], [InlineAutoData], AutoDataAttribute, ICustomization, DataAttribute, 參數化測試, Theory AutoData, MemberAutoData, 測試資料屬性, fixture.Customize
 license: MIT
 metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: "autofixture, xunit, autodata, theory, parameterized-tests, customization"
+  related_skills: "autofixture-basics, autofixture-customization, autofixture-nsubstitute-integration"
 ---
 
 # AutoData 屬性家族:xUnit 與 AutoFixture 的整合應用
 
-## 觸發關鍵字
+## 適用情境
 
 - AutoData
 - InlineAutoData
@@ -326,418 +327,32 @@ public void 使用BusinessAutoData(Order order)
 
 ## CompositeAutoData：多重資料來源整合
 
-組合多個自訂 AutoData 配置：
+透過繼承 `AutoDataAttribute` 並以反射合併多個 Fixture 的 Customizations，組合多個自訂 AutoData 配置：
 
 ```csharp
-public class CompositeAutoDataAttribute : AutoDataAttribute
-{
-    public CompositeAutoDataAttribute(params Type[] autoDataAttributeTypes) 
-        : base(() => CreateFixture(autoDataAttributeTypes))
-    {
-    }
-
-    private static IFixture CreateFixture(Type[] autoDataAttributeTypes)
-    {
-        var fixture = new Fixture();
-
-        foreach (var attributeType in autoDataAttributeTypes)
-        {
-            var createFixtureMethod = attributeType.GetMethod(
-                "CreateFixture",
-                BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-
-            if (createFixtureMethod != null)
-            {
-                var sourceFixture = (IFixture)createFixtureMethod.Invoke(null, null)!;
-
-                foreach (var customization in sourceFixture.Customizations)
-                {
-                    fixture.Customizations.Add(customization);
-                }
-            }
-        }
-
-        return fixture;
-    }
-}
-
-// 使用方式
+// 使用方式 - 自動套用 DomainAutoData + BusinessAutoData 的所有設定
 [Theory]
 [CompositeAutoData(typeof(DomainAutoDataAttribute), typeof(BusinessAutoDataAttribute))]
 public void CompositeAutoData_整合多重資料來源(
-    Person person,
-    Product product,
-    Order order)
+    Person person, Product product, Order order)
 {
-    // DomainAutoData 的設定
-    person.Age.Should().BeInRange(18, 64);
-    product.IsAvailable.Should().BeTrue();
-
-    // BusinessAutoData 的設定
-    order.Status.Should().Be(OrderStatus.Created);
+    person.Age.Should().BeInRange(18, 64);       // DomainAutoData 的設定
+    product.IsAvailable.Should().BeTrue();        // DomainAutoData 的設定
+    order.Status.Should().Be(OrderStatus.Created); // BusinessAutoData 的設定
 }
 ```
 
 ## CollectionSizeAttribute：控制集合大小
 
-AutoData 預設的集合大小是 3，可透過自訂屬性控制：
-
-### CollectionSizeAttribute 實作
-
-```csharp
-using AutoFixture;
-using AutoFixture.Kernel;
-using AutoFixture.Xunit2;
-using System.Reflection;
-
-public class CollectionSizeAttribute : CustomizeAttribute
-{
-    private readonly int _size;
-
-    public CollectionSizeAttribute(int size)
-    {
-        _size = size;
-    }
-
-    public override ICustomization GetCustomization(ParameterInfo parameter)
-    {
-        ArgumentNullException.ThrowIfNull(parameter);
-
-        var objectType = parameter.ParameterType.GetGenericArguments()[0];
-
-        var isTypeCompatible = parameter.ParameterType.IsGenericType &&
-            parameter.ParameterType.GetGenericTypeDefinition()
-                .MakeGenericType(objectType)
-                .IsAssignableFrom(typeof(List<>).MakeGenericType(objectType));
-
-        if (!isTypeCompatible)
-        {
-            throw new InvalidOperationException(
-                $"{nameof(CollectionSizeAttribute)} 指定的型別與 List 不相容: " +
-                $"{parameter.ParameterType} {parameter.Name}");
-        }
-
-        var customizationType = typeof(CollectionSizeCustomization<>).MakeGenericType(objectType);
-        return (ICustomization)Activator.CreateInstance(customizationType, parameter, _size)!;
-    }
-
-    private class CollectionSizeCustomization<T> : ICustomization
-    {
-        private readonly ParameterInfo _parameter;
-        private readonly int _repeatCount;
-
-        public CollectionSizeCustomization(ParameterInfo parameter, int repeatCount)
-        {
-            _parameter = parameter;
-            _repeatCount = repeatCount;
-        }
-
-        public void Customize(IFixture fixture)
-        {
-            fixture.Customizations.Add(
-                new FilteringSpecimenBuilder(
-                    new FixedBuilder(fixture.CreateMany<T>(_repeatCount).ToList()),
-                    new EqualRequestSpecification(_parameter)));
-        }
-    }
-}
-```
-
-### 使用 CollectionSizeAttribute
-
-```csharp
-[Theory]
-[AutoData]
-public void CollectionSize_控制自動產生集合大小(
-    [CollectionSize(5)] List<Product> products,
-    [CollectionSize(3)] List<Order> orders,
-    Customer customer)
-{
-    // Assert
-    products.Should().HaveCount(5);
-    orders.Should().HaveCount(3);
-    customer.Should().NotBeNull();
-
-    products.Should().AllSatisfy(product =>
-    {
-        product.Name.Should().NotBeNullOrEmpty();
-        product.Price.Should().BeGreaterOrEqualTo(0);
-    });
-}
-```
+AutoData 預設的集合大小是 3，可透過自訂 `CollectionSizeAttribute` 控制產生的集合元素數量。完整實作與使用方式請參考 [CollectionSizeAttribute 完整指南](references/collection-size-attribute.md)。
 
 ## 外部測試資料整合
 
-### 測試專案檔案設定
-
-在 `.csproj` 中設定外部資料檔案：
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <!-- CSV 檔案 -->
-    <Content Include="TestData\*.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    
-    <!-- JSON 檔案 -->
-    <Content Include="TestData\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="33.0.1" />
-  </ItemGroup>
-</Project>
-```
-
-### CSV 檔案整合
-
-**TestData/products.csv**
-
-```csv
-ProductId,Name,Category,Price,IsAvailable
-1,"iPhone 15","3C產品",35900,true
-2,"MacBook Pro","3C產品",89900,true
-3,"AirPods Pro","3C產品",7490,false
-4,"Nike Air Max","運動用品",4200,true
-```
-
-**CSV 讀取與整合**
-
-```csharp
-using CsvHelper;
-using CsvHelper.Configuration;
-using System.Globalization;
-
-public class ExternalDataIntegrationTests
-{
-    public static IEnumerable<object[]> GetProductsFromCsv()
-    {
-        var csvPath = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "products.csv");
-        
-        using var reader = new StreamReader(csvPath);
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
-        {
-            HeaderValidated = null,
-            MissingFieldFound = null
-        };
-        
-        using var csv = new CsvReader(reader, config);
-        var records = csv.GetRecords<ProductCsvRecord>().ToList();
-        
-        foreach (var record in records)
-        {
-            yield return new object[]
-            {
-                record.ProductId,
-                record.Name,
-                record.Category,
-                record.Price,
-                record.IsAvailable
-            };
-        }
-    }
-
-    [Theory]
-    [MemberAutoData(nameof(GetProductsFromCsv))]
-    public void CSV整合測試_產品驗證(
-        int productId,
-        string productName,
-        string category,
-        decimal price,
-        bool isAvailable,
-        Customer customer,
-        Order order)
-    {
-        // Assert - CSV 資料
-        productId.Should().BePositive();
-        productName.Should().NotBeNullOrEmpty();
-        category.Should().BeOneOf("3C產品", "運動用品");
-        price.Should().BePositive();
-
-        // Assert - AutoFixture 產生的資料
-        customer.Should().NotBeNull();
-        order.Should().NotBeNull();
-    }
-}
-
-public class ProductCsvRecord
-{
-    public int ProductId { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public string Category { get; set; } = string.Empty;
-    public decimal Price { get; set; }
-    public bool IsAvailable { get; set; }
-}
-```
-
-### JSON 檔案整合
-
-**TestData/customers.json**
-
-```json
-[
-  {
-    "customerId": 1,
-    "name": "張三",
-    "email": "zhang@example.com",
-    "type": "VIP",
-    "creditLimit": 100000
-  },
-  {
-    "customerId": 2,
-    "name": "李四",
-    "email": "li@example.com",
-    "type": "Premium",
-    "creditLimit": 50000
-  }
-]
-```
-
-**JSON 讀取與整合**
-
-```csharp
-using System.Text.Json;
-
-public static IEnumerable<object[]> GetCustomersFromJson()
-{
-    var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "TestData", "customers.json");
-    var jsonContent = File.ReadAllText(jsonPath);
-    
-    var options = new JsonSerializerOptions
-    {
-        PropertyNameCaseInsensitive = true
-    };
-    
-    var customers = JsonSerializer.Deserialize<List<CustomerJsonRecord>>(jsonContent, options)!;
-    
-    foreach (var customer in customers)
-    {
-        yield return new object[]
-        {
-            customer.CustomerId,
-            customer.Name,
-            customer.Email,
-            customer.Type,
-            customer.CreditLimit
-        };
-    }
-}
-
-[Theory]
-[MemberAutoData(nameof(GetCustomersFromJson))]
-public void JSON整合測試_客戶驗證(
-    int customerId,
-    string name,
-    string email,
-    string customerType,
-    decimal creditLimit,
-    Order order)
-{
-    // Assert - JSON 資料
-    customerId.Should().BePositive();
-    name.Should().NotBeNullOrEmpty();
-    email.Should().Contain("@");
-    customerType.Should().BeOneOf("VIP", "Premium", "Regular");
-    creditLimit.Should().BePositive();
-
-    // Assert - AutoFixture 產生的資料
-    order.Should().NotBeNull();
-}
-```
+整合 CSV、JSON 等外部資料來源與 MemberAutoData，同時保留 AutoFixture 自動產生其餘參數的能力。完整指南請參考 [外部測試資料整合](references/external-data-integration.md)。
 
 ## 資料來源設計模式
 
-### 階層式資料組織
-
-```csharp
-namespace AutoData.Tests.DataSources;
-
-/// <summary>
-/// 測試資料來源基底類別
-/// </summary>
-public abstract class BaseTestData
-{
-    protected static string GetTestDataPath(string fileName)
-    {
-        return Path.Combine(Directory.GetCurrentDirectory(), "TestData", fileName);
-    }
-}
-
-/// <summary>
-/// 產品測試資料來源
-/// </summary>
-public class ProductTestDataSource : BaseTestData
-{
-    public static IEnumerable<object[]> BasicProducts()
-    {
-        yield return new object[] { "iPhone", 35900m, true };
-        yield return new object[] { "MacBook", 89900m, true };
-        yield return new object[] { "AirPods", 7490m, false };
-    }
-
-    public static IEnumerable<object[]> ElectronicsProducts()
-    {
-        // 從 CSV 檔案讀取
-        var csvPath = GetTestDataPath("electronics.csv");
-        // ... 讀取邏輯
-    }
-}
-
-/// <summary>
-/// 客戶測試資料來源
-/// </summary>
-public class CustomerTestDataSource : BaseTestData
-{
-    public static IEnumerable<object[]> VipCustomers()
-    {
-        yield return new object[] { "張三", "VIP", 100000m };
-        yield return new object[] { "李四", "VIP", 150000m };
-    }
-}
-```
-
-### 可重用資料集
-
-```csharp
-/// <summary>
-/// 可重用的測試資料集
-/// </summary>
-public static class ReusableTestDataSets
-{
-    public static class ProductCategories
-    {
-        public static IEnumerable<object[]> All()
-        {
-            yield return new object[] { "3C產品", "TECH" };
-            yield return new object[] { "服飾配件", "FASHION" };
-            yield return new object[] { "居家生活", "HOME" };
-        }
-
-        public static IEnumerable<object[]> Electronics()
-        {
-            yield return new object[] { "手機", "MOBILE" };
-            yield return new object[] { "筆電", "LAPTOP" };
-        }
-    }
-
-    public static class CustomerTypes
-    {
-        public static IEnumerable<object[]> All()
-        {
-            yield return new object[] { "VIP", 100000m, 0.15m };
-            yield return new object[] { "Premium", 50000m, 0.10m };
-            yield return new object[] { "Regular", 20000m, 0.05m };
-        }
-    }
-}
-```
+階層式資料組織與可重用資料集的設計模式，建立 `BaseTestData` 基底類別統一管理測試資料路徑。完整範例請參考 [資料來源設計模式](references/data-source-patterns.md)。
 
 ## 與 Awesome Assertions 協作
 

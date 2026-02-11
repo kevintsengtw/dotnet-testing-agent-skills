@@ -1,18 +1,19 @@
 ---
 name: dotnet-testing-test-data-builder-pattern
 description: |
-  Test Data Builder Pattern 完整實作指南。使用建構者模式建立可維護、可讀性高的測試資料。涵蓋流暢介面、語意化方法、預設值設計與 Builder 組合模式。
+  Test Data Builder Pattern 完整實作指南。當需要使用建構者模式建立可維護的測試資料或簡化複雜物件的測試準備時使用。涵蓋流暢介面、語意化方法、預設值設計與 Builder 組合模式。
   Keywords: test data builder, builder pattern test, 測試資料建構器, object mother, fluent interface, 流暢介面, UserBuilder, ProductBuilder, .With(), .Build(), AUser(), 測試資料準備, 複雜物件建立, 語意化測試
 license: MIT
 metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: "test-data-builder, builder-pattern, fluent-interface, test-readability"
+  related_skills: "autofixture-basics, bogus-fake-data, autofixture-bogus-integration"
 ---
 
 # Test Data Builder Pattern 測試資料建構器模式
 
-## 概述
+## 適用情境
 
 Test Data Builder Pattern 是一種專為測試設計的建構者模式（Builder Pattern）變體，用於建立清晰、可維護且表意明確的測試資料。此模式特別適合處理具有多個屬性的複雜物件，讓測試程式碼更易讀且降低維護成本。
 
@@ -489,20 +490,6 @@ public void ProcessOrder_有效訂單_應成功處理()
 
 Test Data Builder Pattern 是撰寫可維護測試的重要技巧：
 
-✅ **使用時機**：
-
-- 測試物件有多個屬性需要設定
-- 需要在多個測試中重複使用相似的測試資料
-- 希望測試程式碼表達清晰的意圖
-
-✅ **核心優勢**：
-
-- 提升測試可讀性
-- 降低測試維護成本
-- 增強測試表達力
-
-⚠️ **注意事項**：
-
-- 保持 Builder 簡單，避免加入業務邏輯
-- 提供合理的預設值
-- 使用語意化的方法名稱
+- **使用時機**：測試物件有多個屬性、需重複使用測試資料、希望表達清晰意圖
+- **核心優勢**：提升可讀性、降低維護成本、增強表達力
+- **注意事項**：保持 Builder 簡單、提供合理預設值、使用語意化方法名稱

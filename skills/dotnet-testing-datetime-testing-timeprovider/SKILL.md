@@ -8,11 +8,12 @@ metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: ".NET, testing, TimeProvider, DateTime, time testing"
+  related_skills: "unit-test-fundamentals, nsubstitute-mocking, filesystem-testing-abstractions"
 ---
 
 # DateTime 與時間相依性測試指南
 
-## 概述
+## 適用情境
 
 本技能指導如何使用 Microsoft.Bcl.TimeProvider 解決時間相依程式碼的測試問題。透過時間抽象化，讓「現在時間」變得可控制、可預測、可重現。
 

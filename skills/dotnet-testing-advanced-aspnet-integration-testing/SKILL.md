@@ -8,11 +8,12 @@ metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: ".NET, testing, ASP.NET Core, integration testing, WebApplicationFactory"
+  related_skills: "advanced-webapi-integration-testing, advanced-testcontainers-database, advanced-aspire-testing"
 ---
 
 # ASP.NET Core 整合測試指南
 
-## 概述
+## 適用情境
 
 本技能指導如何在 ASP.NET Core 中建立有效的整合測試，使用 `WebApplicationFactory<T>` 和 `TestServer` 測試完整的 HTTP 請求/回應流程。
 
@@ -407,125 +408,7 @@ public abstract class IntegrationTestBase : IDisposable
 
 ## CRUD 操作測試範例
 
-### GET 請求測試
-
-```csharp
-[Fact]
-public async Task GetShipper_當貨運商存在_應回傳成功結果()
-{
-    // Arrange
-    await CleanupDatabaseAsync();
-    var shipperId = await SeedShipperAsync("順豐速運", "02-2345-6789");
-
-    // Act
-    var response = await Client.GetAsync($"/api/shippers/{shipperId}");
-
-    // Assert
-    response.Should().Be200Ok()
-            .And
-            .Satisfy<SuccessResultOutputModel<ShipperOutputModel>>(result =>
-            {
-                result.Status.Should().Be("Success");
-                result.Data!.ShipperId.Should().Be(shipperId);
-                result.Data.CompanyName.Should().Be("順豐速運");
-            });
-}
-
-[Fact]
-public async Task GetShipper_當貨運商不存在_應回傳404NotFound()
-{
-    // Arrange
-    var nonExistentShipperId = 9999;
-
-    // Act
-    var response = await Client.GetAsync($"/api/shippers/{nonExistentShipperId}");
-
-    // Assert
-    response.Should().Be404NotFound();
-}
-```
-
-### POST 請求測試
-
-```csharp
-[Fact]
-public async Task CreateShipper_輸入有效資料_應建立成功()
-{
-    // Arrange
-    await CleanupDatabaseAsync();
-    var createParameter = new ShipperCreateParameter
-    {
-        CompanyName = "黑貓宅急便",
-        Phone = "02-1234-5678"
-    };
-
-    // Act
-    var response = await Client.PostAsJsonAsync("/api/shippers", createParameter);
-
-    // Assert
-    response.Should().Be201Created()
-            .And
-            .Satisfy<SuccessResultOutputModel<ShipperOutputModel>>(result =>
-            {
-                result.Status.Should().Be("Success");
-                result.Data!.ShipperId.Should().BeGreaterThan(0);
-                result.Data.CompanyName.Should().Be("黑貓宅急便");
-            });
-}
-```
-
-### 驗證錯誤測試
-
-```csharp
-[Fact]
-public async Task CreateShipper_當公司名稱為空_應回傳400BadRequest()
-{
-    // Arrange
-    var createParameter = new ShipperCreateParameter
-    {
-        CompanyName = "",
-        Phone = "02-1234-5678"
-    };
-
-    // Act
-    var response = await Client.PostAsJsonAsync("/api/shippers", createParameter);
-
-    // Assert
-    response.Should().Be400BadRequest()
-            .And
-            .Satisfy<ValidationProblemDetails>(problem =>
-            {
-                problem.Status.Should().Be(400);
-                problem.Errors.Should().ContainKey("CompanyName");
-            });
-}
-```
-
-### 集合資料測試
-
-```csharp
-[Fact]
-public async Task GetAllShippers_應回傳所有貨運商()
-{
-    // Arrange
-    await CleanupDatabaseAsync();
-    await SeedShipperAsync("公司A", "02-1111-1111");
-    await SeedShipperAsync("公司B", "02-2222-2222");
-
-    // Act
-    var response = await Client.GetAsync("/api/shippers");
-
-    // Assert
-    response.Should().Be200Ok()
-            .And
-            .Satisfy<SuccessResultOutputModel<List<ShipperOutputModel>>>(result =>
-            {
-                result.Data!.Count.Should().Be(2);
-                result.Data.Should().Contain(s => s.CompanyName == "公司A");
-                result.Data.Should().Contain(s => s.CompanyName == "公司B");
-            });
-}
-```
+完整的 CRUD 操作測試程式碼（GET、POST、驗證錯誤、集合查詢）請參考 📄 **[CRUD 操作測試完整範例](references/crud-test-examples.md)**
 
 ---
 

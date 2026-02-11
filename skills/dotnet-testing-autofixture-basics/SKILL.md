@@ -8,11 +8,12 @@ metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: ".NET, testing, AutoFixture, test data, anonymous testing"
+  related_skills: "autodata-xunit-integration, autofixture-customization, autofixture-bogus-integration"
 ---
 
 # AutoFixture 基礎:自動產生測試資料
 
-## 概述
+## 適用情境
 
 AutoFixture 是一個為 .NET 平台設計的測試資料自動產生工具，它的核心理念是「匿名測試」(Anonymous Testing)。這個概念認為，大部分的測試都不應該依賴於特定的資料值，而應該專注於驗證程式邏輯的正確性。
 
@@ -410,68 +411,9 @@ var order = fixture.Build<Order>()
 
 ## 實務應用場景
 
-### Entity 測試
+AutoFixture 在實務中常用於 Entity 測試（搭配 Theory 驗證不同輸入場景）、DTO 驗證（使用 `Build<T>()` 產生符合驗證規則的資料）、以及大量資料測試（使用 `CreateMany()` 產生批次資料）。
 
-```csharp
-[Theory]
-[InlineData(0, CustomerLevel.Bronze)]
-[InlineData(15000, CustomerLevel.Silver)]
-[InlineData(60000, CustomerLevel.Gold)]
-[InlineData(120000, CustomerLevel.Diamond)]
-public void GetLevel_不同消費金額_應回傳正確等級(decimal totalSpent, CustomerLevel expected)
-{
-    var fixture = new Fixture();
-    var customer = fixture.Build<Customer>()
-        .With(x => x.TotalSpent, totalSpent)
-        .Create();
-
-    var level = customer.GetLevel();
-
-    level.Should().Be(expected);
-}
-```
-
-### DTO 驗證
-
-```csharp
-[Fact]
-public void ValidateRequest_有效資料_應通過驗證()
-{
-    var fixture = new Fixture();
-    
-    var request = fixture.Build<CreateCustomerRequest>()
-        .With(x => x.Name, fixture.Create<string>()[..50])
-        .With(x => x.Email, fixture.Create<MailAddress>().Address)
-        .With(x => x.Age, Random.Shared.Next(18, 78))
-        .Create();
-
-    var context = new ValidationContext(request);
-    var results = new List<ValidationResult>();
-    var isValid = Validator.TryValidateObject(request, context, results, true);
-
-    isValid.Should().BeTrue();
-}
-```
-
-### 大量資料測試
-
-```csharp
-[Fact]
-public void ProcessBatch_大量資料_應正確處理()
-{
-    var fixture = new Fixture();
-    var records = fixture.CreateMany<DataRecord>(1000).ToList();
-    var processor = new DataProcessor();
-
-    var stopwatch = Stopwatch.StartNew();
-    var result = processor.ProcessBatch(records);
-    stopwatch.Stop();
-
-    result.ProcessedCount.Should().Be(1000);
-    result.ErrorCount.Should().Be(0);
-    stopwatch.ElapsedMilliseconds.Should().BeLessThan(10000);
-}
-```
+> 📖 完整程式碼範例請參閱 [references/practical-scenarios.md](references/practical-scenarios.md)
 
 ## 最佳實踐
 

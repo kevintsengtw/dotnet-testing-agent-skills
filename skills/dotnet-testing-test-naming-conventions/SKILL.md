@@ -8,6 +8,7 @@ metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: ".NET, testing, naming conventions, test naming, readability"
+  related_skills: "unit-test-fundamentals, test-output-logging, xunit-project-setup"
 ---
 
 # .NET 測試命名規範指南
@@ -267,6 +268,10 @@ public void IsValidEmail_輸入無效Email格式_應回傳False(string invalidEm
 ```
 
 ## 參考資源
+
+請參考同目錄下的範例檔案：
+
+- [templates/naming-convention-examples.cs](templates/naming-convention-examples.cs) - 命名規範完整範例
 
 ### 原始文章
 

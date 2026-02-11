@@ -1,18 +1,19 @@
 ---
 name: dotnet-testing-autofixture-nsubstitute-integration
 description: |
-  AutoFixture 與 NSubstitute 整合指南 - 實現自動模擬 (Auto-Mocking)。涵蓋 AutoNSubstituteDataAttribute、Frozen 機制、Greedy 建構策略。包含 IMapper (AutoMapper/Mapster) 等特殊相依性的客製化處理。適用於複雜相依性注入測試、Mock 驗證與行為設定。
+  AutoFixture 與 NSubstitute 整合指南 - 實現自動模擬 (Auto-Mocking)。當需要自動建立 Mock 物件、簡化複雜相依性注入測試時使用。涵蓋 AutoNSubstituteDataAttribute、Frozen 機制、Greedy 建構策略。包含 IMapper (AutoMapper/Mapster) 等特殊相依性的客製化處理。
   Keywords: autofixture nsubstitute, auto mocking, AutoNSubstituteDataAttribute, 自動模擬, Frozen, AutoNSubstituteCustomization, AutoFixture.AutoNSubstitute, Greedy, fixture.Freeze, Received(), Returns(), IMapper, AutoMapper, Mapster, mapper testing
 license: MIT
 metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: "autofixture, nsubstitute, auto-mocking, dependency-injection, xunit, testing"
+  related_skills: "nsubstitute-mocking, autofixture-basics, autodata-xunit-integration"
 ---
 
 # AutoFixture + NSubstitute 自動模擬整合
 
-## 技能概述
+## 適用情境
 
 本技能介紹如何整合 AutoFixture 與 NSubstitute，透過 `AutoFixture.AutoNSubstitute` 套件實現自動模擬（Auto-Mocking）功能。這種整合方式可以大幅簡化具有多個相依性的服務類別測試，讓開發者專注於測試邏輯本身，而非繁瑣的物件建立過程。
 
@@ -279,274 +280,17 @@ public InlineAutoDataWithCustomizationAttribute(params object[] values)
 
 ## 常見相依性的客製化處理
 
-### IMapper 客製化（Mapster 範例）
+某些相依性（如 IMapper）不適合使用 Mock，而應該使用真實實例。包含 Mapster 和 AutoMapper 的客製化範例。
 
-某些相依性不適合使用 Mock，而應該使用真實實例：
-
-```csharp
-using AutoFixture;
-using Mapster;
-using MapsterMapper;
-
-namespace MyProject.Tests.AutoFixtureConfigurations;
-
-/// <summary>
-/// Mapster 對應器客製化
-/// </summary>
-public class MapsterMapperCustomization : ICustomization
-{
-    private IMapper? _mapper;
-
-    public void Customize(IFixture fixture)
-    {
-        fixture.Register(() => this.Mapper);
-    }
-
-    private IMapper Mapper
-    {
-        get
-        {
-            if (this._mapper is not null)
-            {
-                return this._mapper;
-            }
-
-            var typeAdapterConfig = new TypeAdapterConfig();
-            typeAdapterConfig.Scan(typeof(ServiceMapRegister).Assembly);
-            this._mapper = new Mapper(typeAdapterConfig);
-            return this._mapper;
-        }
-    }
-}
-```
-
-**為什麼 IMapper 不用 Mock？**
-
-1. **工具型相依性**：Mapper 不是業務邏輯，是物件對應工具
-2. **驗證對應邏輯**：測試需要驗證對應是否正確，Mock 會失去這個能力
-3. **設定複雜度**：為每個對應方法設定 Returns 反而增加複雜度
-4. **測試意圖**：我們要測試業務邏輯，不是 Mapper 的行為
-
-### AutoMapper 客製化範例
-
-```csharp
-using AutoFixture;
-using AutoMapper;
-
-namespace MyProject.Tests.AutoFixtureConfigurations;
-
-public class AutoMapperCustomization : ICustomization
-{
-    private IMapper? _mapper;
-
-    public void Customize(IFixture fixture)
-    {
-        fixture.Register(() => this.Mapper);
-    }
-
-    private IMapper Mapper
-    {
-        get
-        {
-            if (this._mapper is not null)
-            {
-                return this._mapper;
-            }
-
-            var configuration = new MapperConfiguration(cfg =>
-            {
-                cfg.AddMaps(typeof(MappingProfile).Assembly);
-            });
-
-            this._mapper = configuration.CreateMapper();
-            return this._mapper;
-        }
-    }
-}
-```
+> 完整客製化處理範例請參考 [references/dependency-customization.md](references/dependency-customization.md)
 
 ---
 
 ## 測試實作範例
 
-### 基本測試：無需設定相依行為
+涵蓋基本測試、Frozen 相依行為設定、自動產生測試資料、InlineAutoData 參數化測試、CollectionSize 控制、IFixture 複雜資料設定、Nullable 參考類型處理等完整範例。
 
-當測試只需要驗證 SUT 本身的邏輯（如參數驗證）時：
-
-```csharp
-[Theory]
-[AutoDataWithCustomization]
-public async Task IsExistsAsync_輸入的ShipperId為0時_應拋出ArgumentOutOfRangeException(
-    ShipperService sut)
-{
-    // Arrange
-    var shipperId = 0;
-
-    // Act
-    var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-        () => sut.IsExistsAsync(shipperId));
-
-    // Assert
-    exception.Message.Should().Contain(nameof(shipperId));
-}
-```
-
-### 進階測試：設定相依行為
-
-使用 `[Frozen]` 取得相依性並設定其行為：
-
-```csharp
-[Theory]
-[AutoDataWithCustomization]
-public async Task IsExistsAsync_輸入的ShipperId_資料不存在_應回傳false(
-    [Frozen] IShipperRepository shipperRepository,
-    ShipperService sut)
-{
-    // Arrange
-    var shipperId = 99;
-    shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(false);
-
-    // Act
-    var actual = await sut.IsExistsAsync(shipperId);
-
-    // Assert
-    actual.Should().BeFalse();
-}
-```
-
-### 使用自動產生的測試資料
-
-AutoFixture 同時產生 SUT 和測試資料：
-
-```csharp
-[Theory]
-[AutoDataWithCustomization]
-public async Task GetAsync_輸入的ShipperId_資料有存在_應回傳model(
-    [Frozen] IShipperRepository shipperRepository,
-    ShipperService sut,
-    ShipperModel model)  // AutoFixture 自動產生
-{
-    // Arrange
-    var shipperId = model.ShipperId;
-    shipperRepository.IsExistsAsync(Arg.Any<int>()).Returns(true);
-    shipperRepository.GetAsync(Arg.Any<int>()).Returns(model);
-
-    // Act
-    var actual = await sut.GetAsync(shipperId);
-
-    // Assert
-    actual.Should().NotBeNull();
-    actual.ShipperId.Should().Be(shipperId);
-}
-```
-
-### 參數化測試：InlineAutoData
-
-結合固定測試值與自動產生的 SUT：
-
-```csharp
-[Theory]
-[InlineAutoDataWithCustomization(0, 10, nameof(from))]
-[InlineAutoDataWithCustomization(-1, 10, nameof(from))]
-[InlineAutoDataWithCustomization(1, 0, nameof(size))]
-[InlineAutoDataWithCustomization(1, -1, nameof(size))]
-public async Task GetCollectionAsync_from與size輸入不合規格內容_應拋出ArgumentOutOfRangeException(
-    int from,
-    int size,
-    string parameterName,
-    ShipperService sut)  // 自動產生
-{
-    // Act
-    var exception = await Assert.ThrowsAsync<ArgumentOutOfRangeException>(
-        () => sut.GetCollectionAsync(from, size));
-
-    // Assert
-    exception.Message.Should().Contain(parameterName);
-}
-```
-
-### 使用 CollectionSize 控制集合大小
-
-```csharp
-[Theory]
-[AutoDataWithCustomization]
-public async Task GetAllAsync_資料表裡有10筆資料_回傳的集合裡有10筆(
-    [Frozen] IShipperRepository shipperRepository,
-    ShipperService sut,
-    [CollectionSize(10)] IEnumerable<ShipperModel> models)
-{
-    // Arrange
-    shipperRepository.GetAllAsync().Returns(models);
-
-    // Act
-    var actual = await sut.GetAllAsync();
-
-    // Assert
-    actual.Should().NotBeEmpty();
-    actual.Should().HaveCount(10);
-}
-```
-
-### 複雜資料設定：使用 IFixture
-
-當需要精確控制測試資料時：
-
-```csharp
-[Theory]
-[AutoDataWithCustomization]
-public async Task SearchAsync_companyName輸入資料_有符合條件的資料_回傳集合應包含符合條件的資料(
-    IFixture fixture,
-    [Frozen] IShipperRepository shipperRepository,
-    ShipperService sut)
-{
-    // Arrange
-    const string companyName = "test";
-    
-    var models = fixture.Build<ShipperModel>()
-                        .With(x => x.CompanyName, companyName)
-                        .CreateMany(1);
-
-    shipperRepository.GetTotalCountAsync().Returns(1);
-    shipperRepository.SearchAsync(Arg.Any<string>(), Arg.Any<string>())
-                     .Returns(models);
-
-    // Act
-    var actual = await sut.SearchAsync(companyName, string.Empty);
-
-    // Assert
-    actual.Should().NotBeEmpty();
-    actual.Should().HaveCount(1);
-    actual.Any(x => x.CompanyName == companyName).Should().BeTrue();
-}
-```
-
-### Nullable 參考類型處理
-
-測試 null 或空值參數時的處理方式：
-
-```csharp
-[Theory]
-[InlineAutoDataWithCustomization(null!, null!)]
-[InlineAutoDataWithCustomization("", "")]
-[InlineAutoDataWithCustomization("   ", "   ")]
-public async Task SearchAsync_companyName與phone都為空白_應拋出ArgumentException(
-    string? companyName,
-    string? phone,
-    ShipperService sut)
-{
-    // Act & Assert
-    var exception = await Assert.ThrowsAsync<ArgumentException>(
-        () => sut.SearchAsync(companyName!, phone!));
-    
-    exception.Message.Should().Contain("companyName 與 phone 不可都為空白");
-}
-```
-
-**處理說明**：
-
-1. **參數宣告使用 `string?`**：因為測試需要傳入 `null` 值
-2. **InlineAutoData 中使用 `null!`**：告訴編譯器這是刻意的測試資料
-3. **方法呼叫使用 `!` 運算子**：在測試中使用 null-forgiving 運算子
+> 完整測試實作範例請參考 [references/test-implementation-examples.md](references/test-implementation-examples.md)
 
 ---
 
@@ -701,11 +445,8 @@ MyProject.Tests/
 
 - [使用 AutoFixture.AutoData 來改寫以前的測試程式碼 | mrkt的程式學習筆記](https://www.dotblogs.com.tw/mrkt/2024/09/29/191300)
 
----
 
-## 範例檔案
-
-請參考同目錄下的範例程式碼：
+### 範例程式碼
 
 - [custom-autodata-attributes.cs](templates/custom-autodata-attributes.cs) - 自訂 AutoData 屬性範本
 - [frozen-patterns.cs](templates/frozen-patterns.cs) - Frozen 機制使用模式

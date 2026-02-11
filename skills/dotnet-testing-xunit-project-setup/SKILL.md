@@ -8,6 +8,7 @@ metadata:
   author: Kevin Tseng
   version: "1.0.0"
   tags: ".NET, testing, xUnit, project setup, configuration"
+  related_skills: "unit-test-fundamentals, test-naming-conventions, awesome-assertions-guide"
 ---
 
 # xUnit 測試專案設定指南

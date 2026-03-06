@@ -4,7 +4,7 @@
 // =============================================================================
 
 using AutoFixture;
-using FluentAssertions;
+using AwesomeAssertions;
 using System.Net.Mail;
 
 namespace TestProject.AutoFixtureBasics;

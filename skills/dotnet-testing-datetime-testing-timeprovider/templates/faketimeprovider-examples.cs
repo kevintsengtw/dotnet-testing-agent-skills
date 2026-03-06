@@ -4,7 +4,7 @@
 // =============================================================================
 
 using System;
-using FluentAssertions;
+using AwesomeAssertions;
 using Microsoft.Extensions.Time.Testing;
 using Xunit;
 

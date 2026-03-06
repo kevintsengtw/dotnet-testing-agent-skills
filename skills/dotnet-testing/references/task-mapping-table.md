@@ -42,7 +42,7 @@
 1. 使用 NSubstitute 建立 Repository 和 EmailService 的 Mock
 2. 用 AutoFixture 產生 User 測試資料
 3. 按照 3A Pattern 撰寫測試
-4. 使用 FluentAssertions 驗證結果
+4. 使用 AwesomeAssertions 驗證結果
 
 **提示詞範例**：
 ```
@@ -69,7 +69,7 @@ public void CreateUser_ValidUser_ShouldSaveAndSendEmail()
     // Act
     sut.CreateUser(user);
 
-    // Assert - 使用 FluentAssertions
+    // Assert - 使用 AwesomeAssertions
     repository.Received(1).Save(Arg.Is<User>(u => u.Email == user.Email));
     emailService.Received(1).SendWelcomeEmail(user.Email);
 }
@@ -160,7 +160,7 @@ public void IsExpired_Order31DaysOld_ShouldReturnTrue()
 
 **實施步驟**：
 1. 重新命名測試方法，遵循三段式命名
-2. 使用 FluentAssertions 改寫斷言
+2. 使用 AwesomeAssertions 改寫斷言
 3. 使用 Builder Pattern 建立測試資料
 
 **提示詞範例**：

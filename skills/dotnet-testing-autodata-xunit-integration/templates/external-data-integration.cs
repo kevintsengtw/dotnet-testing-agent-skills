@@ -8,7 +8,7 @@ using System.Text.Json;
 using AutoFixture.Xunit2;
 using CsvHelper;
 using CsvHelper.Configuration;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace AutoDataXunitIntegration.Templates;

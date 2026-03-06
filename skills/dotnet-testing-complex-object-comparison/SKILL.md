@@ -80,7 +80,7 @@ public void TreeStructure_循環參照_應正確處理()
 
 ### 3-6. 進階比對模式
 
-FluentAssertions 還提供多種進階比對模式：動態欄位排除（排除時間戳記、自動生成欄位）、巢狀物件欄位排除、大量資料效能最佳化比對（選擇性屬性比對、抽樣驗證策略）、以及嚴格/寬鬆排序控制。
+AwesomeAssertions 還提供多種進階比對模式：動態欄位排除（排除時間戳記、自動生成欄位）、巢狀物件欄位排除、大量資料效能最佳化比對（選擇性屬性比對、抽樣驗證策略）、以及嚴格/寬鬆排序控制。
 
 > 📖 完整程式碼範例請參閱 [references/detailed-comparison-patterns.md](references/detailed-comparison-patterns.md)
 

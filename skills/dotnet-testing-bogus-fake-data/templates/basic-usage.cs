@@ -4,7 +4,7 @@
 // =============================================================================
 
 using Bogus;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace BogusBasics.Templates;

@@ -4,7 +4,7 @@
 // =============================================================================
 
 using AutoFixture;
-using FluentAssertions;
+using AwesomeAssertions;
 
 namespace TestProject.AutoFixtureBasics;
 

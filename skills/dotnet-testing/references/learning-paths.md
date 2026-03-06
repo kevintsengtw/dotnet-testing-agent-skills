@@ -41,11 +41,11 @@
 **Day 6-7：流暢斷言**
 - 技能：`dotnet-testing-awesome-assertions-guide`
 - 學習重點：
-  - FluentAssertions 基礎
+  - AwesomeAssertions 基礎
   - 集合斷言
   - 例外斷言
   - 物件比對
-- 實作練習：改寫之前的測試，使用 FluentAssertions
+- 實作練習：改寫之前的測試，使用 AwesomeAssertions
 
 **Day 8：測試輸出**
 - 技能：`dotnet-testing-test-output-logging`

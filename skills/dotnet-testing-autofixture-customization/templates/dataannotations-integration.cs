@@ -5,7 +5,7 @@
 
 using System.ComponentModel.DataAnnotations;
 using AutoFixture;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace AutoFixtureCustomization.Templates;

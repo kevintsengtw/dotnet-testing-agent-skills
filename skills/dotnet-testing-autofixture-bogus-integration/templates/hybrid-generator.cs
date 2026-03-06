@@ -7,7 +7,7 @@ using AutoFixture;
 using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
 using Bogus;
-using FluentAssertions;
+using AwesomeAssertions;
 using System.Reflection;
 using Xunit;
 

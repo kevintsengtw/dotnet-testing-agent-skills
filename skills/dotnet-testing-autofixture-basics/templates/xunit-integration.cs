@@ -4,7 +4,7 @@
 // =============================================================================
 
 using AutoFixture;
-using FluentAssertions;
+using AwesomeAssertions;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Net.Mail;

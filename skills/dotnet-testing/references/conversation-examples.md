@@ -65,7 +65,7 @@
 1. 先使用 NSubstitute 為依賴建立 Mock
 2. 用 AutoFixture 產生 User 測試資料
 3. 按照 3A Pattern 撰寫測試
-4. 使用 FluentAssertions 驗證結果
+4. 使用 AwesomeAssertions 驗證結果
 
 需要我使用這些 skills 協助您建立測試嗎？
 
@@ -117,7 +117,7 @@ public bool IsExpired(TimeProvider timeProvider)
 
 **2. 流暢斷言**
 使用 `dotnet-testing-awesome-assertions-guide` skill
-- 使用 FluentAssertions 取代傳統斷言
+- 使用 AwesomeAssertions 取代傳統斷言
 - 大幅提升可讀性
 
 **3. 清晰的測試資料**

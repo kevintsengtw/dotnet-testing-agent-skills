@@ -86,11 +86,11 @@
 
 | 技能名稱 | 特色 | 提升幅度 | 何時使用 |
 |---------|------|---------|---------|
-| `dotnet-testing-awesome-assertions-guide` | FluentAssertions 流暢斷言 | ⭐⭐⭐ 高 | 所有測試（強烈推薦） |
+| `dotnet-testing-awesome-assertions-guide` | AwesomeAssertions 流暢斷言 | ⭐⭐⭐ 高 | 所有測試（強烈推薦） |
 | `dotnet-testing-complex-object-comparison` | 深層物件比對技巧 | ⭐⭐⭐ 高 | DTO、Entity、複雜物件驗證 |
 | `dotnet-testing-fluentvalidation-testing` | 測試 FluentValidation 驗證器 | ⭐⭐ 中 | 使用 FluentValidation 的專案 |
 
-**FluentAssertions 範例對比**：
+**AwesomeAssertions 範例對比**：
 
 ```csharp
 // 傳統斷言
@@ -98,7 +98,7 @@ Assert.Equal(expected.Name, actual.Name);
 Assert.Equal(expected.Age, actual.Age);
 Assert.True(actual.IsActive);
 
-// FluentAssertions（更易讀）
+// AwesomeAssertions（更易讀）
 actual.Should().BeEquivalentTo(expected, options => options
     .Including(x => x.Name)
     .Including(x => x.Age));

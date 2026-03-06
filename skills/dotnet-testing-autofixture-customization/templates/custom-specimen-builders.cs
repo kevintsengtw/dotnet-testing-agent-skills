@@ -6,7 +6,7 @@
 using System.Reflection;
 using AutoFixture;
 using AutoFixture.Kernel;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace AutoFixtureCustomization.Templates;

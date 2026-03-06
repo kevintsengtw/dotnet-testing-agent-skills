@@ -6,7 +6,7 @@
 using AutoFixture;
 using AutoFixture.Kernel;
 using Bogus;
-using FluentAssertions;
+using AwesomeAssertions;
 using System.Collections.Concurrent;
 using System.Reflection;
 using Xunit;

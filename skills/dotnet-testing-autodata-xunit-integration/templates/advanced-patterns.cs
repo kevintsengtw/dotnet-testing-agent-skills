@@ -8,7 +8,7 @@ using System.Reflection;
 using AutoFixture;
 using AutoFixture.Kernel;
 using AutoFixture.Xunit2;
-using FluentAssertions;
+using AwesomeAssertions;
 using Xunit;
 
 namespace AutoDataXunitIntegration.Templates;

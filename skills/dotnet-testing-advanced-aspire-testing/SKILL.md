@@ -120,6 +120,7 @@ MyApp/
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.Testing" Version="9.1.0" />
     <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+    <PackageReference Include="AwesomeAssertions.Web" Version="1.9.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
     <PackageReference Include="Respawn" Version="6.2.1" />

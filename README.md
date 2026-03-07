@@ -22,6 +22,7 @@
 - 📦 **標準化結構**：符合 Claude Code skills 標準，支援 npx skills install 安裝
 - 📊 **2026-02-01 全面優化**：Description（含 Keywords）、入口導航全面強化
 - 📐 **2026-02-11 Anthropic 規範優化**：依據官方 Skill 建立指南，全面調整 29 個 SKILL.md 結構與內容
+- 🔬 **2026-03-07 Skill-Creator 規範優化**：使用新版 skill-creator 檢視並優化全部 29 個 SKILL.md 的寫作風格與結構
 
 ---
 
@@ -487,6 +488,23 @@ graph LR
 
 ---
 
+## 2026-03-07 Skill-Creator 規範優化
+
+使用新版 skill-creator 工具對全部 29 個 SKILL.md 進行檢視與優化調整：
+
+| 優化項目 | 說明 | 影響範圍 |
+|---------|------|---------|
+| **移除 Emoji 裝飾** | 移除標題與內容中的裝飾性 emoji，採用乾淨專業的寫作風格 | ~20 個檔案 |
+| **AI 指引段落自然化** | 總覽技能的 AI Agent 指引改為自然語氣，用理解替代命令 | 2 個檔案 |
+| **DO/DON'T 風格調整** | 強硬的 DO/DON'T 段落改為「推薦做法」/「常見誤區」並補充理由 | 4 個檔案 |
+| **補齊 related skills** | 缺少相關技能段落的檔案補上「相關技能」資訊 | 10 個檔案 |
+| **流程範例精簡** | 移除冗餘的「錯誤流程」反面教材，僅保留正確流程範例 | 2 個檔案 |
+| **H1 標題一致性** | 統一半形/全形冒號使用 | 3 個檔案 |
+
+> 此次優化依據 Anthropic skill-creator 核心原則：「用解釋 WHY 取代強硬的 MUST」、「保持精簡」、「漸進式揭露」。
+
+---
+
 ## 2026-02-11 Anthropic 規範優化
 
 依據 Anthropic 官方「[The Complete Guide to Building Skills for Claude](https://claude.com/blog/complete-guide-to-building-skills-for-claude)」與「[Skill Authoring Best Practices](https://platform.claude.com/docs/agent-skills/skill-authoring-best-practices)」，對全部 29 個 SKILL.md 進行結構性優化：
@@ -585,5 +603,5 @@ MIT License - 自由使用與修改
 
 ---
 
-**作者**：Kevin Tseng  
-**最後更新**：2026-02-11  
+**作者**：Kevin Tseng
+**最後更新**：2026-03-07

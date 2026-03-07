@@ -28,9 +28,9 @@ description: |
 
 ## 命名範例對照表
 
-### ✅ 好的命名 vs ❌ 不好的命名
+### 好的命名 vs 不好的命名
 
-| ❌ 不好的命名 | ✅ 好的命名                                         | 原因                       |
+| 不好的命名 | 好的命名                                         | 原因                       |
 | ------------- | --------------------------------------------------- | -------------------------- |
 | `TestAdd`     | `Add_輸入1和2_應回傳3`                              | 清楚說明測試情境與預期結果 |
 | `Test1`       | `Add_輸入負數和正數_應回傳正確結果`                 | 有意義的描述               |
@@ -243,14 +243,14 @@ public void IsValidEmail_輸入無效Email格式_應回傳False(string invalidEm
 好的命名會讓測試報告更易讀：
 
 ```text
-✅ CalculatorTests
-   ✅ Add_輸入1和2_應回傳3
-   ✅ Add_輸入負數和正數_應回傳正確結果
-   ❌ Divide_輸入10和0_應拋出DivideByZeroException
-   
-✅ EmailHelperTests
-   ✅ IsValidEmail_輸入有效Email_應回傳True
-   ✅ IsValidEmail_輸入null值_應回傳False
+PASS CalculatorTests
+   PASS Add_輸入1和2_應回傳3
+   PASS Add_輸入負數和正數_應回傳正確結果
+   FAIL Divide_輸入10和0_應拋出DivideByZeroException
+
+PASS EmailHelperTests
+   PASS IsValidEmail_輸入有效Email_應回傳True
+   PASS IsValidEmail_輸入null值_應回傳False
 ```
 
 ## 輸出格式
@@ -273,3 +273,8 @@ public void IsValidEmail_輸入無效Email格式_應回傳False(string invalidEm
 - **Day 01 - 老派工程師的測試啟蒙**
   - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10373888
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day01
+
+### 相關技能
+
+- `dotnet-testing-unit-test-fundamentals` - 單元測試基礎
+- `dotnet-testing-xunit-project-setup` - xUnit 專案設定

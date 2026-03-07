@@ -196,7 +196,7 @@ var frenchFaker = new Faker<Person>("fr")
 
 涵蓋 Seed 可重現性控制、條件式產生與機率控制（`OrNull`、`PickRandomWeighted`）、關聯資料與巢狀物件、複雜業務邏輯約束，以及自訂 DataSet 擴充（如台灣在地資料產生器）。
 
-> 📖 完整內容請參閱 [references/advanced-features.md](references/advanced-features.md)
+> 完整內容請參閱 [references/advanced-features.md](references/advanced-features.md)
 
 ---
 

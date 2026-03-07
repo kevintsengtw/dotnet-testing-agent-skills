@@ -262,7 +262,7 @@ public class UserValidationTests
 
 ### 1. 提供合理的預設值
 
-**✅ 良好實踐：預設值讓物件處於有效狀態**
+**良好實踐：預設值讓物件處於有效狀態**
 
 ```csharp
 public class ProductBuilder
@@ -285,7 +285,7 @@ public class ProductBuilder
 
 ### 2. 使用語意化的命名
 
-**✅ 良好實踐：方法名稱表達測試意圖**
+**良好實踐：方法名稱表達測試意圖**
 
 ```csharp
 public static class UserScenarios
@@ -305,7 +305,7 @@ public static class UserScenarios
 
 ### 3. Builder 之間的組合
 
-**✅ 良好實踐：Builder 可以組合使用**
+**良好實踐：Builder 可以組合使用**
 
 ```csharp
 public class OrderBuilder
@@ -355,7 +355,7 @@ var order = new OrderBuilder()
 
 ### 4. 避免過度複雜化
 
-**❌ 不良實踐：Builder 過於複雜**
+**不良實踐：Builder 過於複雜**
 
 ```csharp
 // 避免在 Builder 中加入複雜的業務邏輯
@@ -374,7 +374,7 @@ public UserBuilder WithComplexValidation()
 }
 ```
 
-**✅ 良好實踐：保持 Builder 簡單**
+**良好實踐：保持 Builder 簡單**
 
 ```csharp
 // Builder 只負責建立物件，不包含業務邏輯
@@ -387,7 +387,7 @@ public UserBuilder WithShortDomainEmail()
 
 ### 5. 統一管理測試資料
 
-**✅ 良好實踐：建立共享的測試資料類別**
+**良好實踐：建立共享的測試資料類別**
 
 ```csharp
 public static class TestData
@@ -432,18 +432,18 @@ public void ProcessOrder_有效訂單_應成功處理()
 
 | 特性     | Test Data Builder           | Object Mother         |
 | -------- | --------------------------- | --------------------- |
-| 彈性     | ✅ 高度彈性，可針對測試調整 | ❌ 固定的測試資料     |
-| 可讀性   | ✅ 流暢介面，意圖明確       | ⚠️ 需要查看方法實作 |
-| 維護性   | ✅ 集中管理，易於修改       | ❌ 變更影響所有測試   |
+| 彈性     | 高度彈性，可針對測試調整 | 固定的測試資料     |
+| 可讀性   | 流暢介面，意圖明確       | 需要查看方法實作 |
+| 維護性   | 集中管理，易於修改       | 變更影響所有測試   |
 | 使用場景 | 單元測試、情境測試          | 簡單的整合測試        |
 
 ### Test Data Builder vs. AutoFixture
 
 | 特性       | Test Data Builder       | AutoFixture               |
 | ---------- | ----------------------- | ------------------------- |
-| 控制度     | ✅ 完全控制物件建立     | ⚠️ 自動產生，控制度較低 |
-| 設定複雜度 | ⚠️ 需手動建立 Builder | ✅ 幾乎零設定             |
-| 測試意圖   | ✅ 非常明確             | ⚠️ 需額外說明           |
+| 控制度     | 完全控制物件建立     | 自動產生，控制度較低 |
+| 設定複雜度 | 需手動建立 Builder | 幾乎零設定             |
+| 測試意圖   | 非常明確             | 需額外說明           |
 | 適用時機   | 需要精確控制的測試      | 大量資料產生、匿名測試    |
 
 > **建議**：Test Data Builder 和 AutoFixture 可以相輔相成。簡單情境使用 AutoFixture，複雜情境或需明確意圖時使用 Builder Pattern。

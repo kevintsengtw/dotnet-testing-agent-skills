@@ -73,7 +73,7 @@ public void TreeStructure_循環參照_應正確處理()
 
 AwesomeAssertions 還提供多種進階比對模式：動態欄位排除（排除時間戳記、自動生成欄位）、巢狀物件欄位排除、大量資料效能最佳化比對（選擇性屬性比對、抽樣驗證策略）、以及嚴格/寬鬆排序控制。
 
-> 📖 完整程式碼範例請參閱 [references/detailed-comparison-patterns.md](references/detailed-comparison-patterns.md)
+> 完整程式碼範例請參閱 [references/detailed-comparison-patterns.md](references/detailed-comparison-patterns.md)
 
 ## 比對選項速查表
 
@@ -199,7 +199,7 @@ public void MultipleComparisons_批次驗證_應一次顯示所有失敗()
 
 ## 最佳實踐建議
 
-### ✅ 推薦做法
+### 推薦做法
 
 1. **優先使用屬性排除而非包含**：除非只需驗證少數屬性，否則使用 `Excluding` 更清楚
 2. **建立可重用的排除擴充方法**：避免在每個測試重複排除邏輯
@@ -207,7 +207,7 @@ public void MultipleComparisons_批次驗證_應一次顯示所有失敗()
 4. **使用 AssertionScope 進行批次驗證**：一次看到所有失敗原因
 5. **提供有意義的 because 說明**：幫助未來維護者理解測試意圖
 
-### ❌ 避免做法
+### 避免做法
 
 1. **避免過度依賴完整物件比對**：考慮只驗證關鍵屬性
 2. **避免忽略循環參照問題**：使用 `IgnoringCyclicReferences()` 明確處理

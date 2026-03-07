@@ -46,7 +46,7 @@ using AwesomeAssertions;
 
 本節涵蓋 7 種核心測試模式，每種模式包含驗證器定義與完整測試範例。
 
-> 📖 完整程式碼範例請參考 [references/core-test-patterns.md](references/core-test-patterns.md)
+> 完整程式碼範例請參考 [references/core-test-patterns.md](references/core-test-patterns.md)
 
 - **模式 1：基本欄位驗證** — 使用 `TestValidate` + `ShouldHaveValidationErrorFor` / `ShouldNotHaveValidationErrorFor` 測試單一欄位規則
 - **模式 2：參數化測試** — 使用 `[Theory]` + `[InlineData]` 測試多種無效/有效輸入組合
@@ -101,7 +101,7 @@ public class UserValidatorTests
 
 ## 測試最佳實踐
 
-### ✅ 推薦做法
+### 推薦做法
 
 1. **使用參數化測試** - 用 Theory 測試多種輸入組合
 2. **測試邊界值** - 特別注意邊界條件
@@ -111,7 +111,7 @@ public class UserValidatorTests
 6. **清楚的測試命名** - 使用 `方法_情境_預期結果` 格式
 7. **測試錯誤訊息** - 確保使用者看到正確的錯誤訊息
 
-### ❌ 避免做法
+### 避免做法
 
 1. **避免使用 DateTime.Now** - 會導致測試不穩定
 2. **避免測試過度耦合** - 每個測試只驗證一個規則

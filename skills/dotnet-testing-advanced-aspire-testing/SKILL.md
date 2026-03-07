@@ -335,3 +335,9 @@ const string sql = @"
 - `templates/controller-tests.cs` - 控制器測試範例
 - `templates/test-project.csproj` - 測試專案設定
 - `templates/apphost-project.csproj` - AppHost 專案設定
+
+### 相關技能
+
+- `dotnet-testing-advanced-testcontainers-database` - Testcontainers 資料庫測試
+- `dotnet-testing-advanced-testcontainers-nosql` - Testcontainers NoSQL 測試
+- `dotnet-testing-advanced-webapi-integration-testing` - 完整 WebAPI 整合測試

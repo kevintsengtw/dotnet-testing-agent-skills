@@ -368,7 +368,7 @@ public class GeneratedCode
 
 覆蓋率分析可整合至 CI/CD Pipeline，在 GitHub Actions 中使用 `dotnet test --collect:"XPlat Code Coverage"` 搭配 `reportgenerator` 產生報告；在 Azure DevOps 中使用 `DotNetCoreCLI@2` 任務搭配 `PublishCodeCoverageResults@1`。
 
-> 📖 完整 YAML 設定範例請參閱 [references/cicd-integration.md](references/cicd-integration.md)
+> 完整 YAML 設定範例請參閱 [references/cicd-integration.md](references/cicd-integration.md)
 
 ## 常見問題與解決方案
 

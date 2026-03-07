@@ -53,7 +53,7 @@ using Microsoft.Extensions.Logging;
 | **Spy** | 記錄呼叫，事後驗證 | `.Received()` 驗證 |
 | **Mock** | 預設期望互動，未滿足則測試失敗 | `.Received(n)` 嚴格驗證 |
 
-> 📖 各類型的完整程式碼範例請參閱 [references/test-double-types.md](references/test-double-types.md)
+> 各類型的完整程式碼範例請參閱 [references/test-double-types.md](references/test-double-types.md)
 
 ## NSubstitute 核心功能
 
@@ -168,7 +168,7 @@ Received.InOrder(() =>
 | 模式 4：ILogger 驗證 | 驗證底層 `Log` 方法繞過擴展方法限制 |
 | 模式 5：複雜設定管理 | 基底測試類別管理共用 Substitute 設定 |
 
-> 📖 完整程式碼範例請參閱 [references/practical-patterns.md](references/practical-patterns.md)
+> 完整程式碼範例請參閱 [references/practical-patterns.md](references/practical-patterns.md)
 
 ## 引數匹配進階技巧
 

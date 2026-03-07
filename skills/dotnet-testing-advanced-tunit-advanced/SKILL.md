@@ -12,7 +12,7 @@ description: |
 
 TUnit 提供 MethodDataSource、ClassDataSource、Matrix Tests 三種進階資料來源。MethodDataSource 最靈活，支援動態產生與外部檔案載入；ClassDataSource 適合跨測試類別共享資料與 AutoFixture 整合；Matrix Tests 自動產生所有參數組合（注意控制數量避免爆炸性增長）。
 
-> 📖 完整範例與比較表請參閱 [references/data-driven-testing.md](references/data-driven-testing.md)
+> 完整範例與比較表請參閱 [references/data-driven-testing.md](references/data-driven-testing.md)
 
 ---
 
@@ -110,7 +110,7 @@ dotnet run --treenode-filter "/*/*/*/*[Feature=OrderProcessing]"
 
 TUnit 提供完整的生命週期鉤子：`[Before(Class)]` → 建構式 → `[Before(Test)]` → 測試方法 → `[After(Test)]` → Dispose → `[After(Class)]`。另有 Assembly/TestSession 層級與 `[BeforeEvery]`/`[AfterEvery]` 全域鉤子。建構式永遠最先執行，BeforeClass/AfterClass 各只執行一次。
 
-> 📖 完整屬性家族與範例請參閱 [references/lifecycle-management.md](references/lifecycle-management.md)
+> 完整屬性家族與範例請參閱 [references/lifecycle-management.md](references/lifecycle-management.md)
 
 ---
 
@@ -200,7 +200,7 @@ public class DependencyInjectionTests(OrderService orderService)
 - **`[Timeout(ms)]`**：為效能敏感測試設定合理上限，搭配 `Stopwatch` 驗證 SLA
 - **`[DisplayName]`**：支援 `{0}` 參數插值，讓測試報告更貼近業務語言
 
-> 📖 完整範例（Retry/Timeout/DisplayName）請參閱 [references/execution-control.md](references/execution-control.md)
+> 完整範例（Retry/Timeout/DisplayName）請參閱 [references/execution-control.md](references/execution-control.md)
 
 ---
 
@@ -208,7 +208,7 @@ public class DependencyInjectionTests(OrderService orderService)
 
 在 TUnit 中使用 `WebApplicationFactory<Program>` 進行 ASP.NET Core 整合測試，透過實作 `IDisposable` 管理生命週期。涵蓋 API 回應驗證、Content-Type 標頭檢查，以及效能基準與並行負載測試。
 
-> 📖 完整 WebApplicationFactory 整合與負載測試範例請參閱 [references/aspnet-integration.md](references/aspnet-integration.md)
+> 完整 WebApplicationFactory 整合與負載測試範例請參閱 [references/aspnet-integration.md](references/aspnet-integration.md)
 
 ---
 
@@ -216,7 +216,7 @@ public class DependencyInjectionTests(OrderService orderService)
 
 使用 `[Before(Assembly)]` / `[After(Assembly)]` 在 Assembly 層級管理 PostgreSQL、Redis、Kafka 等多容器編排，搭配 `NetworkBuilder` 建立共用網路。容器僅啟動一次，大幅減少啟動時間與資源消耗，同時保持測試間的資料隔離。
 
-> 📖 完整多容器編排與全域共享範例請參閱 [references/tunit-testcontainers.md](references/tunit-testcontainers.md)
+> 完整多容器編排與全域共享範例請參閱 [references/tunit-testcontainers.md](references/tunit-testcontainers.md)
 
 ---
 
@@ -419,3 +419,9 @@ tunit.enable_verbose_diagnostics = true
 
 - [Testcontainers.NET 官方網站](https://dotnet.testcontainers.org/)
 - [Testcontainers.NET GitHub](https://github.com/testcontainers/testcontainers-dotnet)
+
+### 相關技能
+
+- `dotnet-testing-advanced-tunit-fundamentals` - TUnit 基礎（前置技能）
+- `dotnet-testing-advanced-aspnet-integration-testing` - ASP.NET Core 整合測試
+- `dotnet-testing-advanced-testcontainers-database` - Testcontainers 資料庫測試

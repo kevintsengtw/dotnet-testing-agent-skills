@@ -488,3 +488,8 @@ xUnit 3.x 帶來的效能改進：
 - [xUnit v3 新功能文件](https://xunit.net/docs/getting-started/v3/whats-new)
 - [xUnit 2.x → 3.x 官方遷移指南](https://xunit.net/docs/getting-started/v3/migration)
 - [xunit.v3 NuGet 套件](https://www.nuget.org/packages/xunit.v3)
+
+### 相關技能
+
+- `dotnet-testing-xunit-project-setup` - xUnit 專案設定基礎
+- `dotnet-testing-advanced-tunit-fundamentals` - TUnit 替代框架

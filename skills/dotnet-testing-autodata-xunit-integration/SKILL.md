@@ -6,7 +6,7 @@ description: |
   Keywords: AutoData, InlineAutoData, AutoFixture xUnit, [AutoData], [InlineAutoData], AutoDataAttribute, ICustomization, DataAttribute, 參數化測試, Theory AutoData, MemberAutoData, 測試資料屬性, fixture.Customize
 ---
 
-# AutoData 屬性家族:xUnit 與 AutoFixture 的整合應用
+# AutoData 屬性家族：xUnit 與 AutoFixture 的整合應用
 
 ## 概述
 

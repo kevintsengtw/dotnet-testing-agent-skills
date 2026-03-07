@@ -307,21 +307,21 @@ public void GetTimeBasedDiscount_週五_應回傳九折優惠(
 
 ## 最佳實踐檢查清單
 
-### ✅ 程式碼設計
+### 程式碼設計
 
 - [ ] 所有時間相依類別透過建構式接收 `TimeProvider`
 - [ ] 使用 `_timeProvider.GetLocalNow()` 取代 `DateTime.Now`
 - [ ] 使用 `_timeProvider.GetUtcNow()` 取代 `DateTime.UtcNow`
 - [ ] DI 容器註冊 `TimeProvider.System` 作為生產環境實作
 
-### ✅ 測試設計
+### 測試設計
 
 - [ ] 每個測試方法使用獨立的 `FakeTimeProvider` 實例
 - [ ] 使用 `SetLocalNow()` 擴充方法簡化時間設定
 - [ ] 使用 `Advance()` 測試時間敏感邏輯（快取、過期、延遲）
 - [ ] 測試涵蓋邊界條件（開始時間、結束時間、臨界點）
 
-### ✅ 進階考量
+### 進階考量
 
 - [ ] FakeTimeProvider 是執行緒安全的，可用於並行測試
 - [ ] 使用 `IDisposable` 模式正確釋放 FakeTimeProvider

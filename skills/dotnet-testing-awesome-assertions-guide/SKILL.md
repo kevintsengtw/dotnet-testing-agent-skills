@@ -16,12 +16,12 @@ description: |
 
 ### 核心特色
 
-- ✅ **完全免費**：Apache 2.0 授權，適合商業專案使用
-- 🔗 **流暢語法**：支援方法鏈結的自然語言風格
-- 📦 **豐富斷言**：涵蓋物件、集合、字串、數值、例外等各種類型
-- 💬 **優秀錯誤訊息**：提供詳細且易理解的失敗資訊
-- ⚡ **高性能**：優化的實作確保測試執行效率
-- 🔧 **可擴展**：支援自訂 Assertions 方法
+- **完全免費**：Apache 2.0 授權，適合商業專案使用
+- **流暢語法**：支援方法鏈結的自然語言風格
+- **豐富斷言**：涵蓋物件、集合、字串、數值、例外等各種類型
+- **優秀錯誤訊息**：提供詳細且易理解的失敗資訊
+- **高性能**：優化的實作確保測試執行效率
+- **可擴展**：支援自訂 Assertions 方法
 
 ### 與 FluentAssertions 的關係
 
@@ -78,7 +78,7 @@ using Xunit;
 | **例外** | `Throw<T>()`, `NotThrow()`, `WithMessage()`, `WithInnerException()` | 例外類型、訊息、巢狀例外 |
 | **非同步** | `ThrowAsync<T>()`, `CompleteWithinAsync()` | 非同步例外與完成驗證 |
 
-> 📖 完整語法範例與程式碼請參閱 [references/core-assertions-syntax.md](references/core-assertions-syntax.md)
+> 完整語法範例與程式碼請參閱 [references/core-assertions-syntax.md](references/core-assertions-syntax.md)
 
 ---
 
@@ -98,7 +98,7 @@ using Xunit;
 
 參考 [templates/custom-assertions-template.cs](templates/custom-assertions-template.cs) 瞭解完整實作。
 
-> 📖 完整範例請參閱 [references/complex-object-assertions.md](references/complex-object-assertions.md)
+> 完整範例請參閱 [references/complex-object-assertions.md](references/complex-object-assertions.md)
 
 ---
 
@@ -156,7 +156,7 @@ using (new AssertionScope())
 | 資料庫實體驗證 | `BeEquivalentTo()` + `Excluding()` 排除自動生成欄位 |
 | 事件驗證 | 訂閱捕獲事件後逐一驗證屬性 |
 
-> 📖 完整程式碼範例請參閱 [references/common-scenarios.md](references/common-scenarios.md)
+> 完整程式碼範例請參閱 [references/common-scenarios.md](references/common-scenarios.md)
 
 ---
 
@@ -208,17 +208,17 @@ actualValue.Should().BeApproximately(expectedValue, 0.001);
 
 ### 適用情境
 
-✅ 撰寫單元測試或整合測試時
-✅ 需要驗證複雜物件結構時
-✅ 比對 API 回應或資料庫實體時
-✅ 需要清晰的失敗訊息時
-✅ 建立領域特定測試標準時
+撰寫單元測試或整合測試時
+需要驗證複雜物件結構時
+比對 API 回應或資料庫實體時
+需要清晰的失敗訊息時
+建立領域特定測試標準時
 
 ### 不適用情境
 
-❌ 效能測試（使用專用 benchmarking 工具）
-❌ 負載測試（使用 K6、JMeter 等）
-❌ UI 測試（使用 Playwright、Selenium）
+效能測試（使用專用 benchmarking 工具）
+負載測試（使用 K6、JMeter 等）
+UI 測試（使用 Playwright、Selenium）
 
 ---
 

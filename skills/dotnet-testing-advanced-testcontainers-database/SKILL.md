@@ -349,13 +349,13 @@ var sqlServer = new MsSqlBuilder()
 
 涵蓋 Include/ThenInclude 多層關聯查詢、AsSplitQuery 避免笛卡兒積、N+1 查詢問題驗證、AsNoTracking 唯讀查詢最佳化等完整測試範例。
 
-> 📖 完整程式碼範例請參考 [references/orm-advanced-testing.md](references/orm-advanced-testing.md#ef-core-進階功能測試)
+> 完整程式碼範例請參考 [references/orm-advanced-testing.md](references/orm-advanced-testing.md#ef-core-進階功能測試)
 
 ## Dapper 進階功能測試
 
 涵蓋基本 CRUD 測試類別設置、QueryMultiple 一對多關聯處理、DynamicParameters 動態查詢建構等完整測試範例。
 
-> 📖 完整程式碼範例請參考 [references/orm-advanced-testing.md](references/orm-advanced-testing.md#dapper-進階功能測試)
+> 完整程式碼範例請參考 [references/orm-advanced-testing.md](references/orm-advanced-testing.md#dapper-進階功能測試)
 
 ## Repository Pattern 設計原則
 
@@ -462,3 +462,9 @@ public void Dispose()
 - [Testcontainers 官方網站](https://testcontainers.com/)
 - [Testcontainers for .NET](https://dotnet.testcontainers.org/)
 - [Testcontainers for .NET / Modules](https://dotnet.testcontainers.org/modules/)
+
+### 相關技能
+
+- `dotnet-testing-advanced-testcontainers-nosql` - NoSQL 容器測試（MongoDB、Redis）
+- `dotnet-testing-advanced-webapi-integration-testing` - 完整 WebAPI 整合測試
+- `dotnet-testing-advanced-aspnet-integration-testing` - ASP.NET Core 基礎整合測試

@@ -223,8 +223,8 @@ dotnet test --verbosity detailed
 ### 參考方向規則
 
 ```text
-測試專案 → 主專案   ✅ 正確
-主專案 → 測試專案   ❌ 錯誤
+測試專案 → 主專案   （正確）
+主專案 → 測試專案   （錯誤）
 ```
 
 **測試專案應該參考主專案，但主專案絕對不應參考測試專案。**
@@ -327,7 +327,7 @@ dotnet new xunit -n MyProject.WebApi.Test.Integration -o tests/MyProject.WebApi.
 dotnet add tests/MyProject.WebApi.Test.Integration reference src/MyProject.WebApi
 ```
 
-> **💡 提示**：雖然本範例中為了簡化說明使用 `.Tests` 格式，但在實際專案中強烈建議使用 `.Test.Unit` 和 `.Test.Integration` 這種更明確的格式。
+> **提示**：雖然本範例中為了簡化說明使用 `.Tests` 格式，但在實際專案中強烈建議使用 `.Test.Unit` 和 `.Test.Integration` 這種更明確的格式。
 
 ## 常見問題與解決方案
 

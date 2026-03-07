@@ -8,33 +8,17 @@ description: |
 
 # .NET 測試基礎技能總覽
 
----
+本檔案是「導航中心」，幫助找到正確的子技能。子技能包含詳細的程式碼範例、最佳實踐和常見陷阱，載入正確的子技能能確保使用者獲得最完整的指引。
 
-## 🤖 AI Agent 重要提示
-
-**當您（AI Agent）被載入此入口 skill 時，請先閱讀以下指引**：
-
-### 📋 本技能的定位
-
-本檔案是「導航中心」，用於幫助找到正確的**子技能**。
-
-#### 您的任務是
-
-1. ✅ 根據使用者需求匹配對應的子技能
-2. ✅ 使用 `Skill` tool 載入具體的子技能
-3. ✅ 讓子技能提供專業的測試指引
-
-#### 為什麼要載入子技能
-
-子技能包含詳細的程式碼範例、最佳實踐和常見陷阱。直接在本入口 skill 中提供測試程式碼會遺漏這些重要細節，導致品質不一致。載入正確的子技能能確保使用者獲得最完整的指引。
+根據使用者需求匹配對應的子技能，使用 Skill tool 載入，讓子技能提供專業的測試指引。
 
 ---
 
-## 🎯 快速技能對照表（AI Agent 必讀）
+## 快速技能對照表
 
 **使用者提到的關鍵字 → 應載入的子技能**
 
-### 最常用技能（必須熟記）
+### 最常用技能
 
 | 使用者說... | 載入指令 | 用途說明 |
 |------------|----------|----------|
@@ -68,9 +52,7 @@ description: |
 
 ---
 
-## ⚠️ 使用流程範例
-
-### ✅ 正確流程
+## 使用流程範例
 
 ```
 使用者：請幫我建立 CreateUserValidator 的測試
@@ -83,17 +65,9 @@ AI：我注意到您需要測試 Validator。根據快速對照表，
 AI：現在按照 FluentValidation Testing skill 的指引為您建立測試...
 ```
 
-### ❌ 錯誤流程
-
-```
-使用者：請幫我建立 CreateUserValidator 的測試
-
-AI：好的，我來寫測試...（直接開始寫程式碼，沒有載入子技能）
-```
-
 ---
 
-## 📚 完整技能清單
+## 完整技能清單
 
 如需查看完整的 19 個基礎技能清單、詳細決策樹、學習路徑建議，請繼續閱讀本檔案後續內容。
 
@@ -194,25 +168,25 @@ AI：好的，我來寫測試...（直接開始寫程式碼，沒有載入子技
 
 將 19 個基礎技能分為 7 大類別（測試基礎、測試資料生成、測試替身、斷言驗證、特殊場景、測試度量、框架整合），每類包含技能對照表、學習路徑與程式碼範例。
 
-> 📖 詳細內容請參閱 [references/skill-classification-map.md](references/skill-classification-map.md)
+> 詳細內容請參閱 [references/skill-classification-map.md](references/skill-classification-map.md)
 
 ## 常見任務映射表
 
 提供 7 個常見測試任務（從零建專案、服務依賴測試、時間邏輯測試等）的技能組合推薦、實施步驟與提示詞範例。
 
-> 📖 詳細內容請參閱 [references/task-mapping-table.md](references/task-mapping-table.md)
+> 詳細內容請參閱 [references/task-mapping-table.md](references/task-mapping-table.md)
 
 ## 學習路徑建議
 
 規劃新手路徑（1-2 週）與進階路徑（2-3 週）的每日學習計畫，包含技能、學習重點與實作練習。
 
-> 📖 詳細內容請參閱 [references/learning-paths.md](references/learning-paths.md)
+> 詳細內容請參閱 [references/learning-paths.md](references/learning-paths.md)
 
 ## 引導對話範例
 
 展示 AI 如何與您互動，幫助您選擇正確的技能，包含新手入門、處理依賴、特定問題、改善測試等 4 個常見對話場景。
 
-> 📖 詳細內容請參閱 [references/conversation-examples.md](references/conversation-examples.md)
+> 詳細內容請參閱 [references/conversation-examples.md](references/conversation-examples.md)
 
 ## 與進階技能的關係
 
@@ -235,7 +209,7 @@ AI：好的，我來寫測試...（直接開始寫程式碼，沒有載入子技
 ### 原始資料來源
 
 - **iThome 鐵人賽系列文章**：[老派軟體工程師的測試修練 - 30 天挑戰](https://ithelp.ithome.com.tw/users/20066083/ironman/8276)
-  🏆 2025 iThome 鐵人賽 Software Development 組冠軍
+  2025 iThome 鐵人賽 Software Development 組冠軍
 
 - **完整範例程式碼**：[30Days_in_Testing_Samples](https://github.com/kevintsengtw/30Days_in_Testing_Samples)
   包含所有範例專案的可執行程式碼

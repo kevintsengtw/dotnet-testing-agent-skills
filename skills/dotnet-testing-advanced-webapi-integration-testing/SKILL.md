@@ -115,7 +115,7 @@ RFC 7807 定義的統一錯誤回應格式：
 
 FluentValidation 異常處理器實作 `IExceptionHandler` 介面，專門處理 `ValidationException`，將驗證錯誤轉換為標準的 `ValidationProblemDetails` 格式回應。處理器之間按照註冊順序執行，特定處理器（如 FluentValidation）必須在全域處理器之前註冊。
 
-> 📖 完整實作程式碼請參閱 [references/exception-handler-details.md](references/exception-handler-details.md)
+> 完整實作程式碼請參閱 [references/exception-handler-details.md](references/exception-handler-details.md)
 
 ## 整合測試基礎設施
 
@@ -474,3 +474,10 @@ tests/
 - [AwesomeAssertions](https://awesomeassertions.org/)
 - [Flurl HTTP Client](https://flurl.dev/)
 - [Respawn](https://github.com/jbogard/Respawn)
+
+### 相關技能
+
+- `dotnet-testing-advanced-aspnet-integration-testing` - ASP.NET Core 基礎整合測試
+- `dotnet-testing-advanced-testcontainers-database` - 資料庫容器測試
+- `dotnet-testing-advanced-testcontainers-nosql` - NoSQL 容器測試
+- `dotnet-testing-fluentvalidation-testing` - FluentValidation 測試

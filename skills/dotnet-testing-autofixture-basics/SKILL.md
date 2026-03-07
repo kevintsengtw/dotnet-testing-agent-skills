@@ -6,7 +6,7 @@ description: |
   Keywords: autofixture, fixture, 自動產生測試資料, test data generation, anonymous testing, 匿名測試, fixture.Create, CreateMany, fixture.Build, Create<T>, AutoFixture.Xunit2, OmitOnRecursionBehavior, IFixture, 產生測試資料, generate test data
 ---
 
-# AutoFixture 基礎:自動產生測試資料
+# AutoFixture 基礎：自動產生測試資料
 
 ## 安裝套件
 
@@ -392,7 +392,7 @@ var order = fixture.Build<Order>()
 
 AutoFixture 在實務中常用於 Entity 測試（搭配 Theory 驗證不同輸入場景）、DTO 驗證（使用 `Build<T>()` 產生符合驗證規則的資料）、以及大量資料測試（使用 `CreateMany()` 產生批次資料）。
 
-> 📖 完整程式碼範例請參閱 [references/practical-scenarios.md](references/practical-scenarios.md)
+> 完整程式碼範例請參閱 [references/practical-scenarios.md](references/practical-scenarios.md)
 
 ## 最佳實踐
 
@@ -464,3 +464,11 @@ public static class TestDataFactory
 - [AutoFixture 官方網站](https://autofixture.github.io/)
 - [AutoFixture 快速入門](https://autofixture.github.io/docs/quick-start/)
 - [AutoFixture NuGet](https://www.nuget.org/packages/autofixture)
+
+### 相關技能
+
+- `dotnet-testing-autofixture-customization` - AutoFixture 進階自訂
+- `dotnet-testing-autofixture-bogus-integration` - AutoFixture + Bogus 整合
+- `dotnet-testing-autofixture-nsubstitute-integration` - AutoFixture + NSubstitute 整合
+- `dotnet-testing-autodata-xunit-integration` - AutoData 與 xUnit 整合
+- `dotnet-testing-test-data-builder-pattern` - Test Data Builder Pattern

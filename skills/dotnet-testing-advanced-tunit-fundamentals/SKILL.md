@@ -254,7 +254,7 @@ await Assert.That(email).Contains("@").And.EndsWith(".com");
 await Assert.That(() => action()).Throws<InvalidOperationException>();
 ```
 
-> 📖 完整斷言類型與範例請參閱 [TUnit 斷言系統詳細說明](references/tunit-assertions-detail.md)
+> 完整斷言類型與範例請參閱 [TUnit 斷言系統詳細說明](references/tunit-assertions-detail.md)
 
 ---
 
@@ -266,7 +266,7 @@ TUnit 支援建構式 / `Dispose` 模式，以及 `[Before(Test)]`、`[Before(Cl
 執行順序：Before(Class) → 建構式 → Before(Test) → 測試方法 → After(Test) → Dispose → After(Class)
 ```
 
-> 📖 完整生命週期範例與屬性對照表請參閱 [生命週期管理詳細說明](references/lifecycle-management.md)
+> 完整生命週期範例與屬性對照表請參閱 [生命週期管理詳細說明](references/lifecycle-management.md)
 
 ---
 
@@ -482,3 +482,9 @@ dotnet publish -c Release -p:PublishAot=true
 
 - [Microsoft.Testing.Platform 介紹](https://learn.microsoft.com/dotnet/core/testing/microsoft-testing-platform-intro)
 - [原生 AOT 部署](https://learn.microsoft.com/zh-tw/dotnet/core/deploying/native-aot)
+
+### 相關技能
+
+- `dotnet-testing-advanced-tunit-advanced` - TUnit 進階功能
+- `dotnet-testing-advanced-xunit-upgrade-guide` - xUnit 升級指南
+- `dotnet-testing-xunit-project-setup` - xUnit 專案設定（比較用）

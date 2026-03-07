@@ -6,7 +6,7 @@ description: |
   Keywords: autofixture customization, autofixture customize, autofixture 自訂, specimen builder, ISpecimenBuilder, RandomDateTimeSequenceGenerator, NumericRangeBuilder, DataAnnotations autofixture, fixture.Customizations, Insert(0), 自訂建構器, NoSpecimen, 泛型化建構器
 ---
 
-# AutoFixture 進階:自訂化測試資料生成策略
+# AutoFixture 進階：自訂化測試資料生成策略
 
 ## 概述
 
@@ -118,7 +118,7 @@ public void With方法_固定值vs動態值的差異()
 | 特性       | `new Random()`             | `Random.Shared`      |
 | ---------- | -------------------------- | -------------------- |
 | 實例化方式 | 每次建立新實例             | 全域共用單一實例     |
-| 執行緒安全 | ❌ 不是                    | ✅ 是                |
+| 執行緒安全 | 不是                    | 是                |
 | 效能       | 多次建立有負擔，可能重複值 | 效能更佳，避免重複值 |
 | 用途建議   | 單執行緒、短期用途         | 多執行緒、全域共用   |
 

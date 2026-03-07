@@ -70,7 +70,7 @@ var user = integratedFixture.Create<User>();
 
 透過 `ISpecimenBuilder` 介面實現屬性層級與類型層級的整合，搭配擴充方法（`WithBogus()`、`WithOmitOnRecursion()`、`WithSeed()`）簡化設定流程。涵蓋 Email、Phone、Name、Address 等常用 SpecimenBuilder 以及完整的類型產生器註冊模式。
 
-> 📖 完整內容請參閱 [references/core-integration-techniques.md](references/core-integration-techniques.md)
+> 完整內容請參閱 [references/core-integration-techniques.md](references/core-integration-techniques.md)
 
 ---
 

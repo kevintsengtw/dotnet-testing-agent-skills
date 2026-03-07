@@ -126,7 +126,7 @@ public void Add_輸入負數和正數_應回傳正確結果()
 | `IsValidEmail_輸入null值_應回傳False`          | 測試無效輸入 |
 | `GetDomain_輸入有效Email_應回傳網域名稱`       | 測試回傳值   |
 
-> 💡 **提示**：使用中文命名可以讓測試報告更易讀，特別是在團隊溝通時。
+> **提示**：使用中文命名可以讓測試報告更易讀，特別是在團隊溝通時。
 
 ## xUnit 測試屬性
 
@@ -292,3 +292,9 @@ Solution/
 - **Day 01 - 老派工程師的測試啟蒙**
   - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10373888
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day01
+
+### 相關技能
+
+- `dotnet-testing-test-naming-conventions` - 測試命名規範
+- `dotnet-testing-xunit-project-setup` - xUnit 專案設定
+- `dotnet-testing-awesome-assertions-guide` - 流暢斷言

@@ -82,7 +82,7 @@ NoSQL 資料庫測試與關聯式資料庫有顯著差異：
 
 涵蓋 MongoDB Container Fixture 建立、複雜文件模型設計（巢狀物件、陣列、字典）、BSON 序列化測試、CRUD 操作測試（含樂觀鎖定）以及索引效能與唯一性約束測試。使用 Collection Fixture 模式共享容器，節省 80% 以上的測試時間。
 
-> 📖 完整程式碼範例請參考 [MongoDB 容器化測試詳細指南](references/mongodb-testing.md)
+> 完整程式碼範例請參考 [MongoDB 容器化測試詳細指南](references/mongodb-testing.md)
 
 ---
 
@@ -90,7 +90,7 @@ NoSQL 資料庫測試與關聯式資料庫有顯著差異：
 
 涵蓋 Redis Container Fixture 建立、快取模型設計（CacheItem 泛型包裝器、UserSession、RecentView、LeaderboardEntry）以及 Redis 五種資料結構（String、Hash、List、Set、Sorted Set）的完整測試範例，包含 TTL 過期測試與資料隔離策略。
 
-> 📖 完整程式碼範例請參考 [Redis 容器化測試詳細指南](references/redis-testing.md)
+> 完整程式碼範例請參考 [Redis 容器化測試詳細指南](references/redis-testing.md)
 
 ---
 

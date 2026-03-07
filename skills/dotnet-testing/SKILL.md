@@ -2,15 +2,8 @@
 name: dotnet-testing
 description: |
   .NET 測試基礎技能總覽與引導中心。當使用者詢問「如何寫 .NET 測試」、「.NET 測試入門」、「需要哪些測試工具」、「測試最佳實踐」、「從零開始學測試」等一般性測試需求時觸發。會根據具體需求推薦適合的子技能組合，涵蓋測試基礎、測試資料、斷言、模擬、特殊場景等 19 個基礎技能。
+  Make sure to use this skill whenever the user asks about .NET testing in general, wants to know which testing tool to use, or needs guidance on getting started with testing, even if they don't explicitly ask for an overview.
   Keywords: dotnet testing, .NET 測試, 測試入門, 如何寫測試, 測試最佳實踐, unit test, 單元測試, xunit, 3A pattern, FIRST 原則, assertion, 斷言, mock, stub, NSubstitute, test data, AutoFixture, Bogus, validator, FluentValidation, TimeProvider, IFileSystem, code coverage, ITestOutputHelper, test naming
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, xUnit, overview, guide, fundamentals"
-  related_skills: "dotnet-testing-advanced"
-  skill_count: 19
-  skill_type: "overview"
 ---
 
 # .NET 測試基礎技能總覽
@@ -31,11 +24,9 @@ metadata:
 2. ✅ 使用 `Skill` tool 載入具體的子技能
 3. ✅ 讓子技能提供專業的測試指引
 
-#### 禁止行為
+#### 為什麼要載入子技能
 
-- ❌ 不要在本入口 skill 中直接提供測試程式碼
-- ❌ 不要在沒有載入子技能的情況下開始實作測試
-- ❌ 不要跳過子技能直接提供「一般性」測試建議
+子技能包含詳細的程式碼範例、最佳實踐和常見陷阱。直接在本入口 skill 中提供測試程式碼會遺漏這些重要細節，導致品質不一致。載入正確的子技能能確保使用者獲得最完整的指引。
 
 ---
 
@@ -109,18 +100,6 @@ AI：好的，我來寫測試...（直接開始寫程式碼，沒有載入子技
 **人類開發者參考**：如需快速查找，請查看 [SKILLS_QUICK_INDEX.md](/SKILLS_QUICK_INDEX.md)
 
 ---
-
-## 適用情境
-
-當您遇到以下情況時，我會協助您找到正確的技能：
-
-- 剛開始學習 .NET 測試，不知從何下手
-- 想為現有專案建立測試，需要完整指引
-- 需要改善測試品質，尋找最佳實踐
-- 遇到特定測試場景，不確定該用哪個工具
-- 想了解測試資料生成、斷言、模擬等技術
-- 希望提升測試可讀性與維護性
-- 需要處理時間、檔案系統等特殊測試場景
 
 ## 快速決策樹
 
@@ -244,6 +223,12 @@ AI：好的，我來寫測試...（直接開始寫程式碼，沒有載入子技
 - 容器化測試（Testcontainers）
 - 微服務測試（.NET Aspire）
 - 測試框架升級與遷移
+
+## 輸出格式
+
+- 根據使用者需求推薦具體的子技能名稱與載入指令
+- 提供簡短的推薦理由說明為何選擇該技能
+- 若涉及多個技能組合，列出建議的學習順序
 
 ## 相關資源
 

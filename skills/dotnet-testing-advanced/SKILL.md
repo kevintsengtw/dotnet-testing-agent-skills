@@ -2,15 +2,8 @@
 name: dotnet-testing-advanced
 description: |
   .NET 進階測試技能總覽與引導中心。當使用者詢問「整合測試」、「API 測試」、「容器化測試」、「微服務測試」、「測試框架遷移」、「Testcontainers」、「Aspire 測試」等進階測試需求時觸發。會根據具體需求推薦適合的子技能組合，涵蓋整合測試、Testcontainers、Aspire 測試、框架升級等 8 個進階技能。
+  Make sure to use this skill whenever the user mentions integration testing, API testing, Testcontainers, .NET Aspire testing, WebApplicationFactory, or xUnit/TUnit migration, even if they don't explicitly ask for advanced testing guidance.
   Keywords: integration testing, 整合測試, API testing, advanced testing, 進階測試, testcontainers, aspire testing, WebApplicationFactory, TestServer, database test, 資料庫測試, EF Core test, MongoDB test, Redis test, Docker test, 容器測試, microservice test, 微服務測試, .NET Aspire, xUnit upgrade, TUnit, framework migration
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, integration, advanced, testcontainers, aspire"
-  related_skills: "dotnet-testing"
-  skill_count: 8
-  skill_type: "overview"
 ---
 
 # .NET 進階測試技能總覽
@@ -31,11 +24,9 @@ metadata:
 2. ✅ 使用 `Skill` tool 載入具體的子技能
 3. ✅ 讓子技能提供專業的整合測試指引
 
-#### 禁止行為
+#### 為什麼要載入子技能
 
-- ❌ 不要在本入口 skill 中直接提供整合測試程式碼
-- ❌ 不要在沒有載入子技能的情況下開始實作測試
-- ❌ 不要跳過子技能直接提供「一般性」整合測試建議
+進階測試涉及容器管理、WebApplicationFactory 設定等複雜細節。子技能包含完整的設定指引和常見問題排解。直接提供程式碼容易遺漏關鍵配置步驟，載入正確的子技能能確保使用者獲得完整指引。
 
 ---
 
@@ -109,18 +100,6 @@ AI：好的，我來寫整合測試...（直接開始寫程式碼，沒有載入
 **人類開發者參考**：如需快速查找，請查看 [SKILLS_QUICK_INDEX.md](/SKILLS_QUICK_INDEX.md)
 
 ---
-
-## 適用情境
-
-當您需要以下進階測試能力時，我會協助您找到正確的技能：
-
-- 測試完整的 Web API 端點與 HTTP 流程
-- 在測試中使用真實的資料庫（容器化）
-- 測試 NoSQL 資料庫（MongoDB、Redis 等）
-- 測試微服務架構與分散式系統
-- 升級測試框架版本（xUnit 2.x → 3.x）
-- 遷移到新測試框架（TUnit）
-- 建立端到端的整合測試
 
 ## 快速決策樹
 
@@ -378,6 +357,12 @@ AI：好的，我來寫整合測試...（直接開始寫程式碼，沒有載入
 先完成 `dotnet-testing` 基礎技能集的核心技能，再進入本進階技能集。
 
 ---
+
+## 輸出格式
+
+- 根據使用者需求推薦具體的進階子技能名稱與載入指令
+- 提供簡短的推薦理由說明為何選擇該技能
+- 若涉及多個技能組合，列出建議的學習順序
 
 ## 相關資源
 

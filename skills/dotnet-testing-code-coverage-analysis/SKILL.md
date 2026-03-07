@@ -2,27 +2,11 @@
 name: dotnet-testing-code-coverage-analysis
 description: |
   程式碼覆蓋率分析完整指南。當需要分析程式碼覆蓋率、產生覆蓋率報告或設定 CI/CD 覆蓋率檢查時使用。涵蓋 Coverlet 設定、報告產生、指標解讀與循環複雜度整合。包含 Fine Code Coverage、VS Code 內建工具與最佳實踐。
+  Make sure to use this skill whenever the user mentions code coverage, Coverlet, coverage report, branch coverage, cyclomatic complexity, or test quality metrics, even if they don't explicitly ask for coverage analysis.
   Keywords: code coverage, 程式碼覆蓋率, 覆蓋率分析, coverage report, Coverlet, Fine Code Coverage, dotnet-coverage, ReportGenerator, line coverage, branch coverage, 行覆蓋率, 分支覆蓋率, cyclomatic complexity, 循環複雜度, runsettings, cobertura
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "code-coverage, coverlet, testing-metrics, quality, ci-cd, analysis"
-  related_skills: "unit-test-fundamentals, xunit-project-setup"
 ---
 
 # 程式碼覆蓋率分析指南
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 設定與執行程式碼覆蓋率分析
-- 配置 Coverlet 或其他覆蓋率工具
-- 產生與解讀覆蓋率報告
-- 在 Visual Studio 或 VS Code 中檢視覆蓋率
-- 評估測試完整性與品質
-- 結合複雜度指標制定測試策略
 
 ## Code Coverage 核心概念
 
@@ -39,22 +23,15 @@ metadata:
 3. **輔助重構決策**：了解哪些區域需要更多關注
 4. **增加測試信心**：確認關鍵路徑都有被驗證
 
-### 常見誤解（必須避免）
+### 常見誤解
 
-❌ **錯誤認知：**
+覆蓋率數字容易產生誤解：
 
-- 涵蓋率 100% 就沒有 Bug
-- 涵蓋率數字越高越好
-- 可以用涵蓋率當作 KPI
+- 涵蓋率 100% 不代表沒有 Bug — 它只告訴你程式碼有被執行，不代表驗證了正確行為
+- 涵蓋率數字越高不一定越好 — 重點是測試的有效性，而非數字本身
+- 把涵蓋率當作 KPI 會適得其反 — 因為開發者會為了衝數字而寫沒有 Assert 的測試
 
-✅ **正確認知：**
-
-- Code Coverage 只是提醒工具，告訴你哪些程式碼沒被測試
-- **重點是測試的有效性，不是覆蓋率數字**
-- 幫助判斷是否需要補充測試案例
-- **絕對不應該當作 KPI 使用**
-
-> ⚠️ **警告**：當 Code Coverage 被當作 KPI 時，開發者會為了衝數字而寫沒有 Assert 的測試，完全失去了測試的意義。
+Code Coverage 是一個提醒工具，幫助你發現哪些程式碼缺少測試，以及判斷是否需要補充測試案例。
 
 ## .NET 專案的覆蓋率工具選擇
 
@@ -156,7 +133,7 @@ dotnet test /p:CollectCoverage=true /p:CoverageReportFormat="cobertura;opencover
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
-  
+
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
   </PropertyGroup>
@@ -166,7 +143,7 @@ dotnet test /p:CollectCoverage=true /p:CoverageReportFormat="cobertura;opencover
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    
+
     <!-- 覆蓋率收集器 -->
     <PackageReference Include="coverlet.collector" Version="6.0.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -465,6 +442,14 @@ public class GeneratedCode
 > - 關鍵業務邏輯是否都有測試
 > - 測試是否真正驗證了預期行為
 > - 是否能在重構時提供信心
+
+## 輸出格式
+
+- 產生 `coverage.runsettings` 設定檔，配置覆蓋率收集參數與排除規則
+- 修改測試專案 `.csproj`，確保包含 `coverlet.collector` 套件參考
+- 產生覆蓋率報告（cobertura XML 格式），可供 CI/CD 管線使用
+- 提供覆蓋率分析摘要，標示未覆蓋的關鍵區域與改善建議
+- 若整合 CI/CD，產生對應的 GitHub Actions 或 Azure DevOps YAML 片段
 
 ## 參考資源
 

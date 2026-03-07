@@ -2,20 +2,11 @@
 name: dotnet-testing-test-data-builder-pattern
 description: |
   Test Data Builder Pattern 完整實作指南。當需要使用建構者模式建立可維護的測試資料或簡化複雜物件的測試準備時使用。涵蓋流暢介面、語意化方法、預設值設計與 Builder 組合模式。
+  Make sure to use this skill whenever the user mentions test data builder, builder pattern, fluent interface, Object Mother, or test data preparation for complex objects, even if they don't explicitly ask for the builder pattern.
   Keywords: test data builder, builder pattern test, 測試資料建構器, object mother, fluent interface, 流暢介面, UserBuilder, ProductBuilder, .With(), .Build(), AUser(), 測試資料準備, 複雜物件建立, 語意化測試
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "test-data-builder, builder-pattern, fluent-interface, test-readability"
-  related_skills: "autofixture-basics, bogus-fake-data, autofixture-bogus-integration"
 ---
 
 # Test Data Builder Pattern 測試資料建構器模式
-
-## 適用情境
-
-Test Data Builder Pattern 是一種專為測試設計的建構者模式（Builder Pattern）變體，用於建立清晰、可維護且表意明確的測試資料。此模式特別適合處理具有多個屬性的複雜物件，讓測試程式碼更易讀且降低維護成本。
 
 ## 核心概念
 
@@ -78,87 +69,87 @@ public class UserBuilder
     private string _email = "default@example.com";
     private int _age = 25;
     private List<string> _roles = new();
-    private UserSettings _settings = new() 
-    { 
-        Theme = "Light", 
-        Language = "en-US" 
+    private UserSettings _settings = new()
+    {
+        Theme = "Light",
+        Language = "en-US"
     };
     private bool _isActive = true;
     private DateTime _createdAt = DateTime.UtcNow;
-    
+
     // With* 方法：流暢介面設定個別屬性
     public UserBuilder WithName(string name)
     {
         _name = name;
         return this;
     }
-    
+
     public UserBuilder WithEmail(string email)
     {
         _email = email;
         return this;
     }
-    
+
     public UserBuilder WithAge(int age)
     {
         _age = age;
         return this;
     }
-    
+
     public UserBuilder WithRole(string role)
     {
         _roles.Add(role);
         return this;
     }
-    
+
     public UserBuilder WithRoles(params string[] roles)
     {
         _roles.AddRange(roles);
         return this;
     }
-    
+
     public UserBuilder WithSettings(UserSettings settings)
     {
         _settings = settings;
         return this;
     }
-    
+
     public UserBuilder IsInactive()
     {
         _isActive = false;
         return this;
     }
-    
+
     public UserBuilder CreatedOn(DateTime createdAt)
     {
         _createdAt = createdAt;
         return this;
     }
-    
+
     // 語意化預設建立者：提供常見情境的快速建立方法
     public static UserBuilder AUser() => new();
-    
+
     public static UserBuilder AnAdminUser() => new UserBuilder()
         .WithRoles("Admin", "User");
-    
+
     public static UserBuilder ARegularUser() => new UserBuilder()
         .WithRole("User");
-    
+
     public static UserBuilder AnInactiveUser() => new UserBuilder()
         .IsInactive();
-    
+
     // 語意化組合方法
     public UserBuilder WithValidEmail()
     {
         _email = $"{_name.Replace(" ", ".").ToLower()}@example.com";
         return this;
     }
-    
+
     public UserBuilder WithAdminRights()
     {
         return WithRoles("Admin", "User");
     }
-    
+
     // Build 方法：建立最終物件
     public User Build()
     {
@@ -192,12 +183,12 @@ public void CreateUser_有效管理員使用者_應成功建立()
         .WithEmail("john.admin@company.com")
         .WithAge(35)
         .Build();
-        
+
     var userService = new UserService();
-    
+
     // Act
     var result = userService.CreateUser(adminUser);
-    
+
     // Assert
     Assert.NotNull(result);
     Assert.Equal("John Admin", result.Name);
@@ -216,14 +207,14 @@ public class UserValidationTests
     {
         // Arrange
         var validator = new UserValidator();
-        
+
         // Act
         var result = validator.IsValid(user);
-        
+
         // Assert
         Assert.Equal(expected, result);
     }
-    
+
     public static IEnumerable<object[]> GetUserScenarios()
     {
         // ✅ 有效使用者情境
@@ -236,7 +227,7 @@ public class UserValidationTests
                 .Build(),
             true
         };
-        
+
         // ❌ 無效使用者情境 - 空名稱
         yield return new object[]
         {
@@ -245,7 +236,7 @@ public class UserValidationTests
                 .Build(),
             false
         };
-        
+
         // ❌ 無效使用者情境 - 年齡過小
         yield return new object[]
         {
@@ -254,7 +245,7 @@ public class UserValidationTests
                 .Build(),
             false
         };
-        
+
         // ❌ 無效使用者情境 - 無效 Email
         yield return new object[]
         {
@@ -280,7 +271,7 @@ public class ProductBuilder
     private decimal _price = 100m;
     private int _stock = 10;
     private bool _isAvailable = true;
-    
+
     // 預設值確保建立的物件是有效的
     public Product Build() => new()
     {
@@ -301,11 +292,11 @@ public static class UserScenarios
 {
     public static UserBuilder ANewUser() => UserBuilder.AUser()
         .CreatedOn(DateTime.UtcNow);
-    
+
     public static UserBuilder AnExpiredUser() => UserBuilder.AUser()
         .CreatedOn(DateTime.UtcNow.AddYears(-5))
         .IsInactive();
-    
+
     public static UserBuilder APremiumUser() => UserBuilder.AUser()
         .WithRoles("Premium", "User")
         .WithSettings(new UserSettings { FeatureFlags = new[] { "AdvancedSearch" } });
@@ -322,27 +313,27 @@ public class OrderBuilder
     private User _customer = UserBuilder.AUser().Build();
     private List<Product> _products = new();
     private decimal _totalAmount = 0m;
-    
+
     public OrderBuilder ForCustomer(User customer)
     {
         _customer = customer;
         return this;
     }
-    
+
     public OrderBuilder WithProduct(Product product)
     {
         _products.Add(product);
         _totalAmount += product.Price;
         return this;
     }
-    
+
     public OrderBuilder WithProducts(params Product[] products)
     {
         _products.AddRange(products);
         _totalAmount = _products.Sum(p => p.Price);
         return this;
     }
-    
+
     public Order Build() => new()
     {
         Customer = _customer,
@@ -407,13 +398,13 @@ public static class TestData
             .WithName("John Doe")
             .WithEmail("john@example.com")
             .Build();
-        
+
         public static User AdminUser => UserBuilder.AnAdminUser()
             .WithName("Admin User")
             .WithEmail("admin@company.com")
             .Build();
     }
-    
+
     public static class Products
     {
         public static Product Laptop => ProductBuilder.AProduct()
@@ -464,6 +455,13 @@ public void ProcessOrder_有效訂單_應成功處理()
 - `user-builder-example.cs` - 基本 User Builder 實作
 - `advanced-builder-scenarios.cs` - 進階 Builder 組合與使用情境
 - `builder-with-theory.cs` - Builder 配合 xUnit Theory 的實務範例
+
+## 輸出格式
+
+- 產生 Builder 類別檔案（如 `UserBuilder.cs`、`ProductBuilder.cs`），放置於測試專案的 `Builders/` 目錄
+- 每個 Builder 包含預設值、`With*` 流暢方法、語意化靜態工廠方法與 `Build()` 方法
+- 若需要跨測試共用，產生 `TestData.cs` 靜態類別集中管理常用測試資料
+- 產生對應的測試類別檔案（`*Tests.cs`），示範 Builder 的使用方式
 
 ## 參考資源
 

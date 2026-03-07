@@ -1,21 +1,12 @@
 ---
 name: dotnet-testing-nsubstitute-mocking
 description: |
-  使用 NSubstitute 建立測試替身(Mock、Stub、Spy)的專門技能。當需要隔離外部依賴、模擬介面行為、驗證方法呼叫時使用。涵蓋 Substitute.For、Returns、Received、Throws 等完整指引。
+  使用 NSubstitute 建立測試替身（Mock、Stub、Spy）的專門技能。當需要隔離外部依賴、模擬介面行為、驗證方法呼叫時使用。涵蓋 Substitute.For、Returns、Received、Throws 等完整指引。
+  Make sure to use this skill whenever the user mentions mock, stub, spy, NSubstitute, test double, 測試替身, Substitute.For, Returns, Received, or dependency isolation, even if they don't explicitly ask for mocking guidance.
   Keywords: mock, stub, spy, nsubstitute, 模擬, test double, 測試替身, IRepository, IService, Substitute.For, Returns, Received, Throws, Arg.Any, Arg.Is, 隔離依賴, 模擬外部服務, dependency injection testing
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, NSubstitute, mock, stub, test double"
-  related_skills: "autofixture-nsubstitute-integration, unit-test-fundamentals, private-internal-testing"
 ---
 
 # NSubstitute 測試替身指南
-
-## 適用情境
-
-此技能專注於使用 NSubstitute 建立和管理測試替身，涵蓋 Test Double 五大類型、依賴隔離策略、行為設定與驗證的最佳實踐。
 
 ## 為什麼需要測試替身？
 
@@ -189,9 +180,9 @@ public void CreateOrder_建立訂單_應儲存正確的訂單資料()
 {
     var repository = Substitute.For<IOrderRepository>();
     var service = new OrderService(repository);
-    
+
     service.CreateOrder("Product A", 5, 100);
-    
+
     // 驗證物件屬性
     repository.Received(1).Save(Arg.Is<Order>(o =>
         o.ProductName == "Product A" &&
@@ -208,12 +199,12 @@ public void RegisterUser_註冊使用者_應產生正確的雜湊密碼()
 {
     var repository = Substitute.For<IUserRepository>();
     var service = new UserService(repository);
-    
+
     User capturedUser = null;
     repository.Save(Arg.Do<User>(u => capturedUser = u));
-    
+
     service.RegisterUser("john@example.com", "password123");
-    
+
     capturedUser.Should().NotBeNull();
     capturedUser.Email.Should().Be("john@example.com");
     capturedUser.PasswordHash.Should().NotBe("password123"); // 應該被雜湊
@@ -223,35 +214,35 @@ public void RegisterUser_註冊使用者_應產生正確的雜湊密碼()
 
 ## 常見陷阱與最佳實踐
 
-### ✅ 推薦做法
+### 推薦做法
 
 1. **針對介面而非實作建立 Substitute**
 
     ```csharp
-    // ✅ 正確：針對介面
+    // 正確：針對介面
     var repository = Substitute.For<IUserRepository>();
 
-    // ❌ 錯誤：針對具體類別（除非有虛擬成員）
+    // 錯誤：針對具體類別（除非有虛擬成員）
     var repository = Substitute.For<UserRepository>();
     ```
 
 2. **使用有意義的測試資料**
 
     ```csharp
-    // ✅ 正確：清楚表達意圖
+    // 正確：清楚表達意圖
     var user = new User { Id = 123, Name = "John Doe", Email = "john@example.com" };
 
-    // ❌ 錯誤：無意義的資料
+    // 錯誤：無意義的資料
     var user = new User { Id = 1, Name = "test", Email = "a@b.c" };
     ```
 
 3. **避免過度驗證**
 
     ```csharp
-    // ✅ 正確：只驗證重要的行為
+    // 正確：只驗證重要的行為
     _emailService.Received(1).SendWelcomeEmail(Arg.Any<string>());
 
-    // ❌ 錯誤：驗證所有內部實作細節
+    // 錯誤：驗證所有內部實作細節
     _repository.Received(1).GetById(123);
     _repository.Received(1).Update(Arg.Any<User>());
     _validator.Received(1).Validate(Arg.Any<User>());
@@ -260,7 +251,7 @@ public void RegisterUser_註冊使用者_應產生正確的雜湊密碼()
 4. **Mock 與 Stub 的明確區分**
 
     ```csharp
-    // ✅ 正確：Stub 用於設定情境，Mock 用於驗證行為
+    // 正確：Stub 用於設定情境，Mock 用於驗證行為
     var stubRepository = Substitute.For<IUserRepository>(); // Stub
     var mockLogger = Substitute.For<ILogger>(); // Mock
 
@@ -269,15 +260,15 @@ public void RegisterUser_註冊使用者_應產生正確的雜湊密碼()
     mockLogger.Received(1).LogInformation(Arg.Any<string>());
     ```
 
-### ❌ 避免做法
+### 避免做法
 
 1. **避免模擬值類型**
 
     ```csharp
-    // ❌ 錯誤：DateTime 是值類型
+    // 錯誤：DateTime 是值類型
     var badDate = Substitute.For<DateTime>();
 
-    // ✅ 正確：抽象時間提供者
+    // 正確：抽象時間提供者
     var dateTimeProvider = Substitute.For<IDateTimeProvider>();
     dateTimeProvider.Now.Returns(new DateTime(2024, 1, 1));
     ```
@@ -285,11 +276,11 @@ public void RegisterUser_註冊使用者_應產生正確的雜湊密碼()
 2. **避免測試與實作強耦合**
 
     ```csharp
-    // ❌ 錯誤：測試實作細節
+    // 錯誤：測試實作細節
     _repository.Received(1).Query(Arg.Any<string>());
     _repository.Received(1).Filter(Arg.Any<Expression<Func<User, bool>>>());
 
-    // ✅ 正確：測試行為結果
+    // 正確：測試行為結果
     var users = service.GetActiveUsers();
     users.Should().HaveCount(2);
     ```
@@ -297,13 +288,13 @@ public void RegisterUser_註冊使用者_應產生正確的雜湊密碼()
 3. **避免設定過於複雜**
 
     ```csharp
-    // ❌ 錯誤：過多的 Substitute（可能違反 SRP）
+    // 錯誤：過多的 Substitute（可能違反 SRP）
     var sub1 = Substitute.For<IService1>();
     var sub2 = Substitute.For<IService2>();
     var sub3 = Substitute.For<IService3>();
     var sub4 = Substitute.For<IService4>();
 
-    // ✅ 正確：重新思考類別職責
+    // 正確：重新思考類別職責
     // 考慮是否違反單一職責原則，需要重構
     ```
 
@@ -311,21 +302,21 @@ public void RegisterUser_註冊使用者_應產生正確的雜湊密碼()
 
 ### 應該替代的
 
-- ✅ 外部 API 呼叫（IHttpClient、IApiClient）
-- ✅ 資料庫操作（IRepository、IDbContext）
-- ✅ 檔案系統操作（IFileSystem）
-- ✅ 網路通訊（IEmailService、IMessageQueue）
-- ✅ 時間依賴（IDateTimeProvider、TimeProvider）
-- ✅ 隨機數產生（IRandom）
-- ✅ 昂貴的計算（IComplexCalculator）
-- ✅ 記錄服務（ILogger<T>）
+- 外部 API 呼叫（IHttpClient、IApiClient）
+- 資料庫操作（IRepository、IDbContext）
+- 檔案系統操作（IFileSystem）
+- 網路通訊（IEmailService、IMessageQueue）
+- 時間依賴（IDateTimeProvider、TimeProvider）
+- 隨機數產生（IRandom）
+- 昂貴的計算（IComplexCalculator）
+- 記錄服務（ILogger<T>）
 
 ### 不應該替代的
 
-- ❌ 值物件（DateTime、string、int）
-- ❌ 簡單的資料傳輸物件（DTO）
-- ❌ 純函數工具（如 AutoMapper 的 IMapper，考慮使用真實實例）
-- ❌ 框架核心類別（除非有明確需求）
+- 值物件（DateTime、string、int）
+- 簡單的資料傳輸物件（DTO）
+- 純函數工具（如 AutoMapper 的 IMapper，考慮使用真實實例）
+- 框架核心類別（除非有明確需求）
 
 ## 疑難排解
 
@@ -403,6 +394,14 @@ _service.TryGetValue("key", out Arg.Any<string>())
 - `templates/verification-examples.cs`: 行為驗證與引數匹配範例
 - `references/practical-patterns.md`: 五種實戰模式完整程式碼
 - `references/test-double-types.md`: Test Double 五大類型詳細範例
+
+## 輸出格式
+
+- 產生使用 NSubstitute 的 xUnit 測試類別檔案（`*Tests.cs`）
+- 測試方法遵循 3A（Arrange-Act-Assert）模式
+- Substitute 設定集中於測試建構函式或 Arrange 區段
+- 驗證呼叫使用 `Received()` / `DidNotReceive()` 明確斷言
+- 搭配 AwesomeAssertions 進行狀態驗證
 
 ## 參考資源
 

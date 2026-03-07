@@ -2,27 +2,11 @@
 name: dotnet-testing-advanced-aspire-testing
 description: |
   .NET Aspire Testing 整合測試框架完整指南。當需要測試 .NET Aspire 分散式應用程式、設定 AppHost 測試或從 Testcontainers 遷移至 Aspire 測試時使用。涵蓋 DistributedApplicationTestingBuilder、容器生命週期管理、多服務編排、Respawn 配置與時間可測試性設計。
+  Make sure to use this skill whenever the user mentions .NET Aspire, AppHost testing, DistributedApplicationTestingBuilder, cloud-native testing, or migrating from Testcontainers to Aspire, even if they don't explicitly ask for Aspire testing guidance.
   Keywords: aspire testing, .NET Aspire, DistributedApplicationTestingBuilder, AppHost testing, 分散式測試, AspireAppFixture, IAsyncLifetime, ContainerLifetime.Session, 雲原生測試, 多服務整合, Aspire.Hosting.Testing, Respawn
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "aspire, distributed-testing, cloud-native, testcontainers, integration-testing"
-  related_skills: "advanced-testcontainers-database, advanced-webapi-integration-testing, advanced-testcontainers-nosql"
 ---
 
 # .NET Aspire Testing 整合測試框架
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 為 .NET Aspire 分散式應用建立整合測試
-- 從 Testcontainers 遷移到 .NET Aspire Testing
-- 設定 AppHost 專案進行測試
-- 使用 DistributedApplicationTestingBuilder 建立測試環境
-- 需要測試多個服務間的互動（資料庫、快取、API 等）
-- 建立雲原生 .NET 應用的整合測試架構
 
 ## 前置需求
 
@@ -64,7 +48,7 @@ metadata:
 MyApp/
 ├── src/
 │   ├── MyApp.Api/                    # WebApi 層
-│   ├── MyApp.Application/            # 應用服務層  
+│   ├── MyApp.Application/            # 應用服務層
 │   ├── MyApp.Domain/                 # 領域模型
 │   └── MyApp.Infrastructure/         # 基礎設施層
 ├── MyApp.AppHost/                    # Aspire 編排專案 ⭐
@@ -187,13 +171,13 @@ private async Task EnsureDatabaseExistsAsync(string connectionString)
     var builder = new NpgsqlConnectionStringBuilder(connectionString);
     var databaseName = builder.Database;
     builder.Database = "postgres"; // 連到預設資料庫
-    
+
     await using var connection = new NpgsqlConnection(builder.ToString());
     await connection.OpenAsync();
-    
+
     var checkDbQuery = $"SELECT 1 FROM pg_database WHERE datname = '{databaseName}'";
     var dbExists = await new NpgsqlCommand(checkDbQuery, connection).ExecuteScalarAsync();
-    
+
     if (dbExists == null)
     {
         await new NpgsqlCommand($"CREATE DATABASE \"{databaseName}\"", connection)
@@ -241,12 +225,12 @@ public class MyControllerTests : IntegrationTestBase
 public class ProductService
 {
     private readonly TimeProvider _timeProvider;
-    
+
     public ProductService(TimeProvider timeProvider)
     {
         _timeProvider = timeProvider;
     }
-    
+
     public async Task<Product> CreateAsync(ProductCreateRequest request)
     {
         var now = _timeProvider.GetUtcNow();
@@ -306,11 +290,19 @@ DapperTypeMapping.Initialize();
 
 // 或使用 SQL 別名
 const string sql = @"
-    SELECT id, name, price, 
-           created_at AS CreatedAt, 
+    SELECT id, name, price,
+           created_at AS CreatedAt,
            updated_at AS UpdatedAt
     FROM products";
 ```
+
+## 輸出格式
+
+- 產生 AppHost 專案的 `Program.cs`，定義容器編排與服務參考
+- 產生測試基礎設施檔案：`AspireAppFixture.cs`、`IntegrationTestCollection.cs`、`IntegrationTestBase.cs`
+- 產生 `DatabaseManager.cs` 處理資料庫初始化與 Respawn 清理
+- 產生控制器測試類別（`*ControllerTests.cs`），繼承 `IntegrationTestBase`
+- 修改測試專案 `.csproj`，加入 Aspire.Hosting.Testing 與相關套件參考
 
 ## 參考資源
 
@@ -331,7 +323,7 @@ const string sql = @"
 - [.NET Aspire 官方文件](https://learn.microsoft.com/dotnet/aspire/)
 - [Aspire Testing 文件](https://learn.microsoft.com/dotnet/aspire/testing)
 
-## 參考資源
+### 範例檔案
 
 請參考同目錄下的範例檔案：
 

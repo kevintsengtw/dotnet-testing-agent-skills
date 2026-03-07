@@ -2,28 +2,13 @@
 name: dotnet-testing-awesome-assertions-guide
 description: |
   使用 AwesomeAssertions 進行流暢且可讀的測試斷言技能。當需要撰寫清晰的斷言、比對物件、驗證集合、處理複雜比對時使用。涵蓋 Should()、BeEquivalentTo()、Contain()、ThrowAsync() 等完整 API。
+  Make sure to use this skill whenever the user mentions assertions, Should(), BeEquivalentTo, fluent assertions, AwesomeAssertions, or wants more readable test assertions, even if they don't explicitly ask for assertion guidance.
   Keywords: assertions, awesome assertions, fluent assertions, 斷言, 流暢斷言, Should(), Be(), BeEquivalentTo, Contain, ThrowAsync, NotBeNull, 物件比對, 集合驗證, 例外斷言, AwesomeAssertions, FluentAssertions, fluent syntax
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, AwesomeAssertions, FluentAssertions, assertions"
-  related_skills: "complex-object-comparison, fluentvalidation-testing, unit-test-fundamentals"
 ---
 
 # AwesomeAssertions 流暢斷言指南
 
 本技能提供使用 AwesomeAssertions 進行高品質測試斷言的完整指南，涵蓋基礎語法、進階技巧與最佳實踐。
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 撰寫清晰、可讀性高的測試斷言
-- 比對複雜物件或集合內容
-- 驗證例外狀況的拋出與訊息
-- 使用流暢語法（Should/Be/Contain）進行測試驗證
-- 將原生 Assert 替換為 AwesomeAssertions
 
 ## 關於 AwesomeAssertions
 
@@ -279,6 +264,13 @@ public void CreateUser_有效資料_應回傳啟用使用者()
 在 `xunit-project-setup` 建立的專案中安裝並使用 AwesomeAssertions。
 
 ---
+
+## 輸出格式
+
+- 產生使用 AwesomeAssertions 流暢語法的測試斷言
+- 使用 Should().Be/BeEquivalentTo/Contain 等方法鏈
+- 包含物件比對、集合驗證、例外斷言範例
+- 提供 .csproj 套件參考（AwesomeAssertions）
 
 ## 參考資源
 

@@ -2,26 +2,11 @@
 name: dotnet-testing-filesystem-testing-abstractions
 description: |
   使用 System.IO.Abstractions 測試檔案系統操作的專門技能。當需要測試 File、Directory、Path 等操作、模擬檔案系統時使用。涵蓋 IFileSystem、MockFileSystem、檔案讀寫測試、目錄操作測試等。
+  Make sure to use this skill whenever the user mentions file system testing, IFileSystem, MockFileSystem, System.IO.Abstractions, or testing file/directory operations, even if they don't explicitly ask for filesystem testing guidance.
   Keywords: file testing, filesystem, 檔案測試, 檔案系統測試, IFileSystem, MockFileSystem, System.IO.Abstractions, File.ReadAllText, File.WriteAllText, Directory.CreateDirectory, Path.Combine, mock file system, 檔案抽象化
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, IFileSystem, MockFileSystem, file testing"
-  related_skills: "nsubstitute-mocking, unit-test-fundamentals, datetime-testing-timeprovider"
 ---
 
 # 檔案系統測試：使用 System.IO.Abstractions 模擬檔案操作
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 重構直接使用 `System.IO.File`、`System.IO.Directory` 等靜態類別的程式碼
-- 為涉及檔案讀寫、目錄操作的程式碼撰寫單元測試
-- 使用 MockFileSystem 模擬各種檔案系統狀態
-- 測試檔案權限不足、檔案不存在等異常情境
-- 設計可測試的檔案處理服務架構
 
 ## 核心原則
 
@@ -420,6 +405,13 @@ mockFileSystem.AddFile("test.txt", new MockFileData(testContent));
 - 目錄操作
 - 檔案資訊查詢
 - 錯誤處理模式
+
+## 輸出格式
+
+- 產生使用 IFileSystem 介面的服務類別
+- 產生使用 MockFileSystem 的測試類別
+- 包含檔案讀寫、目錄操作、路徑處理測試範例
+- 提供 .csproj 套件參考（System.IO.Abstractions、System.IO.Abstractions.TestingHelpers）
 
 ## 參考資源
 

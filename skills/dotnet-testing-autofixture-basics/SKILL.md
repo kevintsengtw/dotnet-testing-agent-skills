@@ -2,32 +2,11 @@
 name: dotnet-testing-autofixture-basics
 description: |
   使用 AutoFixture 自動產生測試資料的基礎技能。當需要快速產生測試物件、減少樣板程式碼、實現匿名測試時使用。涵蓋 Fixture.Create、CreateMany、循環參考處理、與 xUnit 整合等。
+  Make sure to use this skill whenever the user mentions AutoFixture, fixture.Create, anonymous testing, auto-generating test data, or reducing test boilerplate, even if they don't explicitly ask for AutoFixture guidance.
   Keywords: autofixture, fixture, 自動產生測試資料, test data generation, anonymous testing, 匿名測試, fixture.Create, CreateMany, fixture.Build, Create<T>, AutoFixture.Xunit2, OmitOnRecursionBehavior, IFixture, 產生測試資料, generate test data
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, AutoFixture, test data, anonymous testing"
-  related_skills: "autodata-xunit-integration, autofixture-customization, autofixture-bogus-integration"
 ---
 
 # AutoFixture 基礎:自動產生測試資料
-
-## 適用情境
-
-AutoFixture 是一個為 .NET 平台設計的測試資料自動產生工具，它的核心理念是「匿名測試」(Anonymous Testing)。這個概念認為，大部分的測試都不應該依賴於特定的資料值，而應該專注於驗證程式邏輯的正確性。
-
-### 為什麼需要 AutoFixture？
-
-傳統測試資料準備的痛點：
-
-1. **樣板程式碼過多**：90% 的程式碼都在準備資料，真正的測試邏輯被埋沒
-2. **測試焦點模糊**：很難快速理解這個測試在驗證什麼
-3. **維護困難**：當物件結構改變時，所有相關測試都需要修改
-4. **資料依賴性**：測試可能意外依賴於特定的資料值
-5. **重複程式碼**：相同的資料準備邏輯在多個測試中重複出現
-
-AutoFixture 可以看作是 **Test Data Builder Pattern 的自動化進化版**，能自動產生複雜的測試資料，讓我們專注於測試邏輯本身。
 
 ## 安裝套件
 
@@ -461,6 +440,13 @@ public static class TestDataFactory
 - [basic-autofixture-usage.cs](./templates/basic-autofixture-usage.cs) - 基本 AutoFixture 使用方式
 - [complex-object-scenarios.cs](./templates/complex-object-scenarios.cs) - 複雜物件與循環參考處理
 - [xunit-integration.cs](./templates/xunit-integration.cs) - xUnit 整合與 Theory 測試
+
+## 輸出格式
+
+- 產生使用 AutoFixture 的測試類別（.cs 檔案）
+- 包含 Fixture.Create/CreateMany/Build 用法範例
+- 提供 .csproj 套件參考（AutoFixture、AutoFixture.Xunit2）
+- 包含循環參考處理與自訂行為設定
 
 ## 參考資源
 

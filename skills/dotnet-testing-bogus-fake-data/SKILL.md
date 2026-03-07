@@ -2,40 +2,11 @@
 name: dotnet-testing-bogus-fake-data
 description: |
   使用 Bogus 產生擬真假資料的專門技能。當需要產生真實感的姓名、地址、電話、Email、公司資訊等測試資料時使用。涵蓋 Faker 類別、多語言支援、自訂規則、大量資料產生等。
+  Make sure to use this skill whenever the user mentions Bogus, Faker, fake data, realistic test data, generating names/addresses/emails, or seed data, even if they don't explicitly ask for fake data guidance.
   Keywords: bogus, faker, fake data, 假資料, 擬真資料, realistic data, fake name, fake address, fake email, Faker<T>, RuleFor, Generate, faker.Name, faker.Address, faker.Internet, 產生假資料, generate fake data, seed data
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "bogus, fake-data, test-data, realistic-data, faker, testing"
-  related_skills: "autofixture-basics, autofixture-bogus-integration, test-data-builder-pattern"
 ---
 
 # Bogus 假資料產生器
-
-## 適用情境
-
-Bogus 是一個 .NET 平台的假資料產生函式庫，移植自著名的 JavaScript 函式庫 faker.js。它專門用於產生真實感強烈的假資料，如姓名、地址、電話號碼、電子郵件等，特別適合需要模擬真實世界資料的測試場景。
-
-### 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 產生具有真實感的測試資料（姓名、地址、公司名稱等）
-- 需要多語言或多地區格式的測試資料
-- 整合測試或 UI 原型需要擬真資料
-- 效能測試需要大量真實格式的資料
-- 資料庫種子（Seed）需要初始化開發或測試環境
-
-### 核心價值
-
-- **真實感資料產生**：提供有意義的假資料，如真實的姓名、地址、公司名稱
-- **多語言支援**：支援超過 40 種語言和地區格式（包含繁體中文 `zh_TW`）
-- **可重現性**：透過 seed 控制，確保測試資料的一致性
-- **豐富的資料類型**：內建多種 DataSet，涵蓋各種真實世界的資料類型
-- **簡潔的 Fluent API**：直觀易用的設定語法
-
----
 
 ## 套件安裝與設定
 
@@ -409,6 +380,13 @@ MyProject.Tests/
 | `test-data-builder-pattern`     | 手動 Builder Pattern，適合簡單場景           |
 
 ---
+
+## 輸出格式
+
+- 產生 Faker<T> 設定類別（含 RuleFor 規則）
+- 提供多語言假資料產生範例
+- 包含 .csproj 套件參考（Bogus）
+- 產生大量資料產生與 Seed 控制程式碼
 
 ## 參考資源
 

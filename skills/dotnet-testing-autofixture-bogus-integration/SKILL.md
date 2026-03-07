@@ -2,30 +2,11 @@
 name: dotnet-testing-autofixture-bogus-integration
 description: |
   AutoFixture 與 Bogus 整合完整指南。當需要結合 AutoFixture 與 Bogus 產生兼具匿名性與真實感的測試資料時使用。涵蓋 SpecimenBuilder 整合、混合產生器、測試資料工廠與循環參考處理。
+  Make sure to use this skill whenever the user mentions AutoFixture with Bogus, Faker integration, realistic test data, semantic test data, or HybridTestDataGenerator, even if they don't explicitly ask for integration guidance.
   Keywords: autofixture bogus integration, autofixture bogus, bogus integration, Faker, EmailSpecimenBuilder, PhoneSpecimenBuilder, NameSpecimenBuilder, 真實感測試資料, 語意化資料, 混合產生器, HybridTestDataGenerator, OmitOnRecursionBehavior, 循環參考
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "autofixture, bogus, test-data, faker, integration, semantic-data"
-  related_skills: "autofixture-basics, bogus-fake-data, test-data-builder-pattern"
 ---
 
 # AutoFixture 與 Bogus 整合應用指南
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 整合 AutoFixture 與 Bogus 兩套工具
-- 建立混合測試資料產生器
-- 設計 ISpecimenBuilder 整合 Bogus 資料產生
-- 建立自訂 AutoData 屬性使用 Bogus
-- 處理循環參考問題
-- 建立統一的測試資料工廠
-- 設計測試基底類別整合資料產生功能
-
----
 
 ## 核心概念
 
@@ -123,9 +104,9 @@ fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
 **效果**：
 
-- ✅ 避免 StackOverflowException
-- ✅ 循環參考的屬性設為 null 或空集合
-- ⚠️ 某些深層屬性可能為 null（這是預期行為）
+- 避免 StackOverflowException
+- 循環參考的屬性設為 null 或空集合
+- 某些深層屬性可能為 null（這是預期行為）
 
 ---
 
@@ -136,7 +117,7 @@ fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 ```csharp
 public class BogusAutoDataAttribute : AutoDataAttribute
 {
-    public BogusAutoDataAttribute() 
+    public BogusAutoDataAttribute()
         : base(() => new Fixture().WithBogus())
     {
     }
@@ -192,7 +173,7 @@ public class HybridTestDataGenerator : ITestDataGenerator
 
     public T Generate<T>() => _fixture.Create<T>();
 
-    public IEnumerable<T> Generate<T>(int count) 
+    public IEnumerable<T> Generate<T>(int count)
         => Enumerable.Range(0, count).Select(_ => Generate<T>());
 
     public T Generate<T>(Action<T> configure)
@@ -231,7 +212,7 @@ public class IntegratedTestDataFactory
 
     public T CreateFresh<T>() => _fixture.Create<T>();
 
-    public List<T> CreateMany<T>(int count = 3) 
+    public List<T> CreateMany<T>(int count = 3)
         => _fixture.CreateMany<T>(count).ToList();
 
     public T GetCached<T>() where T : class
@@ -305,7 +286,7 @@ public abstract class TestBase
 
     protected T Create<T>() => Fixture.Create<T>();
 
-    protected List<T> CreateMany<T>(int count = 3) 
+    protected List<T> CreateMany<T>(int count = 3)
         => Fixture.CreateMany<T>(count).ToList();
 
     protected T Create<T>(Action<T> configure)
@@ -325,9 +306,9 @@ public abstract class TestBase
 
 由於 AutoFixture 和 Bogus 有不同的隨機數管理機制：
 
-- ✅ Seed 確保測試行為穩定性
-- ✅ Seed 確保資料格式一致性
-- ❌ 無法保證所有屬性值完全相同
+- Seed 確保測試行為穩定性
+- Seed 確保資料格式一致性
+- 無法保證所有屬性值完全相同
 
 ### 建議做法
 
@@ -379,7 +360,7 @@ public void 工廠_應能建立完整的測試場景()
     scenario.Company.Should().NotBeNull();
     scenario.Users.Should().HaveCount(5);
     scenario.Orders.Should().HaveCount(10);
-    
+
     scenario.Users.Should().AllSatisfy(user =>
     {
         user.Company.Should().Be(scenario.Company);
@@ -410,10 +391,10 @@ public void 工廠_應能建立完整的測試場景()
 
 ### 避免事項
 
-1. ❌ 過度設計，保持簡單實用
-2. ❌ 期望整合環境完全可重現
-3. ❌ 忽略循環參考處理
-4. ❌ 在每個測試中重新建立 Fixture
+1. 過度設計，保持簡單實用
+2. 期望整合環境完全可重現
+3. 忽略循環參考處理
+4. 在每個測試中重新建立 Fixture
 
 ---
 
@@ -429,6 +410,14 @@ public void 工廠_應能建立完整的測試場景()
 | 適用場景     | 單元測試       | 整合測試/原型 | 兩者皆可 |
 
 ---
+
+## 輸出格式
+
+- 產生 `ISpecimenBuilder` 實作類別檔案（如 `EmailSpecimenBuilder.cs`）
+- 產生 Fixture 擴充方法類別檔案（`FixtureBogusExtensions.cs`）
+- 產生整合測試資料工廠或混合產生器類別
+- 產生 `BogusAutoDataAttribute` 供 xUnit Theory 測試使用
+- 搭配 `OmitOnRecursionBehavior` 處理循環參考
 
 ## 參考資源
 
@@ -453,5 +442,3 @@ public void 工廠_應能建立完整的測試場景()
 - [autofixture-customization](../autofixture-customization/) - AutoFixture 自訂化策略
 - [autodata-xunit-integration](../autodata-xunit-integration/) - AutoData 屬性整合
 - [bogus-fake-data](../bogus-fake-data/) - Bogus 假資料產生器
-
-

@@ -2,31 +2,11 @@
 name: dotnet-testing-autofixture-customization
 description: |
   AutoFixture 進階自訂化技術完整指南。當需要自訂 AutoFixture 建構器或處理特殊型別的測試資料產生規則時使用。涵蓋 DataAnnotations 自動整合、ISpecimenBuilder 實作、優先順序管理。包含 DateTime/數值範圍建構器、泛型化設計與流暢式擴充方法。
+  Make sure to use this skill whenever the user mentions AutoFixture customization, ISpecimenBuilder, DataAnnotations with AutoFixture, or custom builders for test data generation, even if they don't explicitly ask for customization guidance.
   Keywords: autofixture customization, autofixture customize, autofixture 自訂, specimen builder, ISpecimenBuilder, RandomDateTimeSequenceGenerator, NumericRangeBuilder, DataAnnotations autofixture, fixture.Customizations, Insert(0), 自訂建構器, NoSpecimen, 泛型化建構器
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "autofixture, customization, test-data, specimen-builder, data-annotations"
-  related_skills: "autofixture-basics, autodata-xunit-integration, autofixture-bogus-integration"
 ---
 
 # AutoFixture 進階:自訂化測試資料生成策略
-
-## 適用情境
-
-- autofixture customization
-- autofixture customize
-- ISpecimenBuilder
-- specimen builder
-- DataAnnotations autofixture
-- 屬性範圍控制
-- fixture.Customizations
-- Insert(0)
-- RandomDateTimeSequenceGenerator
-- NumericRangeBuilder
-- 自訂建構器
-- custom builder autofixture
 
 ## 概述
 
@@ -471,6 +451,13 @@ public void 多重數值型別範圍控制()
 - **autofixture-basics**：本技能的前置知識，需先掌握基礎用法
 - **autodata-xunit-integration**：下一步學習目標，將自訂化與 xUnit 整合
 - **autofixture-nsubstitute-integration**：進階整合，結合 Mock 與自訂資料生成
+
+## 輸出格式
+
+- 產生自訂 ISpecimenBuilder 實作類別
+- 產生 ICustomization 組合類別
+- 提供 fixture.Customizations.Insert(0, ...) 設定範例
+- 包含 DataAnnotations 整合與泛型化建構器程式碼
 
 ## 參考資源
 

@@ -2,44 +2,11 @@
 name: dotnet-testing-advanced-aspnet-integration-testing
 description: |
   ASP.NET Core 整合測試的專門技能。當需要測試 Web API 端點、HTTP 請求/回應、中介軟體、依賴注入時使用。涵蓋 WebApplicationFactory、TestServer、HttpClient 測試、記憶體資料庫配置等。
+  Make sure to use this skill whenever the user mentions ASP.NET Core integration testing, WebApplicationFactory, TestServer, HTTP endpoint testing, or middleware testing, even if they don't explicitly ask for integration testing guidance.
   Keywords: integration testing, 整合測試, web api testing, WebApplicationFactory, TestServer, HttpClient testing, controller testing, endpoint testing, 端點測試, RESTful API testing, Microsoft.AspNetCore.Mvc.Testing, CreateClient, ConfigureWebHost, AwesomeAssertions.Web, Be200Ok, Be404NotFound, middleware testing, 中介軟體測試, dependency injection testing
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, ASP.NET Core, integration testing, WebApplicationFactory"
-  related_skills: "advanced-webapi-integration-testing, advanced-testcontainers-database, advanced-aspire-testing"
 ---
 
 # ASP.NET Core 整合測試指南
-
-## 適用情境
-
-本技能指導如何在 ASP.NET Core 中建立有效的整合測試，使用 `WebApplicationFactory<T>` 和 `TestServer` 測試完整的 HTTP 請求/回應流程。
-
-### 適用場景
-
-- **Web API 端點測試**：驗證 RESTful API 的 CRUD 操作
-- **HTTP 請求/回應驗證**：測試完整的請求處理管線
-- **中介軟體測試**：驗證 Authentication、Authorization、Logging 等
-- **依賴注入驗證**：確保 DI 容器設定正確
-- **路由設定驗證**：確保 URL 路由正確對應到控制器動作
-- **模型繫結測試**：驗證請求內容正確繫結到模型
-
-### 必要套件
-
-```xml
-<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
-<PackageReference Include="xunit" Version="2.9.3" />
-<PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
-<PackageReference Include="AwesomeAssertions" Version="9.1.0" />
-<PackageReference Include="AwesomeAssertions.Web" Version="1.9.6" />
-<PackageReference Include="System.Net.Http.Json" Version="9.0.8" />
-```
-
-> ⚠️ **重要提醒**：使用 `AwesomeAssertions` 時，必須安裝 `AwesomeAssertions.Web`，而非 `FluentAssertions.Web`。
-
----
 
 ## 核心概念
 
@@ -481,6 +448,14 @@ error CS1061: 'ObjectAssertions' 未包含 'Be200Ok' 的定義
 - `testcontainers-database` - 使用 Testcontainers 進行容器化資料庫測試
 
 ---
+
+## 輸出格式
+
+- 產生 `CustomWebApplicationFactory.cs`，配置測試用 DI 容器與資料庫替換
+- 產生 `IntegrationTestBase.cs` 測試基底類別，包含資料準備與清理方法
+- 產生控制器測試類別（`*ControllerTests.cs`），涵蓋 CRUD 操作驗證
+- 修改測試專案 `.csproj`，加入 `Microsoft.AspNetCore.Mvc.Testing` 與 `AwesomeAssertions.Web`
+- 確保主專案 `Program.cs` 包含 `public partial class Program { }` 以支援測試存取
 
 ## 參考資源
 

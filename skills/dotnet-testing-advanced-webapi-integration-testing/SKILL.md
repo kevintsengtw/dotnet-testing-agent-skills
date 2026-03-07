@@ -2,22 +2,11 @@
 name: dotnet-testing-advanced-webapi-integration-testing
 description: |
   ASP.NET Core WebApi 整合測試完整指南。當需要對 WebApi 端點進行整合測試或驗證 ProblemDetails 錯誤格式時使用。涵蓋 WebApplicationFactory、IExceptionHandler、Testcontainers 多容器編排、Flurl URL 建構與 AwesomeAssertions HTTP 驗證。
+  Make sure to use this skill whenever the user mentions WebApi integration testing, ProblemDetails, IExceptionHandler, Flurl, Respawn, or multi-container test orchestration, even if they don't explicitly ask for WebApi testing guidance.
   Keywords: webapi integration testing, WebApplicationFactory, asp.net core integration test, webapi 整合測試, IExceptionHandler, ProblemDetails, ValidationProblemDetails, AwesomeAssertions, Flurl, Respawn, Be201Created, Be400BadRequest, 多容器測試, Collection Fixture, 全域例外處理
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "webapi, integration-testing, testcontainers, aspnetcore, clean-architecture"
-  related_skills: "advanced-aspnet-integration-testing, advanced-testcontainers-database, advanced-aspire-testing"
 ---
 
 # WebApi 整合測試
-
-## 適用情境
-
-**技能等級**: 進階  
-**所需前置知識**: xUnit 基礎、ASP.NET Core 基礎、Testcontainers 基礎、Clean Architecture  
-**預計學習時間**: 60-90 分鐘
 
 ## 學習目標
 
@@ -457,6 +446,14 @@ tests/
     └── Controllers/
         └── ProductsControllerTests.cs
 ```
+
+## 輸出格式
+
+- 產生 `TestWebApplicationFactory.cs`，配置多容器（PostgreSQL + Redis）與 DI 替換
+- 產生 `IntegrationTestCollection.cs` 與 `IntegrationTestBase.cs` 測試基礎設施
+- 產生 `DatabaseManager.cs`，整合 Respawn 進行測試資料清理
+- 產生控制器測試類別，驗證 CRUD、ProblemDetails 與 ValidationProblemDetails
+- 產生 `GlobalExceptionHandler.cs` 與 `FluentValidationExceptionHandler.cs` 異常處理器
 
 ## 參考資源
 

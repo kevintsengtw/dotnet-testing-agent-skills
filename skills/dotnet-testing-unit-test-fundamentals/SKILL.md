@@ -2,30 +2,15 @@
 name: dotnet-testing-unit-test-fundamentals
 description: |
   .NET 單元測試基礎與 FIRST 原則的專門技能。當需要建立單元測試、了解測試基礎、學習 3A Pattern、掌握測試最佳實踐時使用。涵蓋 FIRST 原則、AAA Pattern、Fact/Theory、測試金字塔等。
+  Make sure to use this skill whenever the user mentions unit testing fundamentals, FIRST principles, AAA/3A pattern, or wants to learn how to write basic .NET tests, even if they don't explicitly ask for fundamentals guidance.
   Keywords: unit test, 單元測試, unit testing, test fundamentals, 測試基礎, FIRST principle, FIRST 原則, 3A pattern, AAA pattern, Arrange Act Assert, Fact, Theory, InlineData, 如何寫測試, testing best practices, 建立單元測試
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, unit test, FIRST, AAA pattern, xUnit"
-  related_skills: "xunit-project-setup, test-naming-conventions, awesome-assertions-guide"
 ---
 
 # .NET 單元測試基礎指南
 
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 為 .NET 類別或方法建立單元測試
-- 檢視或改進現有測試的品質
-- 設計符合 FIRST 原則的測試案例
-- 解釋測試命名規範與最佳實踐
-- 使用 xUnit 撰寫測試
-
 ## FIRST 原則
 
-每個單元測試都**必須**符合以下原則：
+好的單元測試遵循以下原則，因為這些原則能確保測試的可靠性與維護性：
 
 ### F - Fast (快速)
 
@@ -95,7 +80,7 @@ public void IsValidEmail_輸入有效Email_應回傳True()
 
 ## 3A Pattern 結構
 
-每個測試方法**必須**遵循 Arrange-Act-Assert 模式：
+每個測試方法遵循 Arrange-Act-Assert 模式，這種結構讓測試意圖一目了然：
 
 ```csharp
 [Fact]
@@ -290,6 +275,13 @@ Solution/
 - [ ] **邊界條件** - 最小值、最大值、零、空字串
 - [ ] **無效輸入** - null、負數、格式錯誤
 - [ ] **例外情況** - 預期會拋出例外的情境
+
+## 輸出格式
+
+- 產生符合 FIRST 原則的 xUnit 測試類別（.cs 檔案）
+- 每個測試方法遵循 AAA Pattern（Arrange-Act-Assert）
+- 使用三段式命名法（方法_情境_預期）
+- 涵蓋正常路徑、邊界條件、無效輸入、例外情況
 
 ## 參考資源
 

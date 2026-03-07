@@ -2,32 +2,13 @@
 name: dotnet-testing-autofixture-nsubstitute-integration
 description: |
   AutoFixture 與 NSubstitute 整合指南 - 實現自動模擬 (Auto-Mocking)。當需要自動建立 Mock 物件、簡化複雜相依性注入測試時使用。涵蓋 AutoNSubstituteDataAttribute、Frozen 機制、Greedy 建構策略。包含 IMapper (AutoMapper/Mapster) 等特殊相依性的客製化處理。
+  Make sure to use this skill whenever the user mentions AutoFixture with NSubstitute, auto-mocking, AutoNSubstituteCustomization, Frozen attribute, or AutoNSubstituteDataAttribute, even if they don't explicitly ask for integration guidance.
   Keywords: autofixture nsubstitute, auto mocking, AutoNSubstituteDataAttribute, 自動模擬, Frozen, AutoNSubstituteCustomization, AutoFixture.AutoNSubstitute, Greedy, fixture.Freeze, Received(), Returns(), IMapper, AutoMapper, Mapster, mapper testing
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "autofixture, nsubstitute, auto-mocking, dependency-injection, xunit, testing"
-  related_skills: "nsubstitute-mocking, autofixture-basics, autodata-xunit-integration"
 ---
 
 # AutoFixture + NSubstitute 自動模擬整合
 
-## 適用情境
-
-本技能介紹如何整合 AutoFixture 與 NSubstitute，透過 `AutoFixture.AutoNSubstitute` 套件實現自動模擬（Auto-Mocking）功能。這種整合方式可以大幅簡化具有多個相依性的服務類別測試，讓開發者專注於測試邏輯本身，而非繁瑣的物件建立過程。
-
-### 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 測試具有多個介面相依性的服務類別
-- 建立自動模擬所有介面相依性的測試設定
-- 使用 `[Frozen]` 屬性確保相依性實例在測試中保持一致
-- 建立專案級的自訂 AutoData 屬性來整合多種客製化設定
-- 結合固定測試值與自動產生物件的參數化測試
-
-### 核心價值
+## 核心價值
 
 - **減少樣板程式碼**：不需要手動為每個介面建立 `Substitute.For<T>()`
 - **自動處理複雜相依圖**：AutoFixture 會自動解析並建立所需的物件
@@ -101,7 +82,7 @@ public async Task TestMethod(
 {
     // 設定凍結實例的行為
     repository.GetAsync(Arg.Any<int>()).Returns(someData);
-    
+
     // SUT 內部使用的是同一個 repository 實例
     var result = await sut.DoSomething();
 }
@@ -112,12 +93,12 @@ public async Task TestMethod(
 使用 `[Frozen]` 時，**參數順序非常重要**：
 
 ```csharp
-// ✅ 正確：Frozen 參數在 SUT 之前
+// 正確：Frozen 參數在 SUT 之前
 public async Task TestMethod(
     [Frozen] IRepository repository,
     MyService sut)
 
-// ❌ 錯誤：SUT 會使用不同的 repository 實例
+// 錯誤：SUT 會使用不同的 repository 實例
 public async Task TestMethod(
     MyService sut,
     [Frozen] IRepository repository)  // 太晚凍結了
@@ -138,15 +119,15 @@ public async Task TraditionalWay()
     var logger = Substitute.For<ILogger<OrderService>>();
     var notificationService = Substitute.For<INotificationService>();
     var cacheService = Substitute.For<ICacheService>();
-    
+
     var sut = new OrderService(repository, logger, notificationService, cacheService);
 
     // 設定替身行為
     repository.GetOrderAsync(Arg.Any<int>()).Returns(someOrder);
-    
+
     // Act
     var result = await sut.GetOrderAsync(orderId);
-    
+
     // Assert
     result.Should().NotBeNull();
 }
@@ -169,10 +150,10 @@ public async Task WithAutoNSubstitute(
 {
     // Arrange - 相依性已自動建立，只需設定需要的行為
     repository.GetOrderAsync(Arg.Any<int>()).Returns(someOrder);
-    
+
     // Act
     var result = await sut.GetOrderAsync(orderId);
-    
+
     // Assert
     result.Should().NotBeNull();
 }
@@ -261,11 +242,11 @@ public class InlineAutoDataWithCustomizationAttribute : InlineAutoDataAttribute
 **為什麼使用 `new AutoDataWithCustomizationAttribute()` 而不是 `CreateFixture` 方法？**
 
 ```csharp
-// ❌ 錯誤：InlineAutoDataAttribute 需要 AutoDataAttribute，不是 Func<IFixture>
+// 錯誤：InlineAutoDataAttribute 需要 AutoDataAttribute，不是 Func<IFixture>
 public InlineAutoDataWithCustomizationAttribute(params object[] values)
     : base(CreateFixture, values)  // 編譯錯誤或行為異常
 
-// ✅ 正確：傳遞 AutoDataAttribute 實例
+// 正確：傳遞 AutoDataAttribute 實例
 public InlineAutoDataWithCustomizationAttribute(params object[] values)
     : base(new AutoDataWithCustomizationAttribute(), values)
 ```
@@ -367,40 +348,40 @@ MyProject.Tests/
 1. **參數順序錯誤**
 
    ```csharp
-   // ❌ Frozen 參數在 SUT 之後，不會生效
+   // Frozen 參數在 SUT 之後，不會生效
    public void Test(MyService sut, [Frozen] IRepository repo)
-   
-   // ✅ Frozen 參數必須在 SUT 之前
+
+   // Frozen 參數必須在 SUT 之前
    public void Test([Frozen] IRepository repo, MyService sut)
    ```
 
 2. **遺忘 AutoNSubstituteCustomization**
 
    ```csharp
-   // ❌ 沒有 AutoNSubstitute，介面會產生異常
+   // 沒有 AutoNSubstitute，介面會產生異常
    var fixture = new Fixture();
-   
-   // ✅ 加入 AutoNSubstituteCustomization
+
+   // 加入 AutoNSubstituteCustomization
    var fixture = new Fixture().Customize(new AutoNSubstituteCustomization());
    ```
 
 3. **過度依賴自動產生**
 
    ```csharp
-   // ❌ 測試意圖不明確
+   // 測試意圖不明確
    public void Test(Order order, Customer customer, MyService sut)
    {
        var result = sut.Process(order);
        result.Should().NotBeNull();  // 驗證什麼？
    }
-   
-   // ✅ 明確控制關鍵屬性
+
+   // 明確控制關鍵屬性
    public void Test(IFixture fixture, MyService sut)
    {
        var order = fixture.Build<Order>()
                           .With(o => o.Status, OrderStatus.Pending)
                           .Create();
-       
+
        var result = sut.Process(order);
        result.Status.Should().Be(OrderStatus.Processed);
    }
@@ -424,6 +405,14 @@ MyProject.Tests/
 | `nsubstitute-mocking`        | NSubstitute 基礎，Mock 設定的詳細說明  |
 
 ---
+
+## 輸出格式
+
+- 產生自訂 `AutoDataAttribute` 衍生類別檔案（`*AutoDataAttribute.cs`）
+- 產生 `ICustomization` 實作類別檔案（`*Customization.cs`）
+- 測試方法使用 `[Theory]` 搭配自訂 AutoData 屬性
+- `[Frozen]` 參數置於 SUT 參數之前
+- 搭配 NSubstitute 的 `Returns()` 與 `Received()` 進行行為設定與驗證
 
 ## 參考資源
 

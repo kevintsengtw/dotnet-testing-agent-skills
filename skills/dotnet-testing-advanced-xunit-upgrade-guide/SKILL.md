@@ -2,25 +2,11 @@
 name: dotnet-testing-advanced-xunit-upgrade-guide
 description: |
   xUnit 2.9.x 到 3.x 升級完整指南。當需要將 xUnit v2 升級至 v3 或了解 xUnit v3 新功能與破壞性變更時使用。涵蓋套件更新、async void 修正、IAsyncLifetime 調整。包含新功能介紹: Assert.Skip、Explicit Tests、Matrix Theory、Assembly Fixtures。
+  Make sure to use this skill whenever the user mentions xUnit upgrade, xUnit v3, xUnit migration, xUnit breaking changes, or Assert.Skip, even if they don't explicitly ask for xUnit upgrade guidance.
   Keywords: xunit upgrade, xunit v3, xunit 3.x, xunit migration, xunit 升級, xunit.v3, OutputType Exe, IAsyncLifetime v3, Assert.Skip, SkipUnless, SkipWhen, Explicit attribute, MatrixTheoryData, AssemblyFixture, 破壞性變更
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "xunit, upgrade, migration, v3, breaking-changes, testing-framework"
-  related_skills: "xunit-project-setup, unit-test-fundamentals"
 ---
 
 # xUnit 升級指南：從 2.9.x 到 3.x
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 將現有 xUnit 2.x 測試專案升級到 xUnit 3.x
-- 評估 xUnit 升級的影響範圍
-- 解決 xUnit 升級過程中的編譯錯誤
-- 使用 xUnit 3.x 新功能改進測試
 
 ## 核心概念
 
@@ -173,7 +159,7 @@ git checkout -b feature/upgrade-xunit-v3
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-    
+
     <!-- 常用輔助套件 -->
     <PackageReference Include="AwesomeAssertions" Version="8.1.0" />
     <PackageReference Include="NSubstitute" Version="5.3.0" />
@@ -219,14 +205,14 @@ dotnet test --verbosity normal
 **聲明式 (SkipUnless/SkipWhen)**：
 
 ```csharp
-[Fact(SkipUnless = nameof(IsWindowsEnvironment), 
+[Fact(SkipUnless = nameof(IsWindowsEnvironment),
       Skip = "此測試只在 Windows 環境執行")]
 public void 只在Windows上執行的測試()
 {
     // 測試邏輯
 }
 
-public static bool IsWindowsEnvironment => 
+public static bool IsWindowsEnvironment =>
     RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 ```
 
@@ -237,12 +223,12 @@ public static bool IsWindowsEnvironment =>
 public void 根據環境變數跳過的測試()
 {
     var enableTests = Environment.GetEnvironmentVariable("ENABLE_INTEGRATION_TESTS");
-    
+
     if (string.IsNullOrEmpty(enableTests) || enableTests.ToLower() != "true")
     {
         Assert.Skip("整合測試已停用。設定 ENABLE_INTEGRATION_TESTS=true 來執行");
     }
-    
+
     // 測試邏輯...
 }
 ```
@@ -265,7 +251,7 @@ public void 昂貴的整合測試()
 [Test]
 public void 使用Test屬性的測試() { Assert.True(true); }
 
-[Fact] 
+[Fact]
 public void 使用Fact屬性的測試() { Assert.True(true); }
 ```
 
@@ -294,13 +280,13 @@ public void 矩陣測試範例(int number, string text)
 public class DatabaseAssemblyFixture : IAsyncLifetime
 {
     public string ConnectionString { get; private set; }
-    
+
     public async Task InitializeAsync()
     {
         // 建立測試資料庫
         ConnectionString = await CreateTestDatabaseAsync();
     }
-    
+
     public async Task DisposeAsync()
     {
         // 清理測試資料庫
@@ -315,12 +301,12 @@ public class DatabaseAssemblyFixture : IAsyncLifetime
 public class UserServiceTests
 {
     private readonly DatabaseAssemblyFixture _dbFixture;
-    
+
     public UserServiceTests(DatabaseAssemblyFixture dbFixture)
     {
         _dbFixture = dbFixture;
     }
-    
+
     [Fact]
     public void Test1() { /* 使用 _dbFixture.ConnectionString */ }
 }
@@ -331,7 +317,7 @@ public class UserServiceTests
 ```csharp
 public class TestPipelineStartup : ITestPipelineStartup
 {
-    public async Task ConfigureAsync(ITestPipelineBuilder builder, 
+    public async Task ConfigureAsync(ITestPipelineBuilder builder,
                                      CancellationToken cancellationToken)
     {
         // 全域初始化邏輯
@@ -371,7 +357,7 @@ xUnit 3.x 支援多種報告格式：
 # 產生 CTRF 格式報告
 dotnet run -- -ctrf results.json
 
-# 產生 TRX 格式報告  
+# 產生 TRX 格式報告
 dotnet run -- -trx results.trx
 
 # 產生 XML 格式報告
@@ -478,6 +464,13 @@ xUnit 3.x 帶來的效能改進：
 4. **更好的記憶體隔離**：減少測試之間的干擾
 
 ---
+
+## 輸出格式
+
+- 產生升級後的測試專案 .csproj 設定（xunit.v3 套件、OutputType Exe）
+- 包含 async void 修正為 async Task 的測試程式碼
+- 包含 IAsyncLifetime 調整與 SkippableFact 替換範例
+- 產生 xunit.runner.json 設定檔
 
 ## 參考資源
 

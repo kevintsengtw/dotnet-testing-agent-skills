@@ -2,27 +2,11 @@
 name: dotnet-testing-advanced-testcontainers-database
 description: |
   使用 Testcontainers 進行容器化資料庫測試的專門技能。當需要測試真實資料庫行為、使用 SQL Server/PostgreSQL/MySQL 容器、測試 EF Core/Dapper 時使用。涵蓋容器啟動、資料庫遷移、測試隔離、容器共享等。
+  Make sure to use this skill whenever the user mentions Testcontainers database, SQL Server container, PostgreSQL container, EF Core integration test, Dapper testing, or Collection Fixture, even if they don't explicitly ask for container-based database testing.
   Keywords: testcontainers, 容器測試, container testing, database testing, 資料庫測試, MsSqlContainer, PostgreSqlContainer, MySqlContainer, EF Core testing, Dapper testing, Testcontainers.MsSql, Testcontainers.PostgreSql, GetConnectionString, IAsyncLifetime, CollectionFixture
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, Testcontainers, database, SQL Server, PostgreSQL"
-  related_skills: "advanced-testcontainers-nosql, advanced-aspnet-integration-testing, advanced-aspire-testing"
 ---
 
 # Testcontainers 資料庫整合測試指南
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 需要測試真實資料庫行為（交易、並發、預存程序等）
-- EF Core InMemory 資料庫無法滿足測試需求
-- 建立 PostgreSQL 或 MSSQL 的容器化測試環境
-- 使用 Collection Fixture 模式共享容器實例
-- 同時測試 EF Core 和 Dapper 的資料存取層
-- 需要 SQL 腳本外部化策略
 
 ## EF Core InMemory 的限制
 
@@ -73,19 +57,19 @@ Testcontainers 是一個測試函式庫，提供輕量好用的 API 來啟動 Do
   <PackageReference Include="xunit" Version="2.9.3" />
   <PackageReference Include="xunit.runner.visualstudio" Version="2.9.3" />
   <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
-  
+
   <!-- Testcontainers 核心套件 -->
   <PackageReference Include="Testcontainers" Version="3.10.0" />
-  
+
   <!-- 資料庫容器 -->
   <PackageReference Include="Testcontainers.PostgreSql" Version="3.10.0" />
   <PackageReference Include="Testcontainers.MsSql" Version="3.10.0" />
-  
+
   <!-- Entity Framework Core -->
   <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
   <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
   <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
-  
+
   <!-- Dapper (可選) -->
   <PackageReference Include="Dapper" Version="2.1.35" />
   <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
@@ -224,7 +208,7 @@ public class SqlServerContainerFixture : IAsyncLifetime
     {
         await _container.StartAsync();
         ConnectionString = _container.GetConnectionString();
-        
+
         // 等待容器完全啟動
         await Task.Delay(2000);
     }
@@ -450,6 +434,14 @@ public void Dispose()
     _dbContext.Dispose();
 }
 ```
+
+## 輸出格式
+
+- 產生使用 Testcontainers 的 xUnit 整合測試類別（.cs 檔案）
+- 包含 IAsyncLifetime 容器生命週期管理程式碼
+- 包含 Collection Fixture 共享容器設定
+- 產生外部化 SQL 腳本檔案（.sql）與對應的 .csproj 設定
+- 包含 Repository Pattern 介面與實作範例
 
 ## 參考資源
 

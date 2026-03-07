@@ -2,28 +2,13 @@
 name: dotnet-testing-private-internal-testing
 description: |
   Private 與 Internal 成員測試策略指南。當需要測試私有或內部成員、設定 InternalsVisibleTo 或評估可測試性設計時使用。涵蓋設計優先思維、反射測試、策略模式重構、AbstractLogger 模式與決策框架。
+  Make sure to use this skill whenever the user mentions private method testing, internal testing, InternalsVisibleTo, reflection testing, or testability design, even if they don't explicitly ask for testing strategy guidance.
   Keywords: private method testing, internal testing, InternalsVisibleTo, 私有方法測試, 內部成員測試, 反射測試, reflection testing, GetMethod BindingFlags, Meziantou.MSBuild.InternalsVisibleTo, 可測試性設計, 策略模式重構, testability
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "private-testing, internal-testing, InternalsVisibleTo, reflection, testability, design"
-  related_skills: "nsubstitute-mocking, unit-test-fundamentals, test-naming-conventions"
 ---
 
 # 私有與內部成員測試策略指南
 
 本技能協助您在 .NET 測試中正確處理私有與內部成員的測試，強調設計優先的測試思維。
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 測試 private 或 internal 方法與屬性
-- 設定 InternalsVisibleTo 存取內部成員
-- 評估是否需要測試私有方法或應重構設計
-- 使用反射（Reflection）存取私有成員
-- 提升程式碼的可測試性設計
 
 ## 核心原則：設計優先思維
 
@@ -252,7 +237,7 @@ public class StandardDiscountStrategy : IDiscountStrategy
         // 折扣邏輯現在是公開方法，容易測試
         if (customer.IsVIP)
             return product.BasePrice * 0.1m;
-        
+
         return 0;
     }
 }
@@ -313,9 +298,9 @@ public class DataProcessor
 
         var data = TransformData(input);
         var saved = SaveData(data); // 想模擬這個方法避免實際資料庫操作
-        
-        return saved 
-            ? ProcessResult.Success() 
+
+        return saved
+            ? ProcessResult.Success()
             : ProcessResult.Failed();
     }
 
@@ -462,6 +447,14 @@ public void Process_使用部分模擬_應成功處理()
 - `internals-visible-to-examples.cs` - InternalsVisibleTo 設定範例
 - `reflection-testing-examples.cs` - 反射測試技術範例
 - `strategy-pattern-refactoring.cs` - 策略模式重構範例
+
+## 輸出格式
+
+- 產生測試類別檔案（`*Tests.cs`），包含私有或內部成員的測試方法
+- 若需要 InternalsVisibleTo 設定，修改目標專案的 `.csproj` 或 `AssemblyInfo.cs`
+- 若建議重構，產生提取後的策略介面與實作類別（`.cs`）
+- 若使用反射測試，產生 `ReflectionTestHelper.cs` 輔助類別
+- 提供決策建議說明，標示選擇的測試策略與理由
 
 ## 參考資源
 

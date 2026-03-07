@@ -2,28 +2,13 @@
 name: dotnet-testing-test-output-logging
 description: |
   xUnit 測試輸出與記錄完整指南。當需要在 xUnit 測試中實作測試輸出、診斷記錄或 ILogger 替代品時使用。涵蓋 ITestOutputHelper 注入、AbstractLogger 模式、結構化輸出設計。包含 XUnitLogger、CompositeLogger、效能測試診斷工具實作。
+  Make sure to use this skill whenever the user mentions ITestOutputHelper, test output, test logging, XUnitLogger, AbstractLogger, or ILogger testing in xUnit, even if they don't explicitly ask for test output guidance.
   Keywords: ITestOutputHelper, ILogger testing, test output xunit, 測試輸出, 測試記錄, AbstractLogger, XUnitLogger, CompositeLogger, testOutputHelper.WriteLine, 測試診斷, logger mock, 測試日誌, 結構化輸出, Received().Log
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "xunit, ITestOutputHelper, ILogger, testing, diagnostics, logging"
-  related_skills: "unit-test-fundamentals, nsubstitute-mocking, xunit-project-setup"
 ---
 
 # 測試輸出與記錄專家指南
 
 本技能協助您在 .NET xUnit 測試專案中實作高品質的測試輸出與記錄機制。
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 在 xUnit 測試中使用 ITestOutputHelper 輸出診斷資訊
-- 實作 ILogger 的測試替代品（XUnitLogger）
-- 建立 AbstractLogger 或 CompositeLogger 模式
-- 設計結構化測試輸出進行除錯
-- 實作效能測試診斷工具
 
 ## 核心原則
 
@@ -312,6 +297,13 @@ public abstract class DiagnosticTestBase
 - `ilogger-testing-example.cs` - ILogger 測試策略範例
 - `diagnostic-tools.cs` - XUnitLogger 與 CompositeLogger 實作
 
+## 輸出格式
+
+- 產生含 ITestOutputHelper 注入的測試類別
+- 提供 AbstractLogger/XUnitLogger/CompositeLogger 實作程式碼
+- 包含結構化輸出的 helper 方法
+- ILogger 驗證使用底層 Log 方法而非擴充方法
+
 ## 參考資源
 
 ### 原始文章
@@ -332,6 +324,12 @@ public abstract class DiagnosticTestBase
 - `xunit-project-setup` - xUnit 專案設定
 - `nsubstitute-mocking` - 測試替身與模擬
 
+### 範例檔案
+
+- [templates/itestoutputhelper-example.cs](templates/itestoutputhelper-example.cs) - ITestOutputHelper 使用範例
+- [templates/ilogger-testing-example.cs](templates/ilogger-testing-example.cs) - ILogger 測試範例
+- [templates/diagnostic-tools.cs](templates/diagnostic-tools.cs) - 診斷工具實作
+
 ## 測試清單
 
 在實作測試輸出與記錄時，確認以下檢查項目：
@@ -344,11 +342,3 @@ public abstract class DiagnosticTestBase
 - [ ] 沒有在輸出中洩漏敏感資訊
 - [ ] 非同步測試正確等待記錄完成
 - [ ] 測試失敗時提供足夠的診斷資訊
-
-## 參考資源
-
-請參考同目錄下的範例檔案：
-
-- [templates/itestoutputhelper-example.cs](templates/itestoutputhelper-example.cs) - ITestOutputHelper 使用範例
-- [templates/ilogger-testing-example.cs](templates/ilogger-testing-example.cs) - ILogger 測試範例
-- [templates/diagnostic-tools.cs](templates/diagnostic-tools.cs) - 診斷工具實作

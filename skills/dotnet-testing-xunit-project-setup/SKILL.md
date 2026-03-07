@@ -2,27 +2,11 @@
 name: dotnet-testing-xunit-project-setup
 description: |
   xUnit 測試專案建立與設定的專門技能。當需要建立測試專案、設定專案結構、配置 NuGet 套件、組織測試資料夾時使用。涵蓋 csproj 設定、套件管理、專案結構、xunit.runner.json 配置等。
+  Make sure to use this skill whenever the user mentions creating a test project, xUnit setup, project structure for tests, NuGet test packages, or csproj configuration for testing, even if they don't explicitly ask for project setup guidance.
   Keywords: xunit project, xunit setup, 測試專案建立, test project setup, 建立測試專案, project structure, 專案結構, folder structure, xunit package, nuget packages, 測試套件, 如何建立測試專案, xunit configuration
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, xUnit, project setup, configuration"
-  related_skills: "unit-test-fundamentals, test-naming-conventions, awesome-assertions-guide"
 ---
 
 # xUnit 測試專案設定指南
-
-## 適用情境
-
-當被要求執行以下任務時，請使用此技能：
-
-- 建立新的 xUnit 測試專案
-- 設定 .NET 測試專案結構
-- 配置 xUnit 相依套件與 NuGet 套件
-- 規劃測試專案的資料夾組織
-- 設定程式碼覆蓋率收集工具
-- 理解測試專案的 csproj 設定
 
 ## 專案結構最佳實踐
 
@@ -323,7 +307,7 @@ MyProject/
    ```powershell
    # 快速回饋：只執行單元測試
    dotnet test --filter "FullyQualifiedName~.Test.Unit"
-   
+
    # 完整驗證：執行整合測試
    dotnet test --filter "FullyQualifiedName~.Test.Integration"
    ```
@@ -400,6 +384,14 @@ dotnet add tests/MyProject.WebApi.Test.Integration reference src/MyProject.WebAp
 - [ ] `IsTestProject` 設為 `true`
 - [ ] 可以執行 `dotnet test` 成功
 - [ ] IDE 的 Test Explorer 可以探索到測試
+
+## 輸出格式
+
+- 產生完整的 xUnit 測試專案結構（src/ 與 tests/ 分離）
+- 產生測試專案 csproj 檔案（含必要套件參考）
+- 提供 dotnet CLI 建立指令序列
+- 包含專案參考設定與 xunit.runner.json 配置（如需要）
+- 產生基本測試類別範本（.cs 檔案）
 
 ## 參考資源
 

@@ -2,20 +2,11 @@
 name: dotnet-testing-complex-object-comparison
 description: |
   處理複雜物件比對與深層驗證的專門技能。當需要比對深層物件、排除特定屬性、處理循環參照、驗證 DTO/Entity 時使用。涵蓋 BeEquivalentTo、Excluding、Including、自訂比對規則等。
+  Make sure to use this skill whenever the user mentions deep object comparison, BeEquivalentTo, DTO comparison, Excluding properties, or complex object validation in tests, even if they don't explicitly ask for comparison guidance.
   Keywords: object comparison, 物件比對, deep comparison, 深層比對, BeEquivalentTo, DTO 比對, Entity 驗證, 排除屬性, 循環參照, Excluding, Including, ExcludingNestedObjects, RespectingRuntimeTypes, WithStrictOrdering, 忽略時間戳記, exclude timestamp
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: ".NET, testing, object comparison, BeEquivalentTo, AwesomeAssertions"
-  related_skills: "awesome-assertions-guide, autofixture-basics, test-data-builder-pattern"
 ---
 
 # 複雜物件比對指南（Complex Object Comparison）
-
-## 適用情境
-
-此技能專注於 .NET 測試中的複雜物件比對場景，使用 AwesomeAssertions 的 `BeEquivalentTo` API 處理各種進階比對需求。
 
 ## 核心使用場景
 
@@ -267,6 +258,13 @@ options.WithTracing()  // 產生詳細的比對追蹤資訊
 
 - `templates/comparison-patterns.cs`: 常見比對模式範例
 - `templates/exclusion-strategies.cs`: 欄位排除策略與擴充方法
+
+## 輸出格式
+
+- 產生使用 BeEquivalentTo 的深層物件比對斷言
+- 包含 Excluding/Including 屬性過濾設定
+- 提供自訂比對規則與循環參照處理範例
+- 包含 DTO/Entity 比對的完整測試程式碼
 
 ## 參考資源
 

@@ -2,30 +2,11 @@
 name: dotnet-testing-autodata-xunit-integration
 description: |
   AutoFixture 與 xUnit 整合完整指南。當需要使用 AutoData 或 InlineAutoData 簡化 xUnit 參數化測試資料準備時使用。涵蓋自訂 Customization 與測試資料屬性，提升測試可讀性與維護性。
+  Make sure to use this skill whenever the user mentions AutoData, InlineAutoData, MemberAutoData, AutoFixture xUnit integration, or parameterized test data attributes, even if they don't explicitly ask for AutoData guidance.
   Keywords: AutoData, InlineAutoData, AutoFixture xUnit, [AutoData], [InlineAutoData], AutoDataAttribute, ICustomization, DataAttribute, 參數化測試, Theory AutoData, MemberAutoData, 測試資料屬性, fixture.Customize
-license: MIT
-metadata:
-  author: Kevin Tseng
-  version: "1.0.0"
-  tags: "autofixture, xunit, autodata, theory, parameterized-tests, customization"
-  related_skills: "autofixture-basics, autofixture-customization, autofixture-nsubstitute-integration"
 ---
 
 # AutoData 屬性家族:xUnit 與 AutoFixture 的整合應用
-
-## 適用情境
-
-- AutoData
-- InlineAutoData
-- MemberAutoData
-- CompositeAutoData
-- xUnit AutoFixture 整合
-- 參數化測試資料
-- 測試參數注入
-- CollectionSizeAttribute
-- 外部測試資料
-- CSV 測試資料
-- JSON 測試資料
 
 ## 概述
 
@@ -62,13 +43,13 @@ using AutoFixture.Xunit2;
 public class Person
 {
     public Guid Id { get; set; }
-    
+
     [StringLength(10)]
     public string Name { get; set; } = string.Empty;
-    
+
     [Range(18, 80)]
     public int Age { get; set; }
-    
+
     public string Email { get; set; } = string.Empty;
     public DateTime CreateTime { get; set; }
 }
@@ -159,18 +140,18 @@ public void InlineAutoData_參數順序一致性(
 }
 ```
 
-### ⚠️ 重要限制：只能使用編譯時常數
+### 重要限制：只能使用編譯時常數
 
 ```csharp
-// ✅ 正確：使用常數
+// 正確：使用常數
 [InlineAutoData("VIP", 100000)]
 [InlineAutoData("Premium", 50000)]
 
-// ❌ 錯誤：不能使用變數
+// 錯誤：不能使用變數
 private const decimal VipCreditLimit = 100000m;
 [InlineAutoData("VIP", VipCreditLimit)]  // 編譯錯誤
 
-// ❌ 錯誤：不能使用運算式
+// 錯誤：不能使用運算式
 [InlineAutoData("VIP", 100 * 1000)]  // 編譯錯誤
 ```
 
@@ -381,7 +362,7 @@ public void AutoData與AwesomeAssertions協作_客戶等級驗證(
     customer.Type.Should().Be(customerLevel);
     customer.CreditLimit.Should().Be(expectedCreditLimit);
     customer.CreditLimit.Should().BePositive();
-    
+
     order.Amount.Should().BeInRange(1000m, 15000m);
     canPlaceOrder.Should().BeTrue();
     discountRate.Should().BeInRange(0m, 0.3m);
@@ -450,6 +431,14 @@ private static decimal CalculateDiscount(string customerType, decimal orderAmoun
 - **autofixture-customization**：自訂化策略可用於 AutoData 屬性
 - **autofixture-nsubstitute-integration**：下一步學習目標
 - **awesome-assertions-guide**：搭配使用提升測試可讀性
+
+## 輸出格式
+
+- 產生使用 `[Theory]` 搭配 `[AutoData]` 或 `[InlineAutoData]` 的測試方法
+- 產生自訂 `AutoDataAttribute` 衍生類別檔案（`*AutoDataAttribute.cs`）
+- 測試參數透過屬性注入，減少 Arrange 區段程式碼
+- 固定值參數置於方法簽章前方，自動產生參數置於後方
+- 搭配 DataAnnotation 約束參數範圍
 
 ## 參考資源
 

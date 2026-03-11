@@ -263,7 +263,7 @@ options.WithTracing()  // 產生詳細的比對追蹤資訊
 
 - 產生使用 BeEquivalentTo 的深層物件比對斷言
 - 包含 Excluding/Including 屬性過濾設定
-- 提供自訂比對規則與循環參照處理範例
+- **務必提及循環參照處理**：即使使用者未明確問到，也應說明 `IgnoringCyclicReferences()` 和 `WithMaxRecursionDepth(n)` 的用法，因為深層巢狀物件經常會遇到循環參照問題
 - 包含 DTO/Entity 比對的完整測試程式碼
 
 ## 參考資源

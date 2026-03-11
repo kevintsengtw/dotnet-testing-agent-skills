@@ -30,12 +30,14 @@ description: |
 
 ### 好的命名 vs 不好的命名
 
-| 不好的命名 | 好的命名                                         | 原因                       |
-| ------------- | --------------------------------------------------- | -------------------------- |
-| `TestAdd`     | `Add_輸入1和2_應回傳3`                              | 清楚說明測試情境與預期結果 |
-| `Test1`       | `Add_輸入負數和正數_應回傳正確結果`                 | 有意義的描述               |
-| `EmailTest`   | `IsValidEmail_輸入有效Email_應回傳True`             | 完整的三段式命名           |
-| `OrderTest`   | `ProcessOrder_輸入null_應拋出ArgumentNullException` | 明確的例外情境             |
+三段式命名可以使用中文或英文，依團隊慣例選擇。以下同時展示兩種風格：
+
+| 不好的命名 | 中文命名（推薦）                                    | 英文命名                                                      | 原因                       |
+| ------------- | --------------------------------------------------- | ------------------------------------------------------------- | -------------------------- |
+| `TestAdd`     | `Add_輸入1和2_應回傳3`                              | `Add_WhenGiven1And2_ShouldReturn3`                            | 清楚說明測試情境與預期結果 |
+| `Test1`       | `Add_輸入負數和正數_應回傳正確結果`                 | `Add_WhenGivenNegativeAndPositive_ShouldReturnCorrectResult`  | 有意義的描述               |
+| `EmailTest`   | `IsValidEmail_輸入有效Email_應回傳True`             | `IsValidEmail_WhenValidEmail_ShouldReturnTrue`                | 完整的三段式命名           |
+| `OrderTest`   | `ProcessOrder_輸入null_應拋出ArgumentNullException` | `ProcessOrder_WhenNull_ShouldThrowArgumentNullException`      | 明確的例外情境             |
 
 ## 實際範例
 

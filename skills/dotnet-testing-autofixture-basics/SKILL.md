@@ -22,363 +22,67 @@ dotnet add package AutoFixture
 dotnet add package AutoFixture.Xunit2
 ```
 
-## 基本使用方式
+## 核心 API 摘要
 
-### Fixture 類別與 Create<T>()
+| API                      | 用途                         | 預設行為              |
+| ------------------------ | ---------------------------- | --------------------- |
+| `fixture.Create<T>()`   | 產生單一物件                 | 自動填充所有屬性      |
+| `fixture.CreateMany<T>()` | 產生集合                   | 預設 3 個元素         |
+| `fixture.Build<T>()`    | 精確控制屬性                 | 搭配 With/Without     |
+| `OmitAutoProperties()`  | 只設定必要屬性               | 其餘保持預設值        |
 
-`Fixture` 是 AutoFixture 的核心類別，提供自動產生測試資料的能力：
+### 基本使用
 
-```csharp
-using AutoFixture;
+`Fixture` 是核心類別，提供自動產生測試資料的能力：
 
-[Fact]
-public void AutoFixture_基本使用_應產生有效資料()
-{
-    // Arrange
-    var fixture = new Fixture();
+- **基本型別**：`int`（隨機正整數）、`string`（GUID 格式）、`decimal`、`bool`、`DateTime`、`Guid`
+- **複雜物件**：自動建構巢狀物件與集合屬性，所有層級的屬性都會自動填入值
+- **集合產生**：`CreateMany<T>()` 預設產生 3 個元素，可指定數量如 `CreateMany<T>(10)`
 
-    // Act - 產生基本型別
-    var id = fixture.Create<int>();           // 隨機正整數
-    var name = fixture.Create<string>();      // 類似 GUID 格式的字串
-    var price = fixture.Create<decimal>();    // 隨機十進位數
-    var isActive = fixture.Create<bool>();    // 隨機布林值
-    var date = fixture.Create<DateTime>();    // 隨機日期時間
-    var guid = fixture.Create<Guid>();        // 新的 GUID
+> 完整程式碼範例請參考 [references/basic-usage-examples.md](references/basic-usage-examples.md)
 
-    // Assert
-    id.Should().BePositive();
-    name.Should().NotBeNullOrEmpty();
-    guid.Should().NotBe(Guid.Empty);
-}
-```
-
-### CreateMany<T>() 產生集合
-
-```csharp
-[Fact]
-public void CreateMany_產生集合_應有多個元素()
-{
-    var fixture = new Fixture();
-
-    // 預設產生 3 個元素
-    var products = fixture.CreateMany<Product>().ToList();
-    
-    // 指定數量
-    var moreProducts = fixture.CreateMany<Product>(10).ToList();
-
-    products.Should().HaveCount(3);
-    moreProducts.Should().HaveCount(10);
-}
-```
-
-### 複雜物件自動建構
-
-AutoFixture 能夠自動建構複雜的物件結構：
-
-```csharp
-public class Customer
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
-    public Address Address { get; set; }        // 巢狀物件
-    public List<Order> Orders { get; set; }     // 集合屬性
-}
-
-[Fact]
-public void 複雜物件_應完整建構所有層級()
-{
-    var fixture = new Fixture();
-
-    var customer = fixture.Create<Customer>();
-
-    // 所有屬性自動填入值
-    customer.Should().NotBeNull();
-    customer.Id.Should().BePositive();
-    customer.Name.Should().NotBeNullOrEmpty();
-    customer.Address.Should().NotBeNull();
-    customer.Address.Street.Should().NotBeNullOrEmpty();
-    customer.Orders.Should().NotBeEmpty();
-}
-```
-
-## Build<T>() 模式：精確控制
+### Build<T>() 精確控制
 
 當需要對特定屬性進行控制時，使用 `Build<T>()` 模式：
 
-```csharp
-[Fact]
-public void Build模式_指定特定屬性()
-{
-    var fixture = new Fixture();
+| 方法                    | 用途                         | 範例                                       |
+| ----------------------- | ---------------------------- | ------------------------------------------ |
+| `.With(prop, value)`    | 指定固定值                   | `.With(x => x.Name, "測試客戶")`           |
+| `.With(prop, factory)`  | 使用工廠方法產生值           | `.With(x => x.Price, () => random.Next())` |
+| `.Without(prop)`        | 排除屬性，保持預設值         | `.Without(x => x.InternalId)`              |
+| `.OmitAutoProperties()` | 不自動設定任何屬性          | 只設定關心的屬性                           |
 
-    var customer = fixture.Build<Customer>()
-        .With(x => x.Name, "測試客戶")           // 指定固定值
-        .With(x => x.Age, 25)                    // 指定固定值
-        .Without(x => x.InternalId)              // 排除屬性
-        .Create();
+### 循環參考處理
 
-    customer.Name.Should().Be("測試客戶");
-    customer.Age.Should().Be(25);
-    customer.InternalId.Should().Be(default);
-}
-```
+當物件包含循環參考時（如 Category 的 Parent 屬性指向自己），AutoFixture 預設會拋出 `ObjectCreationException`。
 
-### OmitAutoProperties() 控制自動設定
+**解決方案：** 使用 `OmitOnRecursionBehavior`，移除預設的 `ThrowingRecursionBehavior` 並加入忽略循環參考的行為。
 
-```csharp
-[Fact]
-public void OmitAutoProperties_僅設定必要屬性()
-{
-    var fixture = new Fixture();
+**建議：** 建立 `AutoFixtureTestBase` 基底類別統一處理循環參考，避免在每個測試中重複設定。
 
-    var customer = fixture.Build<Customer>()
-        .OmitAutoProperties()           // 不自動設定任何屬性
-        .With(x => x.Id, 123)          // 只設定關心的屬性
-        .With(x => x.Name, "測試客戶")
-        .Create();
-
-    customer.Id.Should().Be(123);
-    customer.Name.Should().Be("測試客戶");
-    customer.Email.Should().BeNullOrEmpty();  // 保持預設值
-    customer.Age.Should().Be(0);              // 保持預設值
-}
-```
-
-## 循環參考處理
-
-當物件包含循環參考時，AutoFixture 提供兩種處理策略：
-
-### 預設行為：ThrowingRecursionBehavior
-
-```csharp
-// 預設會拋出例外
-[Fact]
-public void 循環參考_預設行為_拋出例外()
-{
-    var fixture = new Fixture();
-    
-    // Category 有 Parent 屬性指向自己，造成循環參考
-    Action act = () => fixture.Create<Category>();
-    
-    act.Should().Throw<ObjectCreationException>();
-}
-```
-
-### OmitOnRecursionBehavior：忽略循環參考
-
-```csharp
-[Fact]
-public void 循環參考_使用OmitOnRecursion_成功建立()
-{
-    var fixture = new Fixture();
-    
-    // 移除預設的拋出例外行為
-    fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-        .ForEach(b => fixture.Behaviors.Remove(b));
-    
-    // 加入忽略循環參考行為
-    fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
-    var category = fixture.Create<Category>();
-
-    category.Should().NotBeNull();
-    category.Name.Should().NotBeNullOrEmpty();
-}
-```
-
-### 共用基底類別
-
-建議建立基底類別來統一處理循環參考：
-
-```csharp
-public abstract class AutoFixtureTestBase
-{
-    protected Fixture CreateFixture()
-    {
-        var fixture = new Fixture();
-
-        fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList()
-            .ForEach(b => fixture.Behaviors.Remove(b));
-        fixture.Behaviors.Add(new OmitOnRecursionBehavior());
-
-        return fixture;
-    }
-}
-
-public class CustomerServiceTests : AutoFixtureTestBase
-{
-    [Fact]
-    public void ProcessOrder_正常訂單_應處理成功()
-    {
-        var fixture = CreateFixture();
-        var customer = fixture.Create<Customer>();
-        
-        // 測試邏輯...
-    }
-}
-```
+> 完整程式碼範例請參考 [references/build-and-customization.md](references/build-and-customization.md)
 
 ## xUnit 整合
 
-### 使用 Fixture 共享客製化
+### Fixture 共享客製化
 
-```csharp
-public class ProductServiceTests
-{
-    private readonly Fixture _fixture;
-
-    public ProductServiceTests()
-    {
-        _fixture = new Fixture();
-        
-        // 共同的客製化設定
-        _fixture.Customize<ProductCreateRequest>(c => c
-            .With(x => x.Price, () => _fixture.Create<decimal>() % 10000)
-            .With(x => x.Name, () => $"Product-{_fixture.Create<string>()[..8]}")
-        );
-    }
-
-    [Fact]
-    public void CreateProduct_使用共享Fixture_應成功建立()
-    {
-        var productData = _fixture.Create<ProductCreateRequest>();
-        var service = new ProductService();
-
-        var result = service.CreateProduct(productData);
-
-        result.Should().NotBeNull();
-        productData.Price.Should().BeLessThan(10000);
-    }
-}
-```
+在測試類別建構函式中使用 `Customize<T>()` 設定共用的資料產生規則，所有測試方法共享同一個 Fixture 設定。
 
 ### 結合 Theory 測試
 
-```csharp
-[Theory]
-[InlineData(CustomerType.Regular)]
-[InlineData(CustomerType.Premium)]
-[InlineData(CustomerType.VIP)]
-public void CalculateDiscount_不同客戶類型_應套用正確折扣(CustomerType customerType)
-{
-    var fixture = new Fixture();
-    
-    var customer = fixture.Build<Customer>()
-        .With(x => x.Type, customerType)
-        .Create();
-        
-    var order = fixture.Create<Order>();
-    var calculator = new DiscountCalculator();
+搭配 `[Theory]` + `[InlineData]`，使用 `Build<T>().With()` 針對不同輸入情境設定關鍵屬性值，驗證各情境的預期行為。
 
-    var discount = calculator.Calculate(customer, order);
+### 匿名測試原則
 
-    switch (customerType)
-    {
-        case CustomerType.Regular:
-            discount.Should().Be(0);
-            break;
-        case CustomerType.Premium:
-            discount.Should().BeInRange(0.05m, 0.10m);
-            break;
-        case CustomerType.VIP:
-            discount.Should().BeInRange(0.15m, 0.25m);
-            break;
-    }
-}
-```
+測試應該關注「行為」而不是「資料」：
 
-## 匿名測試原則
+- **好的做法：** 使用 `fixture.Create<T>()` 產生任意有效資料，驗證操作結果
+- **避免：** 依賴隨機產生值的具體內容（如假設年齡大於 18）
+- **正確：** 使用 `Build<T>().With()` 明確設定影響測試結果的關鍵值
 
-### 核心概念
-
-測試應該關注「行為」而不是「資料」。在大多數情況下，我們並不在乎具體的資料值是什麼：
-
-```csharp
-// ✅ 好的做法：專注於測試邏輯
-[Fact]
-public void AddCustomer_任何有效客戶_應成功新增()
-{
-    var fixture = new Fixture();
-    var customer = fixture.Create<Customer>();
-    var repository = new CustomerRepository();
-
-    var result = repository.Add(customer);
-
-    result.Should().BeTrue();
-}
-
-// ❌ 避免：依賴隨機值的具體內容
-[Fact]
-public void BadTest_依賴隨機值()
-{
-    var fixture = new Fixture();
-    var customer = fixture.Create<Customer>();
-
-    // 錯誤：假設隨機產生的年齡會大於 18
-    customer.Age.Should().BeGreaterThan(18); // 可能失敗
-}
-
-// ✅ 正確：明確設定關鍵值
-[Fact]
-public void GoodTest_明確設定關鍵值()
-{
-    var fixture = new Fixture();
-    var customer = fixture.Build<Customer>()
-        .With(x => x.Age, 25)  // 明確設定
-        .Create();
-
-    var validator = new CustomerValidator();
-    var isValid = validator.IsAdult(customer);
-
-    isValid.Should().BeTrue();  // 穩定的結果
-}
-```
+> 完整程式碼範例請參考 [references/xunit-integration-examples.md](references/xunit-integration-examples.md)
 
 ## 進化比較：Test Data Builder vs AutoFixture
-
-### 傳統 Test Data Builder (Day 03)
-
-```csharp
-// 需要手動建立 Builder 類別 (40+ 行)
-public class OrderBuilder
-{
-    private int _id = 1;
-    private Customer _customer = new Customer { Name = "Default" };
-    private List<OrderItem> _items = new();
-    
-    public OrderBuilder WithCustomer(Customer customer)
-    {
-        _customer = customer;
-        return this;
-    }
-    
-    public OrderBuilder WithItems(params OrderItem[] items)
-    {
-        _items = items.ToList();
-        return this;
-    }
-    
-    public Order Build() => new Order
-    {
-        Id = _id,
-        Customer = _customer,
-        Items = _items
-    };
-}
-```
-
-### AutoFixture 方式 (Day 10)
-
-```csharp
-// 零設定成本，專注於測試邏輯 (5 行)
-var fixture = new Fixture();
-var order = fixture.Build<Order>()
-    .With(x => x.Status, OrderStatus.Completed)
-    .Create();
-```
-
-### 比較摘要
 
 | 層面       | Test Data Builder      | AutoFixture        |
 | ---------- | ---------------------- | ------------------ |
@@ -388,57 +92,65 @@ var order = fixture.Build<Order>()
 | 大量資料   | 需要迴圈               | `CreateMany(100)`  |
 | 可讀性     | 業務語意明確           | 需理解 AutoFixture |
 
+> 完整比較程式碼與混合策略請參考 [references/xunit-integration-examples.md](references/xunit-integration-examples.md)
+
+## 混合策略建議
+
+結合 Test Data Builder 與 AutoFixture 的優點：
+
+- 使用 AutoFixture 建立基礎資料，再用 Builder 加工
+- 使用 `TestDataFactory` 封裝常用的資料產生模式
+- 大量隨機資料產生使用 `CreateMany<T>(count)`
+
+> 完整比較程式碼與混合策略請參考 [references/xunit-integration-examples.md](references/xunit-integration-examples.md)
+
 ## 實務應用場景
 
-AutoFixture 在實務中常用於 Entity 測試（搭配 Theory 驗證不同輸入場景）、DTO 驗證（使用 `Build<T>()` 產生符合驗證規則的資料）、以及大量資料測試（使用 `CreateMany()` 產生批次資料）。
+AutoFixture 在實務中常用於以下場景：
+
+- **Entity 測試**：搭配 Theory 驗證不同輸入場景
+- **DTO 驗證**：使用 `Build<T>()` 產生符合驗證規則的資料
+- **大量資料測試**：使用 `CreateMany()` 產生批次資料
+- **服務層測試**：搭配 NSubstitute 自動產生 Mock 參數
 
 > 完整程式碼範例請參閱 [references/practical-scenarios.md](references/practical-scenarios.md)
+
+## 常見問題
+
+### Q1: 何時該用 AutoFixture，何時該用固定值？
+
+- **用 AutoFixture**：不影響測試結果的「填充」資料，如使用者的 Email、地址等
+- **用固定值**：影響測試邏輯的「關鍵」資料，如折扣計算中的客戶類型、年齡驗證中的年齡值
+
+### Q2: CreateMany 預設產生幾個？如何調整？
+
+預設產生 3 個元素，可透過參數指定數量：`fixture.CreateMany<T>(10)`。若要全域調整，使用 `fixture.RepeatCount = 5`。
+
+### Q3: AutoFixture 產生的字串格式不符合需求？
+
+使用 `Build<T>().With()` 指定格式，或搭配 `Customize<T>()` 設定全域規則。若需要真實感資料，考慮整合 Bogus。
 
 ## 最佳實踐
 
 ### 應該做
 
-1. **使用匿名測試概念** - 專注於測試邏輯而非具體資料
-2. **只在必要時固定特定值** - 使用 `Build<T>().With()` 設定關鍵屬性
-3. **建立共用基底類別** - 統一處理循環參考等共同配置
-4. **合理的集合大小** - 根據測試目的調整 `CreateMany()` 數量
+1. **使用匿名測試概念** — 專注於測試邏輯而非具體資料
+2. **只在必要時固定特定值** — 使用 `Build<T>().With()` 設定關鍵屬性
+3. **建立共用基底類別** — 統一處理循環參考等共同配置
+4. **合理的集合大小** — 根據測試目的調整 `CreateMany()` 數量
 
 ### 應該避免
 
-1. **過度依賴隨機值** - 不要假設隨機值的具體內容
-2. **忽略邊界值** - 仍需要明確測試邊界情況
-3. **濫用自動產生** - 簡單測試可能用固定值更清楚
-
-## 混合策略建議
-
-結合兩種方式的優點：
-
-```csharp
-public static class TestDataFactory
-{
-    private static readonly Fixture _fixture = new();
-    
-    // 用 AutoFixture 建立基礎資料，再用 Builder 加工
-    public static OrderBuilder AnOrder()
-    {
-        var baseOrder = _fixture.Create<Order>();
-        return new OrderBuilder(baseOrder);
-    }
-    
-    // 大量隨機資料產生
-    public static IEnumerable<User> CreateRandomUsers(int count)
-    {
-        return _fixture.CreateMany<User>(count);
-    }
-}
-```
+1. **過度依賴隨機值** — 不要假設隨機值的具體內容
+2. **忽略邊界值** — 仍需要明確測試邊界情況
+3. **濫用自動產生** — 簡單測試可能用固定值更清楚
 
 ## 程式碼範本
 
 請參考 [templates](./templates) 資料夾中的範例檔案：
 
-- [basic-autofixture-usage.cs](./templates/basic-autofixture-usage.cs) - 基本 AutoFixture 使用方式
-- [complex-object-scenarios.cs](./templates/complex-object-scenarios.cs) - 複雜物件與循環參考處理
+- [basic-autofixture-usage.cs](./templates/basic-autofixture-usage.cs) - 基本使用方式
+- [complex-object-scenarios.cs](./templates/complex-object-scenarios.cs) - 複雜物件與循環參考
 - [xunit-integration.cs](./templates/xunit-integration.cs) - xUnit 整合與 Theory 測試
 
 ## 輸出格式
@@ -452,8 +164,6 @@ public static class TestDataFactory
 
 ### 原始文章
 
-本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
-
 - **Day 10 - AutoFixture 基礎：自動產生測試資料**
   - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375018
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day10
@@ -463,7 +173,6 @@ public static class TestDataFactory
 - [AutoFixture GitHub](https://github.com/AutoFixture/AutoFixture)
 - [AutoFixture 官方網站](https://autofixture.github.io/)
 - [AutoFixture 快速入門](https://autofixture.github.io/docs/quick-start/)
-- [AutoFixture NuGet](https://www.nuget.org/packages/autofixture)
 
 ### 相關技能
 

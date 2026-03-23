@@ -52,7 +52,7 @@ Install-Package AwesomeAssertions
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="AwesomeAssertions" Version="9.1.0" PrivateAssets="all" />
+  <PackageReference Include="AwesomeAssertions" Version="9.4.0" PrivateAssets="all" />
 </ItemGroup>
 ```
 
@@ -74,6 +74,7 @@ using Xunit;
 | **物件** | `NotBeNull()`, `BeOfType<T>()`, `BeEquivalentTo()` | 空值、類型、相等性檢查 |
 | **字串** | `Contain()`, `StartWith()`, `MatchRegex()`, `BeEquivalentTo()` | 內容、模式、忽略大小寫比對 |
 | **數值** | `BeGreaterThan()`, `BeInRange()`, `BeApproximately()` | 比較、範圍、浮點精度 |
+| **數值集合** | `EqualApproximately()`, `NotEqualApproximately()` | 數值集合近似比對（9.4+） |
 | **集合** | `HaveCount()`, `Contain()`, `BeEquivalentTo()`, `AllSatisfy()` | 數量、內容、順序、條件 |
 | **例外** | `Throw<T>()`, `NotThrow()`, `WithMessage()`, `WithInnerException()` | 例外類型、訊息、巢狀例外 |
 | **非同步** | `ThrowAsync<T>()`, `CompleteWithinAsync()` | 非同步例外與完成驗證 |
@@ -115,6 +116,81 @@ order.Should().BeEquivalentTo(new
     TotalAmount = 999.99m,
     Status = "Pending"
 }, options => options.ExcludingMissingMembers());
+```
+
+---
+
+## 9.2-9.4 版本新功能
+
+### 數值集合近似比對 — `[Not]EqualApproximately`（9.4+）
+
+針對 `INumber<T>` 數值集合，新增近似相等斷言（需 .NET 8+）：
+
+```csharp
+// 驗證數值集合在容差範圍內近似相等
+var actual = new[] { 1.001f, 2.002f, 3.003f };
+actual.Should().EqualApproximately(new[] { 1f, 2f, 3f }, 0.01f);
+
+// 驗證集合不在容差範圍內近似相等
+actual.Should().NotEqualApproximately(new[] { 10f, 20f, 30f }, 0.01f);
+```
+
+> **與 `BeApproximately()` 的差異**：`BeApproximately()` 用於單一數值，`EqualApproximately()` 用於數值集合，會逐一比對每個元素。當容差為 0 時，`EqualApproximately` 的行為等同於 `Equal`。
+
+### 集合格式化最大項目數設定（9.4+）
+
+斷言失敗時，集合預設顯示前 32 個項目。現在可透過 `FormattingOptions` 自訂：
+
+```csharp
+// 在 AssertionScope 中設定集合顯示上限
+using var scope = new AssertionScope();
+scope.FormattingOptions.MaxItems = 100; // 預設為 32
+
+largeCollection.Should().BeEquivalentTo(expected);
+```
+
+也可透過自訂 Formatter 覆寫：
+
+```csharp
+class LargeCollectionFormatter : EnumerableValueFormatter
+{
+    protected override int MaxItems => 100;
+    public override bool CanHandle(object value) => value is IEnumerable<MyEntity>;
+}
+```
+
+### 集合出現次數約束（9.2+）
+
+`Contain` 方法新增出現次數約束：
+
+```csharp
+var numbers = new[] { 1, 2, 2, 3, 3, 3 };
+numbers.Should().Contain(2, AtLeast.Once());
+numbers.Should().Contain(3, Exactly.Times(3));
+```
+
+### Null 安全性改善 — `[return: NotNull]`（9.4+）
+
+所有 `Should()` 和斷言方法加入 `[return: NotNull]` 標註，讓編譯器的 nullable 分析正確追蹤：
+
+```csharp
+// 9.4 前：Should() 後仍視為可能 null，需加 ! 運算子
+var user = GetUser();
+user.Should().NotBeNull();
+user!.Name.Should().Be("test"); // 需要 ! 消除警告
+
+// 9.4 後：Should().NotBeNull() 返回帶 [NotNull] 標註，編譯器自動推斷非 null
+user.Should().NotBeNull();
+user.Name.Should().Be("test"); // 不再需要 !
+```
+
+### 排除成員名稱（9.3+）
+
+`BeEquivalentTo` 支援按名稱排除成員：
+
+```csharp
+actual.Should().BeEquivalentTo(expected, options => options
+    .Excluding(ctx => ctx.Name == "InternalState"));
 ```
 
 ---
@@ -198,8 +274,11 @@ actual.Should().Equal(expected); // 檢查順序
 **解決方案**：
 
 ```csharp
-// 使用精度容差
+// 單一數值使用精度容差
 actualValue.Should().BeApproximately(expectedValue, 0.001);
+
+// 數值集合使用 EqualApproximately（9.4+，需 .NET 8+）
+actualValues.Should().EqualApproximately(expectedValues, 0.001);
 ```
 
 ---
@@ -302,10 +381,11 @@ public void CreateUser_有效資料_應回傳啟用使用者()
 AwesomeAssertions 提供了強大且可讀的斷言語法，是撰寫高品質測試的重要工具。透過：
 
 1. **流暢語法**：讓測試程式碼更易讀
-2. **豐富斷言**：涵蓋各種資料類型
+2. **豐富斷言**：涵蓋各種資料類型（9.4 新增數值集合近似比對）
 3. **自訂擴展**：建立領域特定斷言
-4. **效能優化**：處理大量資料情境
+4. **效能優化**：處理大量資料情境（9.4 新增集合顯示上限設定）
 5. **完全免費**：Apache 2.0 授權無商業限制
+6. **Null 安全**：9.4 起 `[return: NotNull]` 改善 nullable 分析
 
 記住：好的斷言不僅能驗證結果，更能清楚表達預期行為，並在失敗時提供有用的診斷資訊。
 

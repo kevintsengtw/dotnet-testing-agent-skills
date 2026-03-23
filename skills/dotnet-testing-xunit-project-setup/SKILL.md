@@ -109,12 +109,12 @@ dotnet add package coverlet.collector
    - 讓測試能在 VS Code、Visual Studio、Rider 中被探索與執行
    - 支援測試結果的即時顯示
 
-3. **Microsoft.NET.Test.Sdk**（17.12.0+）
+3. **Microsoft.NET.Test.Sdk**（18.3.0+）
    - .NET 測試平台的 SDK
    - 讓 `dotnet test` 指令能夠執行測試
    - 支援測試結果報告與測試探索
 
-4. **coverlet.collector**（6.0.3+）
+4. **coverlet.collector**（8.0.0+）
    - 程式碼覆蓋率收集工具
    - 與 `dotnet test` 整合
    - 產生覆蓋率報告（支援 Cobertura、OpenCover 等格式）

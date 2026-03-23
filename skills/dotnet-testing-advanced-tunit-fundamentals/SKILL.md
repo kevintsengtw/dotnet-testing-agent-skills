@@ -12,200 +12,44 @@ description: |
 
 ### 1. Source Generator 驅動的測試發現
 
-TUnit 與傳統測試框架最大的差異在於使用 Source Generator 在**編譯時期**完成測試發現：
-
-**傳統框架的方式（xUnit）：**
-
-```csharp
-// xUnit 在執行時期透過反射掃描所有方法
-public class TraditionalTests
-{
-    [Fact] // 執行時期才被發現
-    public void TestMethod() { }
-}
-```
-
-**TUnit 的創新做法：**
+TUnit 與傳統測試框架最大的差異在於使用 Source Generator 在**編譯時期**完成測試發現，避免反射成本、完全支援 Native AOT、更快的啟動時間。
 
 ```csharp
 // TUnit 在編譯時期就透過 Source Generator 產生測試註冊程式碼
 public class ModernTests
 {
     [Test] // 編譯時期就被處理和最佳化
-    public async Task TestMethod() 
+    public async Task TestMethod()
     {
         await Assert.That(true).IsTrue();
     }
 }
 ```
 
-**優勢：**
-
-1. 避免反射成本：所有測試發現在編譯時期完成
-2. AOT 相容：完全支援 Native AOT 編譯
-3. 更快的啟動時間：特別是在大型測試專案中
-
 ### 2. AOT (Ahead-of-Time) 編譯支援
-
-**JIT vs AOT 編譯流程：**
 
 ```text
 傳統 JIT：C# 原始碼 → IL 中間碼 → 執行時期 JIT 編譯 → 機器碼 → 執行
 AOT：    C# 原始碼 → 編譯時期直接產生 → 機器碼 → 直接執行
 ```
 
-**AOT 編譯的優勢：**
-
-- 超快啟動時間（無需等待 JIT 編譯）
-- 更小的記憶體占用
-- 可預測的效能
-- 更適合容器化部署
-
-**啟用 AOT 支援：**
-
-```xml
-<PropertyGroup>
-    <PublishAot>true</PublishAot>
-    <InvariantGlobalization>true</InvariantGlobalization>
-</PropertyGroup>
-```
-
-**實際效能差異：**
-
-```text
-傳統 JIT 編譯測試啟動時間：約 1-2 秒
-TUnit AOT 編譯測試啟動時間：約 50-100 毫秒
-（大型專案可達 10-30 倍啟動時間改善）
-```
+AOT 優勢：超快啟動時間、更小的記憶體占用、可預測的效能、更適合容器化部署。大型專案可達 10-30 倍啟動時間改善。
 
 ### 3. Microsoft.Testing.Platform 採用
 
-TUnit 建構在微軟最新的 Microsoft.Testing.Platform 之上，而非傳統的 VSTest 平台：
+TUnit 建構在微軟最新的 Microsoft.Testing.Platform 之上，而非傳統的 VSTest 平台。
 
-- 更輕量的測試執行器
-- 更好的並行控制機制
-- 原生支援最新的 IDE 整合
-
-**重要注意事項：**
-TUnit 專案**不需要**也**不應該**安裝 `Microsoft.NET.Test.Sdk` 套件。
+**重要注意事項：** TUnit 專案**不需要**也**不應該**安裝 `Microsoft.NET.Test.Sdk` 套件。
 
 ### 4. 預設並行執行
 
-TUnit 將並行執行設為預設，並提供精細的控制：
-
-```csharp
-// 預設所有測試都會並行執行
-[Test]
-public async Task ParallelTest1() { }
-
-[Test]
-public async Task ParallelTest2() { }
-
-// 需要時可以控制並行行為
-[Test]
-[NotInParallel("DatabaseTests")]
-public async Task DatabaseTest() { }
-```
-
----
+TUnit 將並行執行設為預設，需要時可用 `[NotInParallel("GroupName")]` 控制特定測試群組依序執行。
 
 ## TUnit 專案建立
 
-### 方式一：手動建立（理解底層架構）
+支援手動建立（console 模板 + TUnit 套件）或使用 TUnit Template（`dotnet new tunit`，推薦）。專案需設定 csproj（TUnit 套件、IsTestProject）與 GlobalUsings.cs。所有測試方法**必須是非同步的**（`async Task`）。
 
-```bash
-# 建立專案目錄
-mkdir TUnitDemo
-cd TUnitDemo
-
-# 建立解決方案
-dotnet new sln -n MyApp
-
-# 建立主專案
-dotnet new classlib -n MyApp.Core -o src/MyApp.Core
-
-# 建立測試專案（使用 console 模板）
-dotnet new console -n MyApp.Tests -o tests/MyApp.Tests
-
-# 加入解決方案
-dotnet sln add src/MyApp.Core/MyApp.Core.csproj
-dotnet sln add tests/MyApp.Tests/MyApp.Tests.csproj
-
-# 加入專案參考
-dotnet add tests/MyApp.Tests/MyApp.Tests.csproj reference src/MyApp.Core/MyApp.Core.csproj
-```
-
-### 方式二：使用 TUnit Template（推薦）
-
-```bash
-# 安裝 TUnit 專案模板
-dotnet new install TUnit.Templates
-
-# 使用 TUnit template 建立測試專案
-dotnet new tunit -n MyApp.Tests -o tests/MyApp.Tests
-```
-
-### 測試專案 csproj 設定
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <!-- TUnit 核心套件 -->
-    <PackageReference Include="TUnit" Version="0.57.24" />
-    <!-- 程式碼覆蓋率支援 -->
-    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.4" />
-    <!-- TRX 報告支援 -->
-    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\MyApp.Core\MyApp.Core.csproj" />
-  </ItemGroup>
-
-</Project>
-```
-
-### GlobalUsings 設定
-
-```csharp
-// GlobalUsings.cs
-global using TUnit.Core;
-global using TUnit.Assertions;
-global using MyApp.Core;
-```
-
----
-
-## 非同步測試方法（必要）
-
-TUnit 的**所有測試方法都必須是非同步的**，這是框架的技術要求：
-
-```csharp
-// ❌ 錯誤：無法編譯
-[Test]
-public void WrongTest()
-{
-    Assert.That(1 + 1).IsEqualTo(2);
-}
-
-// ✅ 正確：使用 async Task
-[Test]
-public async Task CorrectTest()
-{
-    await Assert.That(1 + 1).IsEqualTo(2);
-}
-```
-
----
+> 完整專案建立步驟與 csproj 範例請參閱 [references/project-setup.md](references/project-setup.md)
 
 ## 測試屬性與參數化
 
@@ -214,7 +58,6 @@ public async Task CorrectTest()
 TUnit 統一使用 `[Test]` 屬性，不像 xUnit 區分 `[Fact]` 和 `[Theory]`：
 
 ```csharp
-// TUnit：統一使用 [Test]
 [Test]
 public async Task Add_輸入1和2_應回傳3()
 {
@@ -227,12 +70,10 @@ public async Task Add_輸入1和2_應回傳3()
 ### 參數化測試 [Arguments]
 
 ```csharp
-// TUnit：使用 [Arguments]（相當於 xUnit 的 [InlineData]）
 [Test]
 [Arguments(1, 2, 3)]
 [Arguments(-1, 1, 0)]
 [Arguments(0, 0, 0)]
-[Arguments(100, -50, 50)]
 public async Task Add_多組輸入_應回傳正確結果(int a, int b, int expected)
 {
     var calculator = new Calculator();
@@ -241,164 +82,33 @@ public async Task Add_多組輸入_應回傳正確結果(int a, int b, int expec
 }
 ```
 
----
-
 ## TUnit.Assertions 斷言系統
 
 TUnit 採用流暢式（Fluent）斷言設計，所有斷言都是非同步的。支援相等性、布林值、數值比較、字串、集合、例外等多種斷言，並可透過 `And` / `Or` 組合條件。
 
 ```csharp
-// 基本用法示例
 await Assert.That(actual).IsEqualTo(expected);
 await Assert.That(email).Contains("@").And.EndsWith(".com");
 await Assert.That(() => action()).Throws<InvalidOperationException>();
 ```
 
-> 完整斷言類型與範例請參閱 [TUnit 斷言系統詳細說明](references/tunit-assertions-detail.md)
-
----
+> 完整斷言類型與範例請參閱 [references/tunit-assertions-detail.md](references/tunit-assertions-detail.md)
 
 ## 測試生命週期管理
 
-TUnit 支援建構式 / `Dispose` 模式，以及 `[Before(Test)]`、`[Before(Class)]`、`[After(Test)]`、`[After(Class)]` 等屬性，提供比 xUnit 更細緻的生命週期控制。
+TUnit 支援建構式 / `Dispose` 模式，以及 `[Before(Test)]`、`[Before(Class)]`、`[After(Test)]`、`[After(Class)]` 等屬性。
 
 ```text
 執行順序：Before(Class) → 建構式 → Before(Test) → 測試方法 → After(Test) → Dispose → After(Class)
 ```
 
-> 完整生命週期範例與屬性對照表請參閱 [生命週期管理詳細說明](references/lifecycle-management.md)
+> 完整生命週期範例與屬性對照表請參閱 [references/lifecycle-management.md](references/lifecycle-management.md)
 
----
+## 並行執行控制與 xUnit 遷移
 
-## 並行執行控制
+TUnit 預設並行執行所有測試，使用 `[NotInParallel]` 控制特定群組依序執行。提供完整的 xUnit → TUnit 語法對照表、遷移範例、CLI 執行指令與 IDE 整合設定。
 
-### NotInParallel 屬性
-
-```csharp
-// 預設並行執行
-[Test]
-public async Task 並行測試1() { }
-
-[Test]
-public async Task 並行測試2() { }
-
-// 控制特定測試不要並行
-[Test]
-[NotInParallel("DatabaseTests")]
-public async Task 資料庫測試1_不並行執行()
-{
-    // 這個測試不會與其他 "DatabaseTests" 群組並行執行
-}
-
-[Test]
-[NotInParallel("DatabaseTests")]
-public async Task 資料庫測試2_不並行執行()
-{
-    // 與資料庫測試1 依序執行
-}
-```
-
----
-
-## xUnit 與 TUnit 語法對照
-
-| 功能           | xUnit                                 | TUnit                                            |
-| -------------- | ------------------------------------- | ------------------------------------------------ |
-| **基本測試**   | `[Fact]`                              | `[Test]`                                         |
-| **參數化測試** | `[Theory]` + `[InlineData]`           | `[Test]` + `[Arguments]`                         |
-| **基本斷言**   | `Assert.Equal(expected, actual)`      | `await Assert.That(actual).IsEqualTo(expected)`  |
-| **布林斷言**   | `Assert.True(condition)`              | `await Assert.That(condition).IsTrue()`          |
-| **例外測試**   | `Assert.Throws<T>(() => action())`    | `await Assert.That(() => action()).Throws<T>()`  |
-| **Null 檢查**  | `Assert.Null(value)`                  | `await Assert.That(value).IsNull()`              |
-| **字串檢查**   | `Assert.Contains("text", fullString)` | `await Assert.That(fullString).Contains("text")` |
-
-### 遷移範例
-
-**xUnit 原始程式碼：**
-
-```csharp
-[Theory]
-[InlineData("test@example.com", true)]
-[InlineData("invalid", false)]
-public void IsValidEmail_各種輸入_應回傳正確驗證結果(string email, bool expected)
-{
-    var result = _validator.IsValidEmail(email);
-    Assert.Equal(expected, result);
-}
-```
-
-**TUnit 轉換後：**
-
-```csharp
-[Test]
-[Arguments("test@example.com", true)]
-[Arguments("invalid", false)]
-public async Task IsValidEmail_各種輸入_應回傳正確驗證結果(string email, bool expected)
-{
-    var result = _validator.IsValidEmail(email);
-    await Assert.That(result).IsEqualTo(expected);
-}
-```
-
-**主要變更：**
-
-1. `[Theory]` → `[Test]`
-2. `[InlineData]` → `[Arguments]`
-3. 方法改為 `async Task`
-4. 所有斷言加上 `await`
-5. 流暢式斷言語法
-
----
-
-## 執行與偵錯
-
-### CLI 執行
-
-```bash
-# 建置專案
-dotnet build
-
-# 執行所有測試
-dotnet test
-
-# 詳細輸出
-dotnet test --verbosity normal
-
-# 產生覆蓋率報告
-dotnet test --coverage
-
-# 過濾特定測試
-dotnet test --filter "ClassName=CalculatorTests"
-dotnet test --filter "TestName~Add"
-```
-
-### AOT 編譯執行
-
-```bash
-# 發佈為 AOT 編譯版本
-dotnet publish -c Release -p:PublishAot=true
-
-# 執行 AOT 編譯的測試
-./bin/Release/net9.0/publish/MyApp.Tests.exe
-```
-
-### IDE 整合
-
-**Visual Studio 2022：**
-
-- 版本需 17.13+
-- 啟用 "Use testing platform server mode"
-
-**VS Code：**
-
-- 安裝 C# Dev Kit 擴充套件
-- 啟用 "Use Testing Platform Protocol"
-
-**JetBrains Rider：**
-
-- 啟用 "Testing Platform support"
-
----
+> 完整並行控制、語法對照與遷移範例請參閱 [references/xunit-migration.md](references/xunit-migration.md)
 
 ## 效能比較
 
@@ -408,33 +118,11 @@ dotnet publish -c Release -p:PublishAot=true
 | **非同步測試**   | 1,400ms | 930ms   | 26ms      | 54x (AOT) |
 | **並行測試**     | 1,425ms | 999ms   | 54ms      | 26x (AOT) |
 
----
-
 ## 常見問題與解決方案
 
-### 問題 1：套件相容性
-
-**錯誤：** 安裝了 `Microsoft.NET.Test.Sdk` 導致測試無法發現
-
-**解決方案：** 移除 `Microsoft.NET.Test.Sdk`，TUnit 使用新的測試平台
-
-### 問題 2：IDE 整合問題
-
-**症狀：** 測試在 IDE 中無法顯示或執行
-
-**解決方案：**
-
-1. 確認 IDE 版本支援 Microsoft.Testing.Platform
-2. 啟用相關預覽功能
-3. 重新載入專案或重啟 IDE
-
-### 問題 3：非同步斷言遺忘
-
-**症狀：** 編譯錯誤或斷言無法正常執行
-
-**解決方案：** 所有斷言都需要 `await`，測試方法必須是 `async Task`
-
----
+1. **套件相容性** — 移除 `Microsoft.NET.Test.Sdk`，TUnit 使用新的測試平台
+2. **IDE 整合問題** — 確認 IDE 版本支援 Microsoft.Testing.Platform，啟用相關預覽功能
+3. **非同步斷言遺忘** — 所有斷言都需要 `await`，測試方法必須是 `async Task`
 
 ## 適用場景評估
 
@@ -452,8 +140,6 @@ dotnet publish -c Release -p:PublishAot=true
 2. **保守團隊**：需要穩定性勝過創新性
 3. **複雜測試生態**：大量使用 xUnit 特定套件
 4. **舊版 .NET**：還在 .NET 6/7
-
----
 
 ## 輸出格式
 

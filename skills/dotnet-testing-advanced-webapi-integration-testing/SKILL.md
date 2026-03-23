@@ -23,66 +23,7 @@ description: |
 
 ### IExceptionHandler - 現代化異常處理
 
-ASP.NET Core 8+ 引入的 `IExceptionHandler` 介面提供了比傳統 middleware 更優雅的錯誤處理方式：
-
-```csharp
-/// <summary>
-/// 全域異常處理器
-/// </summary>
-public class GlobalExceptionHandler : IExceptionHandler
-{
-    private readonly ILogger<GlobalExceptionHandler> _logger;
-
-    public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger)
-    {
-        _logger = logger;
-    }
-
-    public async ValueTask<bool> TryHandleAsync(
-        HttpContext httpContext,
-        Exception exception,
-        CancellationToken cancellationToken)
-    {
-        _logger.LogError(exception, "發生未處理的異常: {Message}", exception.Message);
-
-        var problemDetails = CreateProblemDetails(exception);
-
-        httpContext.Response.StatusCode = problemDetails.Status ?? 500;
-        httpContext.Response.ContentType = "application/problem+json";
-
-        await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-        return true;
-    }
-
-    private static ProblemDetails CreateProblemDetails(Exception exception)
-    {
-        return exception switch
-        {
-            KeyNotFoundException => new ProblemDetails
-            {
-                Type = "https://httpstatuses.com/404",
-                Title = "資源不存在",
-                Status = 404,
-                Detail = exception.Message
-            },
-            ArgumentException => new ProblemDetails
-            {
-                Type = "https://httpstatuses.com/400",
-                Title = "參數錯誤",
-                Status = 400,
-                Detail = exception.Message
-            },
-            _ => new ProblemDetails
-            {
-                Type = "https://httpstatuses.com/500",
-                Title = "內部伺服器錯誤",
-                Status = 500,
-                Detail = "發生未預期的錯誤"
-            }
-        };
-    }
-}
-```
+ASP.NET Core 8+ 引入的 `IExceptionHandler` 介面提供了比傳統 middleware 更優雅的錯誤處理方式。`GlobalExceptionHandler` 依據例外類型（KeyNotFoundException → 404、ArgumentException → 400、其他 → 500）產生對應的 `ProblemDetails` 回應。
 
 ### ProblemDetails 標準格式
 
@@ -98,18 +39,7 @@ RFC 7807 定義的統一錯誤回應格式：
 
 ### ValidationProblemDetails - 驗證錯誤專用
 
-```json
-{
-  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.1",
-  "title": "One or more validation errors occurred.",
-  "status": 400,
-  "detail": "輸入的資料包含驗證錯誤",
-  "errors": {
-    "Name": ["產品名稱不能為空"],
-    "Price": ["產品價格必須大於 0"]
-  }
-}
-```
+繼承自 ProblemDetails，額外包含 `errors` 字典，記錄每個欄位的驗證錯誤訊息。
 
 ### FluentValidation 異常處理器
 
@@ -119,132 +49,15 @@ FluentValidation 異常處理器實作 `IExceptionHandler` 介面，專門處理
 
 ## 整合測試基礎設施
 
-### TestWebApplicationFactory
+測試基礎設施由三個核心組件構成：
 
-```csharp
-public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncLifetime
-{
-    private PostgreSqlContainer? _postgresContainer;
-    private RedisContainer? _redisContainer;
-    private FakeTimeProvider? _timeProvider;
+- **TestWebApplicationFactory**：繼承 `WebApplicationFactory<Program>`，配置多容器（PostgreSQL + Redis）與 DI 替換（如 FakeTimeProvider）
+- **IntegrationTestCollection**：Collection Fixture 定義，確保容器共享
+- **IntegrationTestBase**：測試基底類別，提供 HttpClient、DatabaseManager、FlurlClient 與時間控制方法
 
-    public PostgreSqlContainer PostgresContainer => _postgresContainer
-        ?? throw new InvalidOperationException("PostgreSQL container 尚未初始化");
-
-    public RedisContainer RedisContainer => _redisContainer
-        ?? throw new InvalidOperationException("Redis container 尚未初始化");
-
-    public FakeTimeProvider TimeProvider => _timeProvider
-        ?? throw new InvalidOperationException("TimeProvider 尚未初始化");
-
-    public async Task InitializeAsync()
-    {
-        _postgresContainer = new PostgreSqlBuilder()
-            .WithImage("postgres:16-alpine")
-            .WithDatabase("test_db")
-            .WithUsername("testuser")
-            .WithPassword("testpass")
-            .WithCleanUp(true)
-            .Build();
-
-        _redisContainer = new RedisBuilder()
-            .WithImage("redis:7-alpine")
-            .WithCleanUp(true)
-            .Build();
-
-        _timeProvider = new FakeTimeProvider(new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero));
-
-        await _postgresContainer.StartAsync();
-        await _redisContainer.StartAsync();
-    }
-
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        builder.ConfigureAppConfiguration(config =>
-        {
-            config.Sources.Clear();
-            config.AddInMemoryCollection(new Dictionary<string, string?>
-            {
-                ["ConnectionStrings:DefaultConnection"] = PostgresContainer.GetConnectionString(),
-                ["ConnectionStrings:Redis"] = RedisContainer.GetConnectionString(),
-                ["Logging:LogLevel:Default"] = "Warning"
-            });
-        });
-
-        builder.ConfigureServices(services =>
-        {
-            // 替換 TimeProvider
-            services.Remove(services.Single(d => d.ServiceType == typeof(TimeProvider)));
-            services.AddSingleton<TimeProvider>(TimeProvider);
-        });
-
-        builder.UseEnvironment("Testing");
-    }
-
-    public new async Task DisposeAsync()
-    {
-        if (_postgresContainer != null) await _postgresContainer.DisposeAsync();
-        if (_redisContainer != null) await _redisContainer.DisposeAsync();
-        await base.DisposeAsync();
-    }
-}
-```
-
-### Collection Fixture 模式
-
-```csharp
-[CollectionDefinition("Integration Tests")]
-public class IntegrationTestCollection : ICollectionFixture<TestWebApplicationFactory>
-{
-    public const string Name = "Integration Tests";
-}
-```
-
-### 測試基底類別
-
-```csharp
-[Collection("Integration Tests")]
-public abstract class IntegrationTestBase : IAsyncLifetime
-{
-    protected readonly TestWebApplicationFactory Factory;
-    protected readonly HttpClient HttpClient;
-    protected readonly DatabaseManager DatabaseManager;
-    protected readonly IFlurlClient FlurlClient;
-
-    protected IntegrationTestBase(TestWebApplicationFactory factory)
-    {
-        Factory = factory;
-        HttpClient = factory.CreateClient();
-        DatabaseManager = new DatabaseManager(factory.PostgresContainer.GetConnectionString());
-        FlurlClient = new FlurlClient(HttpClient);
-    }
-
-    public virtual async Task InitializeAsync()
-    {
-        await DatabaseManager.InitializeDatabaseAsync();
-    }
-
-    public virtual async Task DisposeAsync()
-    {
-        await DatabaseManager.CleanDatabaseAsync();
-        FlurlClient.Dispose();
-    }
-
-    protected void ResetTime()
-    {
-        Factory.TimeProvider.SetUtcNow(new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero));
-    }
-
-    protected void AdvanceTime(TimeSpan timeSpan)
-    {
-        Factory.TimeProvider.Advance(timeSpan);
-    }
-}
-```
+> 完整基礎設施程式碼請參閱 [references/test-infrastructure.md](references/test-infrastructure.md)
 
 ## Flurl 簡化 URL 建構
-
-Flurl 提供流暢的 API 來建構複雜的 URL：
 
 ```csharp
 // 傳統方式
@@ -259,135 +72,9 @@ var url = "/products"
 
 ## 測試範例
 
-### 成功建立產品測試
+涵蓋成功建立產品（201 Created）、驗證錯誤（400 BadRequest + ValidationProblemDetails）、資源不存在（404 NotFound + ProblemDetails）、分頁查詢（200 OK + PagedResult）等完整測試範例，以及 TestHelpers 資料管理策略。
 
-```csharp
-[Fact]
-public async Task CreateProduct_使用有效資料_應成功建立產品()
-{
-    // Arrange
-    var request = new ProductCreateRequest { Name = "新產品", Price = 299.99m };
-
-    // Act
-    var response = await HttpClient.PostAsJsonAsync("/products", request);
-
-    // Assert
-    response.Should().Be201Created()
-        .And.Satisfy<ProductResponse>(product =>
-        {
-            product.Id.Should().NotBeEmpty();
-            product.Name.Should().Be("新產品");
-            product.Price.Should().Be(299.99m);
-        });
-}
-```
-
-### 驗證錯誤測試
-
-```csharp
-[Fact]
-public async Task CreateProduct_當產品名稱為空_應回傳400BadRequest()
-{
-    // Arrange
-    var invalidRequest = new ProductCreateRequest { Name = "", Price = 100.00m };
-
-    // Act
-    var response = await HttpClient.PostAsJsonAsync("/products", invalidRequest);
-
-    // Assert
-    response.Should().Be400BadRequest()
-        .And.Satisfy<ValidationProblemDetails>(problem =>
-        {
-            problem.Type.Should().Be("https://tools.ietf.org/html/rfc9110#section-15.5.1");
-            problem.Title.Should().Be("One or more validation errors occurred.");
-            problem.Errors.Should().ContainKey("Name");
-            problem.Errors["Name"].Should().Contain("產品名稱不能為空");
-        });
-}
-```
-
-### 資源不存在測試
-
-```csharp
-[Fact]
-public async Task GetById_當產品不存在_應回傳404且包含ProblemDetails()
-{
-    // Arrange
-    var nonExistentId = Guid.NewGuid();
-
-    // Act
-    var response = await HttpClient.GetAsync($"/Products/{nonExistentId}");
-
-    // Assert
-    response.Should().Be404NotFound()
-        .And.Satisfy<ProblemDetails>(problem =>
-        {
-            problem.Type.Should().Be("https://httpstatuses.com/404");
-            problem.Title.Should().Be("產品不存在");
-            problem.Status.Should().Be(404);
-        });
-}
-```
-
-### 分頁查詢測試
-
-```csharp
-[Fact]
-public async Task GetProducts_使用分頁參數_應回傳正確的分頁結果()
-{
-    // Arrange
-    await TestHelpers.SeedProductsAsync(DatabaseManager, 15);
-
-    // Act - 使用 Flurl 建構 QueryString
-    var url = "/products"
-        .SetQueryParam("pageSize", 5)
-        .SetQueryParam("page", 2);
-
-    var response = await HttpClient.GetAsync(url);
-
-    // Assert
-    response.Should().Be200Ok()
-        .And.Satisfy<PagedResult<ProductResponse>>(result =>
-        {
-            result.Total.Should().Be(15);
-            result.PageSize.Should().Be(5);
-            result.Page.Should().Be(2);
-            result.Items.Should().HaveCount(5);
-        });
-}
-```
-
-## 資料管理策略
-
-### TestHelpers 設計
-
-```csharp
-public static class TestHelpers
-{
-    public static ProductCreateRequest CreateProductRequest(
-        string name = "測試產品",
-        decimal price = 100.00m)
-    {
-        return new ProductCreateRequest { Name = name, Price = price };
-    }
-
-    public static async Task SeedProductsAsync(DatabaseManager dbManager, int count)
-    {
-        var tasks = Enumerable.Range(1, count)
-            .Select(i => SeedSpecificProductAsync(dbManager, $"產品 {i:D2}", i * 10.0m));
-        await Task.WhenAll(tasks);
-    }
-}
-```
-
-### SQL 指令碼外部化
-
-```text
-tests/Integration/
-└── SqlScripts/
-    └── Tables/
-        └── CreateProductsTable.sql
-```
+> 完整測試範例與資料管理程式碼請參閱 [references/test-examples.md](references/test-examples.md)
 
 ## 最佳實務
 
@@ -413,12 +100,12 @@ tests/Integration/
 
 ```xml
 <PackageReference Include="xunit" Version="2.9.3" />
-<PackageReference Include="AwesomeAssertions" Version="9.1.0" />
-<PackageReference Include="Testcontainers.PostgreSql" Version="4.0.0" />
-<PackageReference Include="Testcontainers.Redis" Version="4.0.0" />
+<PackageReference Include="AwesomeAssertions" Version="9.4.0" />
+<PackageReference Include="Testcontainers.PostgreSql" Version="4.11.0" />
+<PackageReference Include="Testcontainers.Redis" Version="4.11.0" />
 <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
 <PackageReference Include="Flurl" Version="4.0.0" />
-<PackageReference Include="Respawn" Version="6.2.1" />
+<PackageReference Include="Respawn" Version="7.0.0" />
 ```
 
 ## 專案結構

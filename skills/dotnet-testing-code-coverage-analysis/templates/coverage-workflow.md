@@ -20,7 +20,7 @@
 
 ```xml
 <ItemGroup>
-  <PackageReference Include="coverlet.collector" Version="6.0.3">
+  <PackageReference Include="coverlet.collector" Version="8.0.1">
     <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     <PrivateAssets>all</PrivateAssets>
   </PackageReference>

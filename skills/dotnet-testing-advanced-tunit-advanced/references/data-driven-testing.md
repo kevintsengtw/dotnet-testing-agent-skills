@@ -36,11 +36,10 @@ public async Task CreateOrder_各種情況_應正確處理(
     await Assert.That(order.TotalAmount).IsEqualTo(expectedTotal);
 }
 
-public static IEnumerable<object[]> GetOrderTestData()
+public static IEnumerable<(string, CustomerLevel, List<OrderItem>, decimal)> GetOrderTestData()
 {
     // 一般會員訂單
-    yield return new object[]
-    {
+    yield return (
         "CUST001",
         CustomerLevel.一般會員,
         new List<OrderItem>
@@ -48,11 +47,10 @@ public static IEnumerable<object[]> GetOrderTestData()
             new() { ProductId = "PROD001", ProductName = "商品A", UnitPrice = 100m, Quantity = 2 }
         },
         200m
-    };
+    );
 
     // VIP會員訂單
-    yield return new object[]
-    {
+    yield return (
         "CUST002", 
         CustomerLevel.VIP會員,
         new List<OrderItem>
@@ -60,7 +58,7 @@ public static IEnumerable<object[]> GetOrderTestData()
             new() { ProductId = "PROD002", ProductName = "商品B", UnitPrice = 500m, Quantity = 1 }
         },
         500m
-    };
+    );
 }
 ```
 
@@ -88,7 +86,7 @@ public async Task CalculateDiscount_從檔案讀取_應套用正確折扣(
     await Assert.That(discount).IsEqualTo(expectedDiscount);
 }
 
-public static IEnumerable<object[]> GetDiscountTestDataFromFile()
+public static IEnumerable<(string, decimal, CustomerLevel, string, decimal)> GetDiscountTestDataFromFile()
 {
     var filePath = Path.Combine("TestData", "discount-scenarios.json");
     var jsonData = File.ReadAllText(filePath);
@@ -97,18 +95,21 @@ public static IEnumerable<object[]> GetDiscountTestDataFromFile()
     
     foreach (var s in scenarios)
     {
-        yield return new object[] { s.Scenario, s.Amount, (CustomerLevel)s.Level, s.Code, s.Expected };
+        yield return (s.Scenario, s.Amount, (CustomerLevel)s.Level, s.Code, s.Expected);
     }
 }
 ```
 
 ## ClassDataSource：類別作為資料提供者
 
-當測試資料需要共享給多個測試類別時使用：
+> **TUnit 1.x 重要變更：** `ClassDataSource<T>` 注入單一 T 實例（不再枚舉 `IEnumerable<T>`）。
+> 若需要「從類別產生多個測試案例」，改用 `MethodDataSource(typeof(DataClass), nameof(DataClass.GetData))`。
+
+**產生多個測試案例（MethodDataSource 方式）：**
 
 ```csharp
 [Test]
-[ClassDataSource<OrderValidationTestData>]
+[MethodDataSource(typeof(OrderValidationTestData), nameof(OrderValidationTestData.GetScenarios))]
 public async Task ValidateOrder_各種驗證情況_應回傳正確結果(OrderValidationScenario scenario)
 {
     var validator = new OrderValidator(_discountRepository, _logger);
@@ -121,9 +122,9 @@ public async Task ValidateOrder_各種驗證情況_應回傳正確結果(OrderVa
     }
 }
 
-public class OrderValidationTestData : IEnumerable<OrderValidationScenario>
+public class OrderValidationTestData
 {
-    public IEnumerator<OrderValidationScenario> GetEnumerator()
+    public static IEnumerable<OrderValidationScenario> GetScenarios()
     {
         yield return new OrderValidationScenario
         {
@@ -141,8 +142,6 @@ public class OrderValidationTestData : IEnumerable<OrderValidationScenario>
             ExpectedErrorKeyword = "客戶ID"
         };
     }
-
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     private static Order CreateValidOrder() => new()
     {
@@ -166,38 +165,62 @@ public class OrderValidationTestData : IEnumerable<OrderValidationScenario>
 }
 ```
 
-**AutoFixture 整合：**
+**注入共享實例（ClassDataSource 1.x 正確用法）：**
 
 ```csharp
-public class AutoFixtureOrderTestData : IEnumerable<Order>
+// ClassDataSource<T> 注入單一 T 實例，適合共享服務/測試夾具
+[Test]
+[ClassDataSource<DatabaseTestFixture>(Shared = SharedType.PerTestSession)]
+public async Task FindOrder_使用資料庫夾具_應正確查詢(DatabaseTestFixture fixture)
 {
-    private readonly Fixture _fixture;
+    var order = await fixture.Repository.FindByIdAsync("ORDER001");
+    await Assert.That(order).IsNotNull();
+}
+```
 
-    public AutoFixtureOrderTestData()
+**AutoFixture 整合（TUnit 1.x）：**
+
+```csharp
+// TUnit 1.x：使用靜態方法 + MethodDataSource 取代 IEnumerable + ClassDataSource
+public class AutoFixtureOrderTestData
+{
+    private static readonly Fixture _fixture = CreateFixture();
+
+    private static Fixture CreateFixture()
     {
-        _fixture = new Fixture();
+        var fixture = new Fixture();
         
-        _fixture.Customize<Order>(composer => composer
-            .With(o => o.CustomerId, () => $"CUST{_fixture.Create<int>() % 1000:D3}")
-            .With(o => o.CustomerLevel, () => _fixture.Create<CustomerLevel>())
-            .With(o => o.Items, () => _fixture.CreateMany<OrderItem>(Random.Shared.Next(1, 5)).ToList()));
+        fixture.Customize<Order>(composer => composer
+            .With(o => o.CustomerId, () => $"CUST{fixture.Create<int>() % 1000:D3}")
+            .With(o => o.CustomerLevel, () => fixture.Create<CustomerLevel>())
+            .With(o => o.Items, () => fixture.CreateMany<OrderItem>(Random.Shared.Next(1, 5)).ToList()));
 
-        _fixture.Customize<OrderItem>(composer => composer
-            .With(oi => oi.ProductId, () => $"PROD{_fixture.Create<int>() % 1000:D3}")
-            .With(oi => oi.ProductName, () => $"測試商品{_fixture.Create<int>() % 100}")
-            .With(oi => oi.UnitPrice, () => Math.Round(_fixture.Create<decimal>() % 1000 + 1, 2))
-            .With(oi => oi.Quantity, () => _fixture.Create<int>() % 10 + 1));
+        fixture.Customize<OrderItem>(composer => composer
+            .With(oi => oi.ProductId, () => $"PROD{fixture.Create<int>() % 1000:D3}")
+            .With(oi => oi.ProductName, () => $"測試商品{fixture.Create<int>() % 100}")
+            .With(oi => oi.UnitPrice, () => Math.Round(fixture.Create<decimal>() % 1000 + 1, 2))
+            .With(oi => oi.Quantity, () => fixture.Create<int>() % 10 + 1));
+
+        return fixture;
     }
 
-    public IEnumerator<Order> GetEnumerator()
+    // 靜態方法供 MethodDataSource 使用，產生多個隨機測試案例
+    public static IEnumerable<Order> GetRandomOrders()
     {
         for (int i = 0; i < 5; i++)
         {
             yield return _fixture.Create<Order>();
         }
     }
+}
 
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+// 使用方式
+[Test]
+[MethodDataSource(typeof(AutoFixtureOrderTestData), nameof(AutoFixtureOrderTestData.GetRandomOrders))]
+public async Task ProcessOrder_隨機訂單_應正確處理(Order order)
+{
+    await Assert.That(order.CustomerId).IsNotEmpty();
+    await Assert.That(order.Items).IsNotEmpty();
 }
 ```
 

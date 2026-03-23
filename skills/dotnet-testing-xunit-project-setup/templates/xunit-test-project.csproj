@@ -31,11 +31,11 @@
     
     <!-- .NET 測試平台 SDK -->
     <!-- 支援 dotnet test 指令與測試結果報告 -->
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     
     <!-- Coverlet 程式碼覆蓋率收集器 -->
     <!-- 與 dotnet test --collect 整合，產生覆蓋率報告 -->
-    <PackageReference Include="coverlet.collector" Version="6.0.3">
+    <PackageReference Include="coverlet.collector" Version="8.0.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

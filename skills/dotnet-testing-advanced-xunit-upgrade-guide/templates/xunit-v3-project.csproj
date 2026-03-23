@@ -18,19 +18,19 @@
 
   <ItemGroup>
     <!-- xUnit v3 核心套件 - 注意使用 xunit.v3 而非 xunit -->
-    <PackageReference Include="xunit.v3" Version="3.0.1" />
+    <PackageReference Include="xunit.v3" Version="3.2.2" />
     
     <!-- Visual Studio 測試執行器 -->
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4">
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     
     <!-- .NET 測試 SDK -->
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     
     <!-- 常用輔助套件 -->
-    <PackageReference Include="AwesomeAssertions" Version="8.1.0" />
+    <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
     <PackageReference Include="NSubstitute" Version="5.3.0" />
     <PackageReference Include="AutoFixture.Xunit3" Version="4.18.1" />
   </ItemGroup>

@@ -1,0 +1,41 @@
+{
+  "skill_name": "skill-creator-advanced",
+  "evals": [
+    {
+      "id": 1,
+      "name": "new-skill-draft",
+      "prompt": "請幫我建立一個處理 PDF 旋轉的 skill，先整理 2-3 個 use cases，再給我初版 SKILL.md 與 scripts/references/assets 規劃。",
+      "expected_output": "回覆包含 2-3 個 use cases、初版 skill 結構，以及可重用資源規劃。",
+      "files": [],
+      "expectations": [
+        "回覆定義至少 2 個具體 use cases。",
+        "回覆說明 description 應如何觸發。",
+        "回覆至少提出一個 deterministic script 或驗證步驟。"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "trigger-debug",
+      "prompt": "我的 skill 常常不會觸發，有時又亂觸發。請幫我診斷 under-trigger / over-trigger 的原因，並提出修改 description 的方向。",
+      "expected_output": "回覆區分 under-trigger 與 over-trigger 訊號，並提出具體 description 修法。",
+      "files": [],
+      "expectations": [
+        "回覆區分 under-trigger 與 over-trigger。",
+        "回覆包含 description 的具體調整方向。",
+        "回覆有提到真實 trigger phrases 或 should-trigger / should-not-trigger 測試。"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "eval-benchmark-setup",
+      "prompt": "請替這個 skill 規劃 evals、baseline 比較方式、workspace 結構，以及 review viewer 的使用流程。",
+      "expected_output": "回覆包含 assets/evals/evals.json、with-skill vs baseline、workspace/iteration 結構與 review 流程。",
+      "files": [],
+      "expectations": [
+        "回覆提到 assets/evals/evals.json。",
+        "回覆提到 with-skill 與 baseline 或 old_skill 比較。",
+        "回覆提到 workspace、benchmark 或 review viewer。"
+      ]
+    }
+  ]
+}

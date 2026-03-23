@@ -103,11 +103,11 @@ MyApp/
 
   <ItemGroup>
     <PackageReference Include="Aspire.Hosting.Testing" Version="9.1.0" />
-    <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+    <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
     <PackageReference Include="AwesomeAssertions.Web" Version="1.9.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageReference Include="Respawn" Version="6.2.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
+    <PackageReference Include="Respawn" Version="7.0.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
@@ -188,16 +188,22 @@ private async Task EnsureDatabaseExistsAsync(string connectionString)
 
 ## Respawn 配置
 
-使用 PostgreSQL 時必須指定適配器：
+使用 PostgreSQL 時指定適配器：
 
 ```csharp
 _respawner = await Respawner.CreateAsync(connection, new RespawnerOptions
 {
     TablesToIgnore = new Table[] { "__EFMigrationsHistory" },
     SchemasToInclude = new[] { "public" },
-    DbAdapter = DbAdapter.Postgres  // 關鍵！
+    DbAdapter = DbAdapter.Postgres  // 明確指定（7.0 起可從 DbConnection 自動推斷，但建議保留）
 });
 ```
+
+> **Respawn 7.0 升級提示**：
+> - `DbAdapter` 現可從 `DbConnection` 型別自動推斷（使用 `NpgsqlConnection` 時自動選擇 Postgres），但明確指定仍建議以確保正確性
+> - `Microsoft.Data.SqlClient` 不再作為傳遞依賴；若需重置 SQL Server 需自行加入該套件
+> - 新增 SQLite、IBM DB2、Snowflake 適配器支援
+> - 新增 `FormatDeleteStatement` 可自訂刪除語句
 
 ## Collection Fixture 最佳實踐
 

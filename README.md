@@ -24,6 +24,7 @@
 - 📐 **2026-02-11 Anthropic 規範優化**：依據官方 Skill 建立指南，全面調整 29 個 SKILL.md 結構與內容
 - 🔬 **2026-03-07 Skill-Creator 規範優化**：使用新版 skill-creator 檢視並優化全部 29 個 SKILL.md 的寫作風格與結構
 - 🔧 **2026-03-11 Skill-Creator 驗證測試後微調**：針對 3 個 skills 進行驗證測試後的回應品質微調
+- 📦 **2026-03-15 NuGet 套件版本升級 + Skill 結構重構**：全面升級測試相關套件版本，12 個 SKILL.md 瘦身並將程式碼範例拆至 references/
 
 ---
 
@@ -489,6 +490,41 @@ graph LR
 
 ---
 
+## 2026-03-15 NuGet 套件版本升級 + Skill 結構重構 (v2.4.0)
+
+使用 Anthropic 官方 skill-creator 重新調整 12 個 dotnet-testing 系列 SKILL.md，並全面升級測試相關 NuGet 套件版本：
+
+### Skill 結構重構
+
+| 優化項目 | 說明 | 影響範圍 |
+|---------|------|---------|
+| **SKILL.md 瘦身** | 大段程式碼範例拆至 `references/` 目錄，降低 Context Window 佔用 | 12 個檔案 |
+| **templates 更新** | 各 skill 的 .csproj 範本同步更新套件版本 | 多個 templates |
+| **references 新增** | 新增詳細參考文件，包含完整範例與進階用法 | 多個 references |
+
+### NuGet 套件版本升級
+
+| 套件 | 舊版本 | 新版本 |
+|------|--------|--------|
+| TUnit | 0.57.24 | 1.19.57 (1.x 正式版) |
+| Testcontainers | — | 4.11.0 |
+| xunit.v3 | 3.0.1 | 3.2.2 |
+| xunit.runner.visualstudio | — | 3.1.5 |
+| AwesomeAssertions | — | 9.4.0 |
+| Microsoft.NET.Test.Sdk | — | 18.3.0 |
+| coverlet.collector | — | 8.0.1 |
+| FluentValidation | 11.11.0 | 12.1.1 |
+| Respawn | 6.2.1 | 7.0.0 |
+| Microsoft.Data.SqlClient | 5.2.2 | 6.1.4 |
+| System.IO.Abstractions | 21.* | 22.1.0 |
+| StackExchange.Redis | — | 最新版 |
+| Dapper | — | 最新版 |
+| MongoDB.Driver | — | 最新版 |
+
+> 此次更新確保所有 skill 的範本與參考內容使用最新穩定版套件。
+
+---
+
 ## 2026-03-11 Skill-Creator 驗證測試後微調 (v2.3.1)
 
 透過 skill-creator 進行驗證測試後，針對三個 skills 的回應品質進行微調：
@@ -619,4 +655,4 @@ MIT License - 自由使用與修改
 ---
 
 **作者**：Kevin Tseng  
-**最後更新**：2026-03-11  
+**最後更新**：2026-03-23

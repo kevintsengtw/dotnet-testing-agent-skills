@@ -25,19 +25,11 @@ description: |
 
 ### 3. 資料庫特定功能
 
-InMemory 模式無法測試：
-
-- 預存程序 (Stored Procedures) 與 Triggers
-- Views
-- 外鍵約束 (Foreign Key Constraints)、檢查約束 (Check Constraints)
-- 資料類型精確度（decimal、datetime 等）
-- Concurrency Tokens（RowVersion、Timestamp）
+InMemory 模式無法測試：預存程序、Triggers、Views、外鍵約束、檢查約束、資料類型精確度、Concurrency Tokens 等。
 
 **結論**：當需要驗證複雜交易邏輯、並發處理、資料庫特定行為時，應使用 Testcontainers 進行整合測試。
 
 ## Testcontainers 核心概念
-
-### 什麼是 Testcontainers？
 
 Testcontainers 是一個測試函式庫，提供輕量好用的 API 來啟動 Docker 容器，專門用於整合測試。
 
@@ -53,17 +45,17 @@ Testcontainers 是一個測試函式庫，提供輕量好用的 API 來啟動 Do
 ```xml
 <ItemGroup>
   <!-- 測試框架 -->
-  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+  <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
   <PackageReference Include="xunit" Version="2.9.3" />
   <PackageReference Include="xunit.runner.visualstudio" Version="2.9.3" />
-  <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+  <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
 
   <!-- Testcontainers 核心套件 -->
-  <PackageReference Include="Testcontainers" Version="3.10.0" />
+  <PackageReference Include="Testcontainers" Version="4.11.0" />
 
   <!-- 資料庫容器 -->
-  <PackageReference Include="Testcontainers.PostgreSql" Version="3.10.0" />
-  <PackageReference Include="Testcontainers.MsSql" Version="3.10.0" />
+  <PackageReference Include="Testcontainers.PostgreSql" Version="4.11.0" />
+  <PackageReference Include="Testcontainers.MsSql" Version="4.11.0" />
 
   <!-- Entity Framework Core -->
   <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
@@ -71,8 +63,8 @@ Testcontainers 是一個測試函式庫，提供輕量好用的 API 來啟動 Do
   <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.0" />
 
   <!-- Dapper (可選) -->
-  <PackageReference Include="Dapper" Version="2.1.35" />
-  <PackageReference Include="Microsoft.Data.SqlClient" Version="5.2.2" />
+  <PackageReference Include="Dapper" Version="2.1.72" />
+  <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.4" />
 </ItemGroup>
 ```
 
@@ -80,270 +72,22 @@ Testcontainers 是一個測試函式庫，提供輕量好用的 API 來啟動 Do
 
 ## 環境需求
 
-### Docker Desktop 設定
-
-- Windows 10 版本 2004 或更新版本
-- 啟用 WSL 2 功能
-- 8GB RAM（建議 16GB 以上）
-- 64GB 可用磁碟空間
-
-### 建議的 Docker Desktop Resources 設定
-
-- Memory: 6GB（系統記憶體的 50-75%）
-- CPUs: 4 cores
-- Swap: 2GB
-- Disk image size: 64GB
+- Windows 10 版本 2004+，啟用 WSL 2，8GB RAM（建議 16GB+），64GB 磁碟空間
+- Docker Desktop 建議設定：Memory 6GB、CPUs 4 cores、Swap 2GB、Disk 64GB
 
 ## 基本容器操作模式
 
-### PostgreSQL 容器
+使用 `IAsyncLifetime` 管理容器生命週期，在 `InitializeAsync` 中啟動容器並建立 DbContext，在 `DisposeAsync` 中釋放資源。支援 PostgreSQL（`PostgreSqlBuilder`）和 SQL Server（`MsSqlBuilder`）。
 
-```csharp
-public class PostgreSqlTests : IAsyncLifetime
-{
-    private readonly PostgreSqlContainer _postgres;
-    private UserDbContext _dbContext = null!;
-
-    public PostgreSqlTests()
-    {
-        _postgres = new PostgreSqlBuilder()
-            .WithImage("postgres:15-alpine")
-            .WithDatabase("testdb")
-            .WithUsername("testuser")
-            .WithPassword("testpass")
-            .WithPortBinding(5432, true)  // 自動分配主機埠號
-            .Build();
-    }
-
-    public async Task InitializeAsync()
-    {
-        await _postgres.StartAsync();
-
-        var options = new DbContextOptionsBuilder<UserDbContext>()
-            .UseNpgsql(_postgres.GetConnectionString())
-            .Options;
-
-        _dbContext = new UserDbContext(options);
-        await _dbContext.Database.EnsureCreatedAsync();
-    }
-
-    public async Task DisposeAsync()
-    {
-        await _dbContext.DisposeAsync();
-        await _postgres.DisposeAsync();
-    }
-}
-```
-
-### SQL Server 容器
-
-```csharp
-public class SqlServerTests : IAsyncLifetime
-{
-    private readonly MsSqlContainer _container;
-    private UserDbContext _dbContext = null!;
-
-    public SqlServerTests()
-    {
-        _container = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-            .WithPassword("YourStrong@Passw0rd")
-            .WithCleanUp(true)
-            .Build();
-    }
-
-    public async Task InitializeAsync()
-    {
-        await _container.StartAsync();
-
-        var options = new DbContextOptionsBuilder<UserDbContext>()
-            .UseSqlServer(_container.GetConnectionString())
-            .Options;
-
-        _dbContext = new UserDbContext(options);
-        await _dbContext.Database.EnsureCreatedAsync();
-    }
-
-    public async Task DisposeAsync()
-    {
-        await _dbContext.DisposeAsync();
-        await _container.DisposeAsync();
-    }
-}
-```
+> 完整程式碼範例請參考 [references/container-basics.md](references/container-basics.md)
 
 ## Collection Fixture 模式：容器共享
 
-### 為什麼需要容器共享？
+在大型專案中，每個測試類別都建立新容器會遇到嚴重的效能瓶頸。Collection Fixture 讓所有測試類別共享同一個容器，**測試執行時間可減少約 67%**。
 
-在大型專案中，每個測試類別都建立新容器會遇到嚴重的效能瓶頸：
+包含 SQL 腳本外部化策略（將 SQL 檔案從 C# 程式碼分離）與 Wait Strategy 最佳實務。
 
-- **傳統方式**：每個測試類別啟動一個容器。若有 3 個測試類別，總耗時約 `3 × 10 秒 = 30 秒`
-- **Collection Fixture**：所有測試類別共享同一個容器。總耗時僅約 `1 × 10 秒 = 10 秒`
-
-**測試執行時間減少約 67%**
-
-### Collection Fixture 實作
-
-```csharp
-/// <summary>
-/// MSSQL 容器的 Collection Fixture
-/// </summary>
-public class SqlServerContainerFixture : IAsyncLifetime
-{
-    private readonly MsSqlContainer _container;
-
-    public SqlServerContainerFixture()
-    {
-        _container = new MsSqlBuilder()
-            .WithImage("mcr.microsoft.com/mssql/server:2022-latest")
-            .WithPassword("Test123456!")
-            .WithCleanUp(true)
-            .Build();
-    }
-
-    public static string ConnectionString { get; private set; } = string.Empty;
-
-    public async Task InitializeAsync()
-    {
-        await _container.StartAsync();
-        ConnectionString = _container.GetConnectionString();
-
-        // 等待容器完全啟動
-        await Task.Delay(2000);
-    }
-
-    public async Task DisposeAsync()
-    {
-        await _container.DisposeAsync();
-    }
-}
-
-/// <summary>
-/// 定義測試集合
-/// </summary>
-[CollectionDefinition(nameof(SqlServerCollectionFixture))]
-public class SqlServerCollectionFixture : ICollectionFixture<SqlServerContainerFixture>
-{
-    // 此類別只是用來定義 Collection，不需要實作內容
-}
-```
-
-### 測試類別整合
-
-```csharp
-[Collection(nameof(SqlServerCollectionFixture))]
-public class EfCoreTests : IDisposable
-{
-    private readonly ECommerceDbContext _dbContext;
-
-    public EfCoreTests(ITestOutputHelper testOutputHelper)
-    {
-        var connectionString = SqlServerContainerFixture.ConnectionString;
-
-        var options = new DbContextOptionsBuilder<ECommerceDbContext>()
-            .UseSqlServer(connectionString)
-            .EnableSensitiveDataLogging()
-            .LogTo(testOutputHelper.WriteLine, LogLevel.Information)
-            .Options;
-
-        _dbContext = new ECommerceDbContext(options);
-        _dbContext.Database.EnsureCreated();
-    }
-
-    public void Dispose()
-    {
-        // 按照外鍵約束順序清理資料
-        _dbContext.Database.ExecuteSqlRaw("DELETE FROM OrderItems");
-        _dbContext.Database.ExecuteSqlRaw("DELETE FROM Orders");
-        _dbContext.Database.ExecuteSqlRaw("DELETE FROM Products");
-        _dbContext.Database.ExecuteSqlRaw("DELETE FROM Categories");
-        _dbContext.Dispose();
-    }
-}
-```
-
-## SQL 腳本外部化策略
-
-### 為什麼需要外部化 SQL 腳本？
-
-- **關注點分離**：C# 程式碼專注於測試邏輯，SQL 腳本專注於資料庫結構
-- **可維護性**：修改資料庫結構時，只需編輯 `.sql` 檔案
-- **可讀性**：C# 程式碼變得更簡潔
-- **工具支援**：SQL 檔案可獲得編輯器的語法高亮和格式化支援
-- **版本控制友善**：SQL 變更可在版本控制系統中清楚追蹤
-
-### 資料夾結構
-
-```text
-tests/DatabaseTesting.Tests/
-├── SqlScripts/
-│   ├── Tables/
-│   │   ├── CreateCategoriesTable.sql
-│   │   ├── CreateProductsTable.sql
-│   │   ├── CreateOrdersTable.sql
-│   │   └── CreateOrderItemsTable.sql
-│   └── StoredProcedures/
-│       └── GetProductSalesReport.sql
-```
-
-### .csproj 設定
-
-```xml
-<ItemGroup>
-  <Content Include="SqlScripts\**\*.sql">
-    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-  </Content>
-</ItemGroup>
-```
-
-### 腳本載入實作
-
-```csharp
-private void EnsureTablesExist()
-{
-    var scriptDirectory = Path.Combine(AppContext.BaseDirectory, "SqlScripts");
-    if (!Directory.Exists(scriptDirectory)) return;
-
-    // 按照依賴順序執行表格建立腳本
-    var orderedScripts = new[]
-    {
-        "Tables/CreateCategoriesTable.sql",
-        "Tables/CreateProductsTable.sql",
-        "Tables/CreateOrdersTable.sql",
-        "Tables/CreateOrderItemsTable.sql"
-    };
-
-    foreach (var scriptPath in orderedScripts)
-    {
-        var fullPath = Path.Combine(scriptDirectory, scriptPath);
-        if (File.Exists(fullPath))
-        {
-            var script = File.ReadAllText(fullPath);
-            _dbContext.Database.ExecuteSqlRaw(script);
-        }
-    }
-}
-```
-
-## Wait Strategy 最佳實務
-
-### 內建 Wait Strategy
-
-```csharp
-// 等待特定埠號可用
-var postgres = new PostgreSqlBuilder()
-    .WithWaitStrategy(Wait.ForUnixContainer()
-        .UntilPortIsAvailable(5432))
-    .Build();
-
-// 等待日誌訊息出現
-var sqlServer = new MsSqlBuilder()
-    .WithWaitStrategy(Wait.ForUnixContainer()
-        .UntilPortIsAvailable(1433)
-        .UntilMessageIsLogged("SQL Server is now ready for client connections"))
-    .Build();
-```
+> 完整 Collection Fixture 實作、SQL 腳本外部化與 Wait Strategy 範例請參考 [references/collection-fixture-and-scripts.md](references/collection-fixture-and-scripts.md)
 
 ## EF Core 進階功能測試
 
@@ -361,40 +105,9 @@ var sqlServer = new MsSqlBuilder()
 
 ### 介面分離原則 (ISP) 的應用
 
-```csharp
-/// <summary>
-/// 基礎 CRUD 操作介面
-/// </summary>
-public interface IProductRepository
-{
-    Task<IEnumerable<Product>> GetAllAsync();
-    Task<Product?> GetByIdAsync(int id);
-    Task AddAsync(Product product);
-    Task UpdateAsync(Product product);
-    Task DeleteAsync(int id);
-}
-
-/// <summary>
-/// EF Core 特有的進階功能介面
-/// </summary>
-public interface IProductByEFCoreRepository
-{
-    Task<Product?> GetProductWithCategoryAndTagsAsync(int productId);
-    Task<IEnumerable<Product>> GetProductsByCategoryWithSplitQueryAsync(int categoryId);
-    Task<int> BatchUpdateProductPricesAsync(int categoryId, decimal priceMultiplier);
-    Task<IEnumerable<Product>> GetProductsWithNoTrackingAsync(decimal minPrice);
-}
-
-/// <summary>
-/// Dapper 特有的進階功能介面
-/// </summary>
-public interface IProductByDapperRepository
-{
-    Task<Product?> GetProductWithTagsAsync(int productId);
-    Task<IEnumerable<Product>> SearchProductsAsync(int? categoryId, decimal? minPrice, bool? isActive);
-    Task<IEnumerable<ProductSalesReport>> GetProductSalesReportAsync(decimal minPrice);
-}
-```
+- `IProductRepository`：基礎 CRUD 操作介面（GetAll、GetById、Add、Update、Delete）
+- `IProductByEFCoreRepository`：EF Core 特有進階功能（SplitQuery、BatchUpdate、NoTracking）
+- `IProductByDapperRepository`：Dapper 特有進階功能（多表查詢、動態參數、預存程序）
 
 ### 設計優勢
 
@@ -415,6 +128,10 @@ netstat -an | findstr :5432
 docker system prune -a
 ```
 
+### ContainerNotRunningException（4.8.0+ 新增）
+
+Testcontainers 4.8.0 起，預設等待策略改為等待容器進入 **Running** 狀態。若容器未能正常啟動，會拋出此例外。常見原因：映像檔名稱錯誤、Docker 資源不足、連接埠衝突。
+
 ### 記憶體不足問題
 
 - 調整 Docker Desktop 記憶體配置
@@ -423,17 +140,7 @@ docker system prune -a
 
 ### 測試資料隔離
 
-```csharp
-public void Dispose()
-{
-    // 按照外鍵約束順序清理資料
-    _dbContext.Database.ExecuteSqlRaw("DELETE FROM OrderItems");
-    _dbContext.Database.ExecuteSqlRaw("DELETE FROM Orders");
-    _dbContext.Database.ExecuteSqlRaw("DELETE FROM Products");
-    _dbContext.Database.ExecuteSqlRaw("DELETE FROM Categories");
-    _dbContext.Dispose();
-}
-```
+在 `Dispose` 中按照外鍵約束順序清理資料（OrderItems → Orders → Products → Categories）。
 
 ## 輸出格式
 
@@ -468,3 +175,6 @@ public void Dispose()
 - `dotnet-testing-advanced-testcontainers-nosql` - NoSQL 容器測試（MongoDB、Redis）
 - `dotnet-testing-advanced-webapi-integration-testing` - 完整 WebAPI 整合測試
 - `dotnet-testing-advanced-aspnet-integration-testing` - ASP.NET Core 基礎整合測試
+- `dotnet-testing-advanced-xunit-upgrade-guide` - xUnit v3 升級指南（含 Testcontainers.XunitV3 整合說明）
+
+> **xUnit v3 使用者注意**：搭配 xUnit v3 時，可使用 `Testcontainers.XunitV3`（4.9.0）套件自動管理容器生命週期，取代手動實作 `IAsyncLifetime`。

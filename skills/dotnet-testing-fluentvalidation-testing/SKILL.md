@@ -23,13 +23,15 @@ description: |
 ### 套件安裝
 
 ```xml
-<PackageReference Include="FluentValidation" Version="11.11.0" />
-<PackageReference Include="FluentValidation.TestHelper" Version="11.11.0" />
+<PackageReference Include="FluentValidation" Version="12.1.1" />
+<PackageReference Include="FluentValidation.TestHelper" Version="12.1.1" />
 <PackageReference Include="xunit" Version="2.9.3" />
-<PackageReference Include="Microsoft.Extensions.Time.Testing" Version="9.0.0" />
+<PackageReference Include="Microsoft.Extensions.Time.Testing" Version="10.3.0" />
 <PackageReference Include="NSubstitute" Version="5.3.0" />
-<PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+<PackageReference Include="AwesomeAssertions" Version="9.4.0" />
 ```
+
+> **FluentValidation 12.x 注意事項**：FluentValidation 12.0 為主要版本升級，最低需求為 **.NET 8**。已移除的 API 包括 `Transform`/`TransformForEach`（改用 `Must` + 手動轉換）、`InjectValidator`（改用建構子注入 + `SetValidator`）、`CascadeMode.StopOnFirstFailure`（改用 `RuleLevelCascadeMode = CascadeMode.Stop`）。`ShouldHaveAnyValidationError` 已更名為 `ShouldHaveValidationErrors`。完整遷移指南請參閱 [FluentValidation 12.0 Upgrade Guide](https://docs.fluentvalidation.net/en/latest/upgrading-to-12.html)。
 
 ### 基本 using 指令
 

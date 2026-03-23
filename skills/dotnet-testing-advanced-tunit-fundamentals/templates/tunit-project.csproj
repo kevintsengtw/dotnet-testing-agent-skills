@@ -14,16 +14,16 @@
 
   <ItemGroup>
     <!-- TUnit 核心套件 -->
-    <PackageReference Include="TUnit" Version="0.57.24" />
+    <PackageReference Include="TUnit" Version="1.19.57" />
     
-    <!-- 程式碼覆蓋率支援 -->
-    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="17.12.4" />
+    <!-- 程式碼覆蓋率支援（已內建於 TUnit 1.x meta-package，此處鎖定版本）-->
+    <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.5.2" />
     
-    <!-- TRX 報告支援 -->
-    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="1.4.3" />
+    <!-- TRX 報告支援（已內建於 TUnit 1.x meta-package，此處鎖定版本）-->
+    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="2.0.2" />
     
     <!-- 可選：時間測試支援 -->
-    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.3.0" />
   </ItemGroup>
 
   <!-- 注意：不要安裝 Microsoft.NET.Test.Sdk，TUnit 使用新的測試平台 -->

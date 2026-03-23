@@ -28,7 +28,7 @@ description: |
 <PackageReference Include="NSubstitute" Version="5.3.0" />
 <PackageReference Include="xunit" Version="2.9.3" />
 <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
-<PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+<PackageReference Include="AwesomeAssertions" Version="9.4.0" />
 ```
 
 ### 基本 using 指令

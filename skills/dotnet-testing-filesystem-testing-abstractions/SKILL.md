@@ -22,30 +22,16 @@ description: |
 
 ### 2. System.IO.Abstractions 解決方案
 
-這是一個將 System.IO 靜態類別包裝成介面的套件，支援依賴注入和測試替身。
-
-**核心介面架構**：
-
-```csharp
-public interface IFileSystem
-{
-    IFile File { get; }
-    IDirectory Directory { get; }
-    IFileInfo FileInfo { get; }
-    IDirectoryInfo DirectoryInfo { get; }
-    IPath Path { get; }
-    IDriveInfo DriveInfo { get; }
-}
-```
+將 System.IO 靜態類別包裝成介面的套件，支援依賴注入和測試替身。
 
 **必要 NuGet 套件**：
 
 ```xml
 <!-- 正式環境 -->
-<PackageReference Include="System.IO.Abstractions" Version="21.*" />
+<PackageReference Include="System.IO.Abstractions" Version="22.1.0" />
 
 <!-- 測試專案 -->
-<PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="21.*" />
+<PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="22.1.0" />
 ```
 
 ### 3. 重構步驟
@@ -56,35 +42,22 @@ public interface IFileSystem
 // ❌ 重構前（不可測試）
 public class ConfigService
 {
-    public string LoadConfig(string path)
-    {
-        return File.ReadAllText(path);
-    }
+    public string LoadConfig(string path) => File.ReadAllText(path);
 }
 
 // ✅ 重構後（可測試）
 public class ConfigService
 {
     private readonly IFileSystem _fileSystem;
-    
-    public ConfigService(IFileSystem fileSystem)
-    {
-        _fileSystem = fileSystem;
-    }
-    
-    public string LoadConfig(string path)
-    {
-        return _fileSystem.File.ReadAllText(path);
-    }
+    public ConfigService(IFileSystem fileSystem) => _fileSystem = fileSystem;
+    public string LoadConfig(string path) => _fileSystem.File.ReadAllText(path);
 }
 ```
 
 **步驟二**：在 DI 容器中註冊真實實作
 
 ```csharp
-// Program.cs
 services.AddSingleton<IFileSystem, FileSystem>();
-services.AddScoped<ConfigService>();
 ```
 
 **步驟三**：在測試中使用 MockFileSystem
@@ -99,312 +72,37 @@ var service = new ConfigService(mockFs);
 
 ## MockFileSystem 測試模式
 
-### 模式一：預設檔案狀態
+涵蓋四種核心測試模式：預設檔案狀態建立、驗證寫入結果、目錄操作測試、使用 NSubstitute 模擬 IO 異常（UnauthorizedAccessException 等）。另含進階技巧：串流操作測試、檔案資訊查詢測試、備份檔案測試。
 
-```csharp
-[Fact]
-public async Task LoadConfig_檔案存在_應回傳內容()
-{
-    // Arrange - 建立預設的檔案系統狀態
-    var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-    {
-        ["config.json"] = new MockFileData("{ \"key\": \"value\" }"),
-        [@"C:\data\users.csv"] = new MockFileData("Name,Age\nJohn,25"),
-        [@"C:\logs\"] = new MockDirectoryData()  // 空目錄
-    });
-    
-    var service = new ConfigService(mockFileSystem);
-    
-    // Act
-    var result = await service.LoadConfigAsync("config.json");
-    
-    // Assert
-    result.Should().Contain("key");
-}
-```
-
-### 模式二：驗證寫入結果
-
-```csharp
-[Fact]
-public async Task SaveConfig_指定內容_應正確寫入()
-{
-    // Arrange
-    var mockFileSystem = new MockFileSystem();
-    var service = new ConfigService(mockFileSystem);
-    
-    // Act
-    await service.SaveConfigAsync("output.json", "{ \"saved\": true }");
-    
-    // Assert - 驗證檔案系統的最終狀態
-    mockFileSystem.File.Exists("output.json").Should().BeTrue();
-    var content = await mockFileSystem.File.ReadAllTextAsync("output.json");
-    content.Should().Contain("saved");
-}
-```
-
-### 模式三：測試目錄操作
-
-```csharp
-[Fact]
-public void CopyFile_目標目錄不存在_應自動建立()
-{
-    // Arrange
-    var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-    {
-        [@"C:\source\file.txt"] = new MockFileData("content")
-    });
-    var service = new FileManagerService(mockFileSystem);
-    
-    // Act
-    service.CopyFileToDirectory(@"C:\source\file.txt", @"C:\target\subfolder");
-    
-    // Assert
-    mockFileSystem.Directory.Exists(@"C:\target\subfolder").Should().BeTrue();
-    mockFileSystem.File.Exists(@"C:\target\subfolder\file.txt").Should().BeTrue();
-}
-```
-
-### 模式四：使用 NSubstitute 模擬錯誤
-
-當需要模擬特定異常時，MockFileSystem 支援有限，可使用 NSubstitute：
-
-```csharp
-[Fact]
-public void TryReadFile_權限不足_應回傳False()
-{
-    // Arrange
-    var mockFileSystem = Substitute.For<IFileSystem>();
-    var mockFile = Substitute.For<IFile>();
-    
-    mockFileSystem.File.Returns(mockFile);
-    mockFile.Exists("protected.txt").Returns(true);
-    mockFile.ReadAllText("protected.txt")
-            .Throws(new UnauthorizedAccessException("存取被拒"));
-    
-    var service = new FilePermissionService(mockFileSystem);
-    
-    // Act
-    var result = service.TryReadFile("protected.txt", out var content);
-    
-    // Assert
-    result.Should().BeFalse();
-    content.Should().BeNull();
-}
-```
-
-## 進階測試技巧
-
-### 串流操作測試
-
-```csharp
-[Fact]
-public async Task CountLines_多行檔案_應回傳正確行數()
-{
-    // Arrange
-    var content = "Line 1\nLine 2\nLine 3\nLine 4";
-    var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-    {
-        ["data.txt"] = new MockFileData(content)
-    });
-    
-    var processor = new StreamProcessorService(mockFileSystem);
-    
-    // Act
-    var result = await processor.CountLinesAsync("data.txt");
-    
-    // Assert
-    result.Should().Be(4);
-}
-```
-
-### 檔案資訊測試
-
-```csharp
-[Fact]
-public void GetFileInfo_檔案存在_應回傳正確資訊()
-{
-    // Arrange
-    var content = "Hello, World!";
-    var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-    {
-        [@"C:\test.txt"] = new MockFileData(content)
-    });
-    
-    var service = new FileManagerService(mockFileSystem);
-    
-    // Act
-    var info = service.GetFileInfo(@"C:\test.txt");
-    
-    // Assert
-    info.Should().NotBeNull();
-    info!.Name.Should().Be("test.txt");
-    info.Size.Should().Be(content.Length);
-}
-```
-
-### 備份檔案測試
-
-```csharp
-[Fact]
-public void BackupFile_檔案存在_應建立時間戳記備份()
-{
-    // Arrange
-    var mockFileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
-    {
-        [@"C:\data\important.txt"] = new MockFileData("重要資料")
-    });
-    
-    var service = new FileManagerService(mockFileSystem);
-    
-    // Act
-    var backupPath = service.BackupFile(@"C:\data\important.txt");
-    
-    // Assert
-    backupPath.Should().StartWith(@"C:\data\important_");
-    backupPath.Should().EndWith(".txt");
-    mockFileSystem.File.Exists(backupPath).Should().BeTrue();
-}
-```
+> 完整 MockFileSystem 測試模式與進階技巧請參考 [references/mockfilesystem-patterns.md](references/mockfilesystem-patterns.md)
 
 ## 最佳實踐
 
 ### 應該這樣做
 
-1. **使用 Path.Combine 處理路徑**：
-
-   ```csharp
-   var path = _fileSystem.Path.Combine("configs", "app.json");
-   ```
-
-2. **防禦性檢查檔案存在性**：
-
-   ```csharp
-   if (!_fileSystem.File.Exists(filePath))
-   {
-       return defaultValue;
-   }
-   ```
-
-3. **自動建立必要目錄**：
-
-   ```csharp
-   var dir = _fileSystem.Path.GetDirectoryName(filePath);
-   if (!string.IsNullOrEmpty(dir) && !_fileSystem.Directory.Exists(dir))
-   {
-       _fileSystem.Directory.CreateDirectory(dir);
-   }
-   ```
-
-4. **妥善處理各種 IO 異常**：
-
-   ```csharp
-   try
-   {
-       return await _fileSystem.File.ReadAllTextAsync(path);
-   }
-   catch (UnauthorizedAccessException) { /* 權限不足 */ }
-   catch (IOException) { /* 檔案被鎖定 */ }
-   catch (DirectoryNotFoundException) { /* 目錄不存在 */ }
-   ```
-
-5. **每個測試使用獨立的 MockFileSystem**：
-
-   ```csharp
-   public class ServiceTests
-   {
-       [Fact]
-       public void Test1()
-       {
-           var mockFs = new MockFileSystem(); // 獨立實例
-       }
-       
-       [Fact]
-       public void Test2()
-       {
-           var mockFs = new MockFileSystem(); // 獨立實例
-       }
-   }
-   ```
+1. **使用 Path.Combine 處理路徑** — `_fileSystem.Path.Combine("configs", "app.json")`
+2. **防禦性檢查檔案存在性** — 在讀取前先檢查 `_fileSystem.File.Exists()`
+3. **自動建立必要目錄** — 寫入前確保目錄存在
+4. **妥善處理各種 IO 異常** — UnauthorizedAccessException、IOException、DirectoryNotFoundException
+5. **每個測試使用獨立的 MockFileSystem** — 確保測試隔離
 
 ### 應該避免
 
-1. **硬編碼路徑分隔符號**：
-
-   ```csharp
-   // ❌ 不要這樣做
-   var path = "configs\\app.json";  // Windows only
-   var path = "configs/app.json";   // Unix only
-   
-   // ✅ 應該這樣做
-   var path = _fileSystem.Path.Combine("configs", "app.json");
-   ```
-
-2. **在單元測試中使用真實檔案系統**：
-
-   ```csharp
-   // ❌ 這不是單元測試
-   var realFs = new FileSystem();
-   
-   // ✅ 單元測試應使用 MockFileSystem
-   var mockFs = new MockFileSystem();
-   ```
-
-3. **忽略例外處理**：
-
-   ```csharp
-   // ❌ 不要假設檔案一定存在
-   var content = _fileSystem.File.ReadAllText(path);
-   
-   // ✅ 加入存在性檢查和例外處理
-   if (_fileSystem.File.Exists(path))
-   {
-       try { return _fileSystem.File.ReadAllText(path); }
-       catch (IOException) { return defaultValue; }
-   }
-   ```
+1. **硬編碼路徑分隔符號** — 使用 `Path.Combine` 取代 `\\` 或 `/`
+2. **在單元測試中使用真實檔案系統** — 使用 MockFileSystem
+3. **忽略例外處理** — 不要假設檔案一定存在
 
 ## 效能考量
 
-### MockFileSystem 優勢
-
-- **速度**：比真實檔案操作快 10-100 倍
-- **可靠性**：不受磁碟狀態影響
-- **隔離性**：測試之間完全隔離
-- **錯誤模擬**：可精確模擬各種異常情境
-
-### 記憶體使用建議
-
-- 只建立測試必需的檔案
-- 避免在測試中模擬超大檔案
-- 對於大檔案處理邏輯，使用適度大小的測試資料：
-
-```csharp
-// ✅ 適度大小的測試資料
-var testContent = string.Join("\n", 
-    Enumerable.Range(1, 1000).Select(i => $"Line {i}"));
-mockFileSystem.AddFile("test.txt", new MockFileData(testContent));
-```
+- **MockFileSystem 速度**：比真實檔案操作快 10-100 倍
+- **記憶體使用**：只建立測試必需的檔案，避免模擬超大檔案
 
 ## 實務整合範例
 
-### 設定檔管理服務
+請參考 `templates/` 目錄下的完整實作：
 
-請參考 `templates/configmanager-service.cs` 中的完整實作，包含：
-
-- 設定檔載入與儲存
-- JSON 序列化與反序列化
-- 自動建立目錄
-- 設定檔備份功能
-
-### 檔案管理服務
-
-請參考 `templates/filemanager-service.cs` 中的實作，包含：
-
-- 檔案複製與備份
-- 目錄操作
-- 檔案資訊查詢
-- 錯誤處理模式
+- `configmanager-service.cs` - 設定檔管理服務（載入/儲存/備份）
+- `filemanager-service.cs` - 檔案管理服務（複製/目錄操作/錯誤處理）
 
 ## 輸出格式
 

@@ -41,27 +41,27 @@ NoSQL 資料庫測試與關聯式資料庫有顯著差異：
 
   <ItemGroup>
     <!-- MongoDB 相關套件 -->
-    <PackageReference Include="MongoDB.Driver" Version="3.0.0" />
-    <PackageReference Include="MongoDB.Bson" Version="3.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.7.0" />
+    <PackageReference Include="MongoDB.Bson" Version="3.7.0" />
 
     <!-- Redis 相關套件 -->
-    <PackageReference Include="StackExchange.Redis" Version="2.8.16" />
+    <PackageReference Include="StackExchange.Redis" Version="2.11.8" />
 
     <!-- Testcontainers -->
-    <PackageReference Include="Testcontainers" Version="4.0.0" />
-    <PackageReference Include="Testcontainers.MongoDb" Version="4.0.0" />
-    <PackageReference Include="Testcontainers.Redis" Version="4.0.0" />
+    <PackageReference Include="Testcontainers" Version="4.11.0" />
+    <PackageReference Include="Testcontainers.MongoDb" Version="4.11.0" />
+    <PackageReference Include="Testcontainers.Redis" Version="4.11.0" />
 
     <!-- 測試框架 -->
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
-    <PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+    <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
 
     <!-- JSON 序列化與時間測試 -->
-    <PackageReference Include="System.Text.Json" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Bcl.TimeProvider" Version="9.0.0" />
-    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="9.0.0" />
+    <PackageReference Include="System.Text.Json" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Bcl.TimeProvider" Version="10.0.3" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.3.0" />
   </ItemGroup>
 </Project>
 ```
@@ -70,11 +70,11 @@ NoSQL 資料庫測試與關聯式資料庫有顯著差異：
 
 | 套件                   | 版本   | 用途                               |
 | ---------------------- | ------ | ---------------------------------- |
-| MongoDB.Driver         | 3.0.0  | MongoDB 官方驅動程式，支援最新功能 |
-| MongoDB.Bson           | 3.0.0  | BSON 序列化處理                    |
-| StackExchange.Redis    | 2.8.16 | Redis 客戶端，支援 Redis 7.x       |
-| Testcontainers.MongoDb | 4.0.0  | MongoDB 容器管理                   |
-| Testcontainers.Redis   | 4.0.0  | Redis 容器管理                     |
+| MongoDB.Driver         | 3.7.0  | MongoDB 官方驅動程式，支援最新功能 |
+| MongoDB.Bson           | 3.7.0  | BSON 序列化處理                    |
+| StackExchange.Redis    | 2.11.8 | Redis 客戶端，支援 Redis 7.x       |
+| Testcontainers.MongoDb | 4.11.0 | MongoDB 容器管理                   |
+| Testcontainers.Redis   | 4.11.0 | Redis 容器管理                     |
 
 ---
 
@@ -201,6 +201,7 @@ _container = new MongoDbBuilder()
 - [testcontainers-database](../testcontainers-database/SKILL.md) - PostgreSQL/MSSQL 容器化測試
 - [aspnet-integration-testing](../aspnet-integration-testing/SKILL.md) - ASP.NET Core 整合測試
 - [nsubstitute-mocking](../../dotnet-testing/nsubstitute-mocking/SKILL.md) - 測試替身與 Mock
+- [xunit-upgrade-guide](../dotnet-testing-advanced-xunit-upgrade-guide/SKILL.md) - xUnit v3 升級指南（含 Testcontainers.XunitV3 整合）
 
 ---
 

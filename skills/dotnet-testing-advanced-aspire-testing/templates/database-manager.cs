@@ -43,7 +43,7 @@ public class DatabaseManager
             {
                 TablesToIgnore = new Table[] { "__EFMigrationsHistory" },
                 SchemasToInclude = new[] { "public" },
-                DbAdapter = DbAdapter.Postgres  // 重要：明確指定 PostgreSQL 適配器
+                DbAdapter = DbAdapter.Postgres  // 7.0 起可自動推斷，但建議明確指定
             });
         }
     }

@@ -26,309 +26,42 @@ xUnit v3 採用全新的套件命名策略：
 
 ### 最低運行時需求
 
-xUnit 3.x 的嚴格要求：
-
-- **.NET Framework 4.7.2+** 或
-- **.NET 8.0+** (推薦)
-
-**不支援的版本**：
-
-- .NET Core 3.1
-- .NET 5、6、7
+- **.NET Framework 4.7.2+** 或 **.NET 8.0+** (推薦)
+- **不支援**：.NET Core 3.1、.NET 5/6/7
 
 ---
 
-## 破壞性變更清單
+## 破壞性變更
 
-### 1. 測試專案變成可執行檔
+涵蓋 OutputType 改為 Exe、async void 不再支援、IAsyncLifetime 繼承 IAsyncDisposable、SkippableFact 移除、僅支援 SDK-style 專案、自訂 DataAttribute 簽名變更等六項破壞性變更，每項皆附修正前後的程式碼對照。
 
-```xml
-<!-- xUnit 2.x (Library) -->
-<PropertyGroup>
-  <OutputType>Library</OutputType>
-</PropertyGroup>
-
-<!-- xUnit 3.x (Exe) - 必須變更 -->
-<PropertyGroup>
-  <OutputType>Exe</OutputType>
-</PropertyGroup>
-```
-
-### 2. async void 測試不再支援
-
-```csharp
-// ❌ xUnit 2.x - 3.x 中會失敗
-[Fact]
-public async void 測試某個非同步功能()
-{
-    var result = await SomeAsyncMethod();
-    Assert.True(result);
-}
-
-// ✅ xUnit 3.x - 正確寫法
-[Fact]
-public async Task 測試某個非同步功能()
-{
-    var result = await SomeAsyncMethod();
-    Assert.True(result);
-}
-```
-
-### 3. IAsyncLifetime 變更
-
-在 xUnit 3.x 中，`IAsyncLifetime` 繼承 `IAsyncDisposable`。如果同時實作 `IAsyncLifetime` 和 `IDisposable`，只會呼叫 `DisposeAsync`，不會呼叫 `Dispose`。
-
-```csharp
-// ⚠️ 需要注意的模式
-public class MyTestClass : IAsyncLifetime, IDisposable
-{
-    public async Task InitializeAsync() { /* ... */ }
-    public async Task DisposeAsync() { /* 會被呼叫 */ }
-    public void Dispose() { /* 在 3.x 中不會被呼叫 */ }
-}
-
-// ✅ 建議：將清理邏輯統一放在 DisposeAsync
-public class MyTestClass : IAsyncLifetime
-{
-    public async Task InitializeAsync() { /* 初始化 */ }
-    public async Task DisposeAsync() { /* 所有清理邏輯 */ }
-}
-```
-
-### 4. SkippableFact/SkippableTheory 移除
-
-```csharp
-// ❌ xUnit 2.x - 已移除
-[SkippableFact]
-public void 可跳過的測試()
-{
-    Skip.If(某個條件, "跳過原因");
-    // 測試邏輯
-}
-
-// ✅ xUnit 3.x - 使用 Assert.Skip
-[Fact]
-public void 可跳過的測試()
-{
-    if (某個條件)
-    {
-        Assert.Skip("跳過原因");
-    }
-    // 測試邏輯
-}
-```
-
-### 5. 僅支援 SDK-style 專案
-
-檢查專案檔案開頭是否為：
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-```
-
-如果是傳統格式，必須先轉換為 SDK-style。
+> 完整破壞性變更清單與程式碼範例請參考 [references/breaking-changes.md](references/breaking-changes.md)
 
 ---
 
 ## 升級步驟
 
-### 步驟 1：建立升級分支
+五步驟 SOP：建立升級分支 → 更新專案檔案（套件、OutputType）→ 修正 async void → 更新 using → 編譯與測試。另含 .NET 10 SDK MTP 模式遷移指南（global.json 設定、CLI 用法變更、VSTest 遷移步驟）。
 
-```bash
-git checkout -b feature/upgrade-xunit-v3
-```
-
-### 步驟 2：更新專案檔案
-
-```xml
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <OutputType>Exe</OutputType>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <IsPackable>false</IsPackable>
-    <IsTestProject>true</IsTestProject>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <!-- xUnit v3 套件 -->
-    <PackageReference Include="xunit.v3" Version="3.0.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4">
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
-
-    <!-- 常用輔助套件 -->
-    <PackageReference Include="AwesomeAssertions" Version="8.1.0" />
-    <PackageReference Include="NSubstitute" Version="5.3.0" />
-  </ItemGroup>
-</Project>
-```
-
-### 步驟 3：修正 async void 測試
-
-使用 IDE 搜尋：
-
-```regex
-async\s+void.*\[(Fact|Theory)\]
-```
-
-將所有 `async void` 改為 `async Task`。
-
-### 步驟 4：更新 using 陳述式
-
-```csharp
-// 移除 (不再需要)
-// using Xunit.Abstractions;
-
-// 保留
-using Xunit;
-```
-
-### 步驟 5：編譯與測試
-
-```bash
-dotnet clean
-dotnet restore
-dotnet build
-dotnet test --verbosity normal
-```
+> 完整升級步驟與 .NET 10 MTP 模式指南請參考 [references/upgrade-steps.md](references/upgrade-steps.md)
 
 ---
 
 ## xUnit 3.x 新功能
 
-### 動態跳過測試
+涵蓋 Assert.Skip / SkipUnless / SkipWhen 動態跳過、Explicit Tests、[Test] 屬性、MatrixTheoryData 矩陣測試、Assembly Fixtures、Test Pipeline Startup、多格式測試報告等新功能，每項皆附完整程式碼範例。
 
-**聲明式 (SkipUnless/SkipWhen)**：
+> 完整新功能範例請參考 [references/new-features.md](references/new-features.md)
 
-```csharp
-[Fact(SkipUnless = nameof(IsWindowsEnvironment),
-      Skip = "此測試只在 Windows 環境執行")]
-public void 只在Windows上執行的測試()
-{
-    // 測試邏輯
-}
+### Testcontainers.XunitV3 整合套件
 
-public static bool IsWindowsEnvironment =>
-    RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+Testcontainers 官方推出 `Testcontainers.XunitV3`（4.9.0），專為 xUnit v3 設計的整合套件，自動管理容器的建立與銷毀，取代手動實作 `IAsyncLifetime` 的方式。
+
+```xml
+<PackageReference Include="Testcontainers.XunitV3" Version="4.9.0" />
 ```
 
-**命令式 (Assert.Skip)**：
-
-```csharp
-[Fact]
-public void 根據環境變數跳過的測試()
-{
-    var enableTests = Environment.GetEnvironmentVariable("ENABLE_INTEGRATION_TESTS");
-
-    if (string.IsNullOrEmpty(enableTests) || enableTests.ToLower() != "true")
-    {
-        Assert.Skip("整合測試已停用。設定 ENABLE_INTEGRATION_TESTS=true 來執行");
-    }
-
-    // 測試邏輯...
-}
-```
-
-### 明確測試 (Explicit Tests)
-
-```csharp
-[Fact(Explicit = true)]
-public void 昂貴的整合測試()
-{
-    // 這個測試預設不會執行，除非明確要求
-    // 適用於效能測試、長時間執行的測試
-}
-```
-
-### [Test] 屬性
-
-```csharp
-// 三種寫法功能相同
-[Test]
-public void 使用Test屬性的測試() { Assert.True(true); }
-
-[Fact]
-public void 使用Fact屬性的測試() { Assert.True(true); }
-```
-
-### 矩陣理論資料 (Matrix Theory Data)
-
-```csharp
-public static TheoryData<int, string> TestData =>
-    new MatrixTheoryData<int, string>(
-        [1, 2, 3],                    // 數字資料
-        ["Hello", "World", "Test"]    // 字串資料
-    );
-    // 這會產生 3×3=9 個測試案例
-
-[Theory]
-[MemberData(nameof(TestData))]
-public void 矩陣測試範例(int number, string text)
-{
-    number.Should().BePositive();
-    text.Should().NotBeNullOrEmpty();
-}
-```
-
-### Assembly Fixtures
-
-```csharp
-public class DatabaseAssemblyFixture : IAsyncLifetime
-{
-    public string ConnectionString { get; private set; }
-
-    public async Task InitializeAsync()
-    {
-        // 建立測試資料庫
-        ConnectionString = await CreateTestDatabaseAsync();
-    }
-
-    public async Task DisposeAsync()
-    {
-        // 清理測試資料庫
-        await DropTestDatabaseAsync();
-    }
-}
-
-// 註冊 Assembly Fixture
-[assembly: AssemblyFixture(typeof(DatabaseAssemblyFixture))]
-
-// 在測試中使用
-public class UserServiceTests
-{
-    private readonly DatabaseAssemblyFixture _dbFixture;
-
-    public UserServiceTests(DatabaseAssemblyFixture dbFixture)
-    {
-        _dbFixture = dbFixture;
-    }
-
-    [Fact]
-    public void Test1() { /* 使用 _dbFixture.ConnectionString */ }
-}
-```
-
-### Test Pipeline Startup
-
-```csharp
-public class TestPipelineStartup : ITestPipelineStartup
-{
-    public async Task ConfigureAsync(ITestPipelineBuilder builder,
-                                     CancellationToken cancellationToken)
-    {
-        // 全域初始化邏輯
-        Console.WriteLine("初始化測試環境...");
-        await InitializeDatabaseAsync();
-    }
-}
-
-// 註冊
-[assembly: TestPipelineStartup(typeof(TestPipelineStartup))]
-```
+> 若專案同時使用 Testcontainers 與 xUnit v3，建議採用此套件簡化容器生命週期管理。
 
 ---
 
@@ -349,53 +82,23 @@ public class TestPipelineStartup : ITestPipelineStartup
 
 ---
 
-## 測試報告格式
-
-xUnit 3.x 支援多種報告格式：
-
-```bash
-# 產生 CTRF 格式報告
-dotnet run -- -ctrf results.json
-
-# 產生 TRX 格式報告
-dotnet run -- -trx results.trx
-
-# 產生 XML 格式報告
-dotnet run -- -xml results.xml
-
-# 產生多種格式報告
-dotnet run -- -xml results.xml -ctrf results.json -trx results.trx
-```
-
----
-
 ## 常見問題與解決方案
 
 ### 問題 1：找不到 xunit.abstractions
 
-**錯誤**：`The type or namespace name 'Abstractions' does not exist`
+移除 `using Xunit.Abstractions;`，相關類型已移到 `Xunit` 命名空間。
 
-**解決**：移除 `using Xunit.Abstractions;`，相關類型已移到 `Xunit` 命名空間。
+### 問題 2：IDE 無法發現測試
 
-### 問題 2：自訂 DataAttribute 無法運作
-
-xUnit 3.x 中 `DataAttribute` 方法簽名已變更：`GetData(MethodInfo)` → `GetDataAsync(MethodInfo, DisposalTracker)`，回傳型別改為 `Task<IReadOnlyCollection<ITheoryDataRow>>`。
-
-### 問題 3：IDE 無法發現測試
-
-確認 IDE 版本符合要求：
-
-- Visual Studio 2022 17.8+
-- Rider 2023.3+
-- VS Code (最新版)
-
-如仍有問題，可暫時停用 Microsoft Testing Platform：
+確認 IDE 版本：Visual Studio 2022 17.8+、Rider 2023.3+、VS Code 最新版。如仍有問題，可暫時停用 MTP：
 
 ```xml
 <PropertyGroup>
   <EnableMicrosoftTestingPlatform>false</EnableMicrosoftTestingPlatform>
 </PropertyGroup>
 ```
+
+> **.NET 10 SDK 注意**：若使用 MTP 模式，停用 MTP 會導致 `dotnet test` 錯誤。應改為移除 `global.json` 中的 `test` 區段。
 
 ---
 
@@ -428,12 +131,11 @@ xUnit 3.x 中 `DataAttribute` 方法簽名已變更：`GetData(MethodInfo)` → 
 - [ ] CI/CD Pipeline 驗證
 - [ ] 文檔更新
 - [ ] 團隊培訓
+- [ ] （.NET 10+）設定 `global.json` 啟用 MTP 模式並驗證 `dotnet test` 正常運作
 
 ---
 
 ## IDE 與工具支援
-
-### IDE 版本需求
 
 | IDE           | 最低版本   |
 | ------------- | ---------- |
@@ -441,27 +143,9 @@ xUnit 3.x 中 `DataAttribute` 方法簽名已變更：`GetData(MethodInfo)` → 
 | VS Code       | 最新版     |
 | Rider         | 2023.3+    |
 
-### Microsoft Testing Platform
+xUnit 3.x 預設啟用 Microsoft Testing Platform（MTP），搭配 .NET 10 SDK 可使用原生 MTP 模式。
 
-xUnit 3.x 預設啟用 Microsoft Testing Platform：
-
-```xml
-<PropertyGroup>
-  <EnableMicrosoftTestingPlatform>true</EnableMicrosoftTestingPlatform>
-  <OutputType>Exe</OutputType>
-</PropertyGroup>
-```
-
----
-
-## 效能改進
-
-xUnit 3.x 帶來的效能改進：
-
-1. **獨立進程執行**：測試在獨立進程中執行，更好的隔離性
-2. **改進的並行演算法**：更智慧的負載平衡
-3. **更快的啟動時間**：可執行檔直接執行
-4. **更好的記憶體隔離**：減少測試之間的干擾
+> .NET 10 MTP 模式詳細設定請參考 [references/upgrade-steps.md](references/upgrade-steps.md)
 
 ---
 
@@ -493,3 +177,4 @@ xUnit 3.x 帶來的效能改進：
 
 - `dotnet-testing-xunit-project-setup` - xUnit 專案設定基礎
 - `dotnet-testing-advanced-tunit-fundamentals` - TUnit 替代框架
+- `dotnet-testing-advanced-testcontainers-database` - Testcontainers 資料庫整合測試（搭配 XunitV3 套件）

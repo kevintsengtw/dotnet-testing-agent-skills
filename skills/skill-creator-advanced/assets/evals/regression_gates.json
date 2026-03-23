@@ -1,0 +1,6 @@
+{
+  "min_pass_rate_delta": 0.0,
+  "max_time_increase_seconds": 30.0,
+  "max_token_increase": 5000,
+  "require_non_negative_pass_rate": true
+}

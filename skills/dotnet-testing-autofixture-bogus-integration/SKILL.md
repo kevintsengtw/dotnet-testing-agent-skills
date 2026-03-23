@@ -12,49 +12,27 @@ description: |
 
 ### 為什麼需要整合？
 
-**AutoFixture 的優勢**：
+| 面向           | AutoFixture              | Bogus                    | 整合方案         |
+| -------------- | ------------------------ | ------------------------ | ---------------- |
+| 資料真實感     | 低（GUID 格式字串）      | 高（真實 Email/Phone）   | 高               |
+| 物件關聯處理   | 自動                     | 手動                     | 自動             |
+| 循環參考處理   | 內建                     | 無                       | 整合             |
+| 設定複雜度     | 低                       | 中                       | 中               |
+| 適用場景       | 單元測試                 | 整合測試/原型            | 兩者皆可         |
 
-- 快速產生匿名測試資料
-- 自動處理複雜物件結構
-- 良好的循環參考處理機制
-
-**Bogus 的優勢**：
-
-- 產生真實感的語意化資料
-- 豐富的資料類型支援（Email、Phone、Address 等）
-- 對驗證比較友善的資料格式
-
-**整合後的效果**：
-
-```csharp
-// 整合前的問題
-var user = fixture.Create<User>();
-// user.Email 可能是 "Email1a2b3c4d"，不像真實 Email
-
-// 整合後
-var user = integratedFixture.Create<User>();
-// user.Email 是 "john.doe@example.com"
-// user.FirstName 是 "John"
-// 其他屬性由 AutoFixture 自動填充
-```
-
----
+**整合效果：** `user.Email` 從 `"Email1a2b3c4d"` 變為 `"john.doe@example.com"`，其他屬性仍由 AutoFixture 自動填充。
 
 ## 套件安裝
 
 ```xml
 <PackageReference Include="AutoFixture" Version="4.18.1" />
 <PackageReference Include="AutoFixture.Xunit2" Version="4.18.1" />
-<PackageReference Include="Bogus" Version="35.6.3" />
+<PackageReference Include="Bogus" Version="35.6.5" />
 <PackageReference Include="xunit" Version="2.9.3" />
-<PackageReference Include="AwesomeAssertions" Version="9.1.0" />
+<PackageReference Include="AwesomeAssertions" Version="9.4.0" />
 ```
 
----
-
-## 整合架構
-
-### 整合方式總覽
+## 整合方式總覽
 
 | 整合方式                     | 適用場景           | 複雜度 |
 | ---------------------------- | ------------------ | ------ |
@@ -64,35 +42,36 @@ var user = integratedFixture.Create<User>();
 | 整合工廠 (IntegratedFactory) | 完整測試場景建構   | 高     |
 | 自訂 AutoData 屬性           | xUnit 整合         | 低     |
 
----
-
 ## 核心整合技術
 
-透過 `ISpecimenBuilder` 介面實現屬性層級與類型層級的整合，搭配擴充方法（`WithBogus()`、`WithOmitOnRecursion()`、`WithSeed()`）簡化設定流程。涵蓋 Email、Phone、Name、Address 等常用 SpecimenBuilder 以及完整的類型產生器註冊模式。
+### ISpecimenBuilder 整合
+
+透過 `ISpecimenBuilder` 介面實現屬性層級與類型層級的整合：
+
+- **屬性層級**：根據屬性名稱判斷（如 `Email`、`Phone`、`FirstName`），使用 Bogus 產生對應的真實感資料
+- **類型層級**：為整個類型（如 `User`、`Address`）註冊 Bogus Faker 產生器
+
+### 常用 SpecimenBuilder
+
+| SpecimenBuilder          | 產生資料類型       | Bogus API               |
+| ------------------------ | ------------------ | ------------------------ |
+| `EmailSpecimenBuilder`   | Email 地址         | `f.Internet.Email()`     |
+| `PhoneSpecimenBuilder`   | 電話號碼           | `f.Phone.PhoneNumber()`  |
+| `NameSpecimenBuilder`    | 人名               | `f.Name.FirstName()`     |
+| `AddressSpecimenBuilder` | 地址               | `f.Address.FullAddress()`|
+
+### 擴充方法
+
+- `fixture.WithBogus()` — 註冊所有 Bogus SpecimenBuilder
+- `fixture.WithOmitOnRecursion()` — 處理循環參考
+- `fixture.WithSeed(seed)` — 設定隨機種子
+- `fixture.WithRepeatCount(count)` — 設定 CreateMany 預設數量
 
 > 完整內容請參閱 [references/core-integration-techniques.md](references/core-integration-techniques.md)
 
----
-
 ## 循環參考處理
 
-### 為什麼循環參考很重要？
-
-```csharp
-public class User
-{
-    public Company? Company { get; set; }  // User 參考 Company
-}
-
-public class Company
-{
-    public List<User> Employees { get; set; } = new();  // Company 參考 User
-}
-```
-
-**問題**：User → Company → Employees(User) → Company → ... 無限循環
-
-### 解決方案：OmitOnRecursionBehavior
+當物件存在循環參考（如 User → Company → Employees(User)）時，使用 `OmitOnRecursionBehavior` 解決：
 
 ```csharp
 var fixture = new Fixture();
@@ -102,17 +81,9 @@ fixture.Behaviors.OfType<ThrowingRecursionBehavior>()
 fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 ```
 
-**效果**：
-
-- 避免 StackOverflowException
-- 循環參考的屬性設為 null 或空集合
-- 某些深層屬性可能為 null（這是預期行為）
-
----
+**效果：** 避免 StackOverflowException，循環參考的屬性設為 null 或空集合。
 
 ## 自訂 AutoData 屬性
-
-### BogusAutoDataAttribute
 
 ```csharp
 public class BogusAutoDataAttribute : AutoDataAttribute
@@ -122,183 +93,41 @@ public class BogusAutoDataAttribute : AutoDataAttribute
     {
     }
 }
-```
 
-### 使用方式
-
-```csharp
+// 使用方式
 [Theory]
 [BogusAutoData]
 public void 使用整合資料測試(User user, Address address)
 {
     user.Email.Should().Contain("@");
-    user.FirstName.Should().NotBeNullOrEmpty();
     address.City.Should().NotBeNullOrEmpty();
 }
 ```
 
----
+## 混合產生器與測試資料工廠
 
-## 混合產生器
+### HybridTestDataGenerator
 
-### ITestDataGenerator 介面
+統一的測試資料產生 API，實作 `ITestDataGenerator` 介面：
 
-```csharp
-public interface ITestDataGenerator
-{
-    T Generate<T>();
-    IEnumerable<T> Generate<T>(int count);
-    T Generate<T>(Action<T> configure);
-}
-```
-
-### HybridTestDataGenerator 實作
-
-```csharp
-public class HybridTestDataGenerator : ITestDataGenerator
-{
-    private readonly IFixture _fixture;
-
-    public HybridTestDataGenerator(int? seed = null)
-    {
-        _fixture = new Fixture()
-            .WithBogus()
-            .WithOmitOnRecursion();
-
-        if (seed.HasValue)
-        {
-            Bogus.Randomizer.Seed = new Random(seed.Value);
-        }
-    }
-
-    public T Generate<T>() => _fixture.Create<T>();
-
-    public IEnumerable<T> Generate<T>(int count)
-        => Enumerable.Range(0, count).Select(_ => Generate<T>());
-
-    public T Generate<T>(Action<T> configure)
-    {
-        var item = Generate<T>();
-        configure(item);
-        return item;
-    }
-}
-```
-
----
-
-## 整合測試資料工廠
+- `Generate<T>()` — 產生單一物件
+- `Generate<T>(int count)` — 產生指定數量的集合
+- `Generate<T>(Action<T> configure)` — 產生物件後進行自訂設定
 
 ### IntegratedTestDataFactory
 
-```csharp
-public class IntegratedTestDataFactory
-{
-    private readonly IFixture _fixture;
-    private readonly Dictionary<Type, object> _cache = new();
+完整場景建構工廠，支援進階功能：
 
-    public IntegratedTestDataFactory(int? seed = null)
-    {
-        _fixture = new Fixture()
-            .WithBogus()
-            .WithOmitOnRecursion()
-            .WithRepeatCount(3);
+- `CreateFresh<T>()` — 每次產生全新物件
+- `CreateMany<T>(count)` — 批次建立
+- `GetCached<T>()` — 快取機制，相同類型只產生一次
+- `CreateTestScenario()` — 建立包含 Company、Users、Orders 的完整測試場景，自動建立關聯
 
-        if (seed.HasValue)
-        {
-            _fixture.WithSeed(seed.Value);
-        }
-    }
+### TestBase 基底類別
 
-    public T CreateFresh<T>() => _fixture.Create<T>();
+統一 Fixture、Generator、Factory 的初始化與 Seed 管理，提供 `Create<T>()`、`CreateMany<T>()`、`Create<T>(configure)` 等便捷方法。
 
-    public List<T> CreateMany<T>(int count = 3)
-        => _fixture.CreateMany<T>(count).ToList();
-
-    public T GetCached<T>() where T : class
-    {
-        var type = typeof(T);
-        if (_cache.TryGetValue(type, out var cached))
-            return (T)cached;
-
-        var instance = CreateFresh<T>();
-        _cache[type] = instance;
-        return instance;
-    }
-
-    public void ClearCache() => _cache.Clear();
-
-    /// <summary>
-    /// 建立完整測試場景
-    /// </summary>
-    public TestScenario CreateTestScenario()
-    {
-        var company = CreateFresh<Company>();
-        var users = CreateMany<User>(5);
-        var orders = CreateMany<Order>(10);
-
-        // 建立關聯
-        foreach (var user in users)
-        {
-            user.Company = company;
-        }
-
-        company.Employees = users;
-
-        return new TestScenario
-        {
-            Company = company,
-            Users = users,
-            Orders = orders
-        };
-    }
-}
-```
-
----
-
-## 測試基底類別
-
-### TestBase 實作
-
-```csharp
-public abstract class TestBase
-{
-    protected readonly IFixture Fixture;
-    protected readonly HybridTestDataGenerator Generator;
-    protected readonly IntegratedTestDataFactory Factory;
-
-    protected TestBase(int? seed = null)
-    {
-        Fixture = new Fixture()
-            .WithBogus()
-            .WithOmitOnRecursion()
-            .WithRepeatCount(3);
-
-        if (seed.HasValue)
-        {
-            Fixture.WithSeed(seed.Value);
-        }
-
-        Generator = new HybridTestDataGenerator(seed);
-        Factory = new IntegratedTestDataFactory(seed);
-    }
-
-    protected T Create<T>() => Fixture.Create<T>();
-
-    protected List<T> CreateMany<T>(int count = 3)
-        => Fixture.CreateMany<T>(count).ToList();
-
-    protected T Create<T>(Action<T> configure)
-    {
-        var instance = Create<T>();
-        configure(instance);
-        return instance;
-    }
-}
-```
-
----
+> 完整程式碼範例請參考 [references/hybrid-generator-and-factory.md](references/hybrid-generator-and-factory.md)
 
 ## Seed 管理與可重現性
 
@@ -312,81 +141,37 @@ public abstract class TestBase
 
 ### 建議做法
 
-```csharp
-// 使用 Seed 確保穩定性
-var factory = new IntegratedTestDataFactory(seed: 12345);
+- **一般場景**：使用 `IntegratedTestDataFactory(seed: 12345)` 確保穩定性
+- **完全可重現**：使用單一工具，如 `Faker<User>().UseSeed(12345)`
+- **不需重現**：不設定 Seed，每次產生不同的隨機資料
 
-// 如果需要完全可重現，使用單一工具
-var faker = new Faker<User>();
-faker.UseSeed(12345);
-```
+## 常見問題
 
----
+### Q1: 什麼時候該用整合方案，什麼時候用單一工具？
 
-## 使用範例
+- **用整合方案**：需要真實感資料（Email、Phone）且物件結構複雜的測試場景
+- **用純 AutoFixture**：只需要匿名資料填充的單元測試
+- **用純 Bogus**：需要完全可重現且資料格式嚴格的整合測試
 
-### 基本整合使用
+### Q2: SpecimenBuilder 匹配優先順序？
 
-```csharp
-[Fact]
-public void AutoFixture_整合_Bogus_應能產生真實感資料()
-{
-    // Arrange
-    var fixture = new Fixture().WithBogus();
+AutoFixture 按照 `Customizations` 集合的順序匹配，先加入的 Builder 優先。使用 `fixture.Customizations.Insert(0, builder)` 可確保最高優先。
 
-    // Act
-    var user = fixture.Create<User>();
+### Q3: 如何為新的實體類型加入 Bogus 支援？
 
-    // Assert
-    user.Email.Should().Contain("@");
-    user.FirstName.Should().NotBeNullOrEmpty();
-    user.Phone.Should().MatchRegex(@"[\d\-\(\)\s]+");
-}
-```
-
-### 使用工廠建立測試場景
-
-```csharp
-[Fact]
-public void 工廠_應能建立完整的測試場景()
-{
-    // Arrange
-    var factory = new IntegratedTestDataFactory(seed: 42);
-
-    // Act
-    var scenario = factory.CreateTestScenario();
-
-    // Assert
-    scenario.Company.Should().NotBeNull();
-    scenario.Users.Should().HaveCount(5);
-    scenario.Orders.Should().HaveCount(10);
-
-    scenario.Users.Should().AllSatisfy(user =>
-    {
-        user.Company.Should().Be(scenario.Company);
-        user.Email.Should().Contain("@");
-    });
-}
-```
-
----
+1. 建立對應的 `ISpecimenBuilder` 實作
+2. 在 `Create()` 方法中判斷屬性名稱或類型
+3. 使用 Bogus Faker 產生對應的真實感資料
+4. 在 `WithBogus()` 擴充方法中註冊
 
 ## 最佳實踐
 
 ### 建議做法
 
-1. **永遠先處理循環參考**
-
-   ```csharp
-   fixture.WithOmitOnRecursion().WithBogus();
-   ```
-
+1. **永遠先處理循環參考** — `fixture.WithOmitOnRecursion().WithBogus()`
 2. **為常用實體建立專用 SpecimenBuilder**
-
 3. **使用 Seed 確保測試穩定性**
-
 4. **建立測試基底類別統一資料產生邏輯**
-
 5. **適當使用快取提升效能**
 
 ### 避免事項
@@ -395,21 +180,6 @@ public void 工廠_應能建立完整的測試場景()
 2. 期望整合環境完全可重現
 3. 忽略循環參考處理
 4. 在每個測試中重新建立 Fixture
-
----
-
-## 整合與 AutoFixture/Bogus 的比較
-
-| 面向         | 純 AutoFixture | 純 Bogus      | 整合方案 |
-| ------------ | -------------- | ------------- | -------- |
-| 資料真實感   | 低             | 高            | 高       |
-| 設定複雜度   | 低             | 中            | 中       |
-| 物件關聯處理 | 自動           | 手動          | 自動     |
-| 循環參考處理 | 內建           | 無            | 整合     |
-| 可重現性     | 高             | 高            | 中       |
-| 適用場景     | 單元測試       | 整合測試/原型 | 兩者皆可 |
-
----
 
 ## 輸出格式
 
@@ -423,8 +193,6 @@ public void 工廠_應能建立完整的測試場景()
 
 ### 原始文章
 
-本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：
-
 - **Day 15 - AutoFixture 與 Bogus 整合：結合兩者優勢**
   - 鐵人賽文章：https://ithelp.ithome.com.tw/articles/10375620
   - 範例程式碼：https://github.com/kevintsengtw/30Days_in_Testing_Samples/tree/main/day15
@@ -434,9 +202,7 @@ public void 工廠_應能建立完整的測試場景()
 - [AutoFixture GitHub](https://github.com/AutoFixture/AutoFixture)
 - [Bogus GitHub Repository](https://github.com/bchavez/Bogus)
 
----
-
-## 相關技能
+### 相關技能
 
 - [autofixture-basics](../autofixture-basics/) - AutoFixture 基礎使用
 - [autofixture-customization](../autofixture-customization/) - AutoFixture 自訂化策略

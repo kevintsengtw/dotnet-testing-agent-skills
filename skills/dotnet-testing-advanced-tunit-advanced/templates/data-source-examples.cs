@@ -83,13 +83,13 @@ public class MethodDataSourceBasicTests
     }
 
     /// <summary>
-    /// 資料提供方法 - 使用 yield return 產生測試資料
+    /// 資料提供方法 - 使用 yield return 產生強型別 tuple 測試資料
+    /// TUnit 1.x 推薦使用強型別 tuple 取代 object[]，提供更好的型別安全
     /// </summary>
-    public static IEnumerable<object[]> GetOrderTestData()
+    public static IEnumerable<(string, CustomerLevel, List<OrderItem>, decimal)> GetOrderTestData()
     {
         // 一般會員訂單
-        yield return new object[]
-        {
+        yield return (
             "CUST001",
             CustomerLevel.一般會員,
             new List<OrderItem>
@@ -97,11 +97,10 @@ public class MethodDataSourceBasicTests
                 new() { ProductId = "PROD001", ProductName = "商品A", UnitPrice = 100m, Quantity = 2 }
             },
             200m
-        };
+        );
 
         // VIP會員訂單
-        yield return new object[]
-        {
+        yield return (
             "CUST002", 
             CustomerLevel.VIP會員,
             new List<OrderItem>
@@ -109,11 +108,10 @@ public class MethodDataSourceBasicTests
                 new() { ProductId = "PROD002", ProductName = "商品B", UnitPrice = 500m, Quantity = 1 }
             },
             500m
-        };
+        );
 
         // 多商品訂單
-        yield return new object[]
-        {
+        yield return (
             "CUST003",
             CustomerLevel.白金會員,
             new List<OrderItem>
@@ -122,7 +120,7 @@ public class MethodDataSourceBasicTests
                 new() { ProductId = "PROD002", ProductName = "商品B", UnitPrice = 200m, Quantity = 2 }
             },
             500m
-        };
+        );
     }
 }
 
@@ -155,7 +153,7 @@ public class MethodDataSourceFromFileTests
     /// 從 JSON 檔案載入測試資料
     /// 需要在專案中建立 TestData/discount-scenarios.json
     /// </summary>
-    public static IEnumerable<object[]> GetDiscountTestDataFromFile()
+    public static IEnumerable<(string, decimal, CustomerLevel, string, decimal)> GetDiscountTestDataFromFile()
     {
         // 模擬 JSON 資料（實際專案中會從檔案載入）
         var scenarios = new List<DiscountScenario>
@@ -167,7 +165,7 @@ public class MethodDataSourceFromFileTests
 
         foreach (var s in scenarios)
         {
-            yield return new object[] { s.Scenario, s.Amount, (CustomerLevel)s.Level, s.Code, s.Expected };
+            yield return (s.Scenario, s.Amount, (CustomerLevel)s.Level, s.Code, s.Expected);
         }
     }
 
@@ -202,8 +200,9 @@ public static class TestDataHelper
 {
     /// <summary>
     /// 從 JSON 檔案載入測試資料的通用方法
+    /// TUnit 1.x：指定 TResult 為強型別 tuple，例如 LoadFromJson&lt;T, (string, int, decimal)&gt;(...)
     /// </summary>
-    public static IEnumerable<object[]> LoadFromJson<T>(string fileName, Func<T, object[]> converter)
+    public static IEnumerable<TResult> LoadFromJson<T, TResult>(string fileName, Func<T, TResult> converter)
     {
         var filePath = Path.Combine("TestData", fileName);
         
@@ -229,16 +228,20 @@ public static class TestDataHelper
 #region ClassDataSource Examples
 
 /// <summary>
-/// ClassDataSource 基本使用範例
-/// 使用類別作為資料提供者，適合共享資料和可重用的測試情境
+/// ClassDataSource 使用範例 (TUnit 1.x)
+///
+/// 重要：TUnit 1.x 中 ClassDataSource&lt;T&gt; 注入單一 T 實例，不再枚舉 IEnumerable&lt;T&gt;
+/// - 若需要「從類別產生多個測試案例（N 個情境 → N 個測試）」，請改用 MethodDataSource
+/// - ClassDataSource 適用於「注入共享服務、資料庫連線、設定物件」等場景
 /// </summary>
 public class ClassDataSourceTests
 {
     /// <summary>
-    /// 使用 ClassDataSource 進行訂單驗證測試
+    /// MethodDataSource（建議）：從靜態方法產生多個測試案例
+    /// 每個 OrderValidationScenario 產生一個獨立測試
     /// </summary>
     [Test]
-    [ClassDataSource<OrderValidationTestData>]
+    [MethodDataSource(typeof(OrderValidationTestData), nameof(OrderValidationTestData.GetScenarios))]
     public async Task ValidateOrder_各種驗證情況_應回傳正確結果(OrderValidationScenario scenario)
     {
         // Arrange
@@ -246,6 +249,19 @@ public class ClassDataSourceTests
 
         // Assert
         await Assert.That(isValid).IsEqualTo(scenario.ExpectedValid);
+    }
+
+    /// <summary>
+    /// ClassDataSource（TUnit 1.x 正確用法）：注入共享的 T 實例
+    /// 適合需要昂貴初始化（如資料庫連線）且可在多個測試間共享的場景
+    /// </summary>
+    [Test]
+    [ClassDataSource<OrderValidationTestData>(Shared = SharedType.PerClass)]
+    public async Task ValidateOrder_使用共享資料物件_應正確載入(OrderValidationTestData testData)
+    {
+        // ClassDataSource<T> 注入一個 T 實例（非枚舉）
+        var scenarios = OrderValidationTestData.GetScenarios().ToList();
+        await Assert.That(scenarios).IsNotEmpty();
     }
 
     private static bool ValidateOrder(Order order)
@@ -260,11 +276,15 @@ public class ClassDataSourceTests
 
 /// <summary>
 /// 訂單驗證測試資料提供類別
-/// 實作 IEnumerable<T> 介面
+/// TUnit 1.x：提供靜態 GetScenarios() 方法供 MethodDataSource 使用
+/// 也可被 ClassDataSource&lt;T&gt; 注入為單一共享實例
 /// </summary>
-public class OrderValidationTestData : IEnumerable<OrderValidationScenario>
+public class OrderValidationTestData
 {
-    public IEnumerator<OrderValidationScenario> GetEnumerator()
+    /// <summary>
+    /// 靜態資料方法：供 MethodDataSource 使用，產生多個測試案例
+    /// </summary>
+    public static IEnumerable<OrderValidationScenario> GetScenarios()
     {
         // 有效訂單
         yield return new OrderValidationScenario
@@ -293,8 +313,6 @@ public class OrderValidationTestData : IEnumerable<OrderValidationScenario>
             ExpectedErrorKeyword = "商品"
         };
     }
-
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 
     private static Order CreateValidOrder() => new()
     {

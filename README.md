@@ -24,7 +24,7 @@
 - 📐 **2026-02-11 Anthropic 規範優化**：依據官方 Skill 建立指南，全面調整 29 個 SKILL.md 結構與內容
 - 🔬 **2026-03-07 Skill-Creator 規範優化**：使用新版 skill-creator 檢視並優化全部 29 個 SKILL.md 的寫作風格與結構
 - 🔧 **2026-03-11 Skill-Creator 驗證測試後微調**：針對 3 個 skills 進行驗證測試後的回應品質微調
-- 📦 **2026-03-15 NuGet 套件版本升級 + Skill 結構重構**：全面升級測試相關套件版本，12 個 SKILL.md 瘦身並將程式碼範例拆至 references/
+- 📦 **2026-03-23 NuGet 套件版本升級 + Skill 結構重構**：全面升級測試相關套件版本，12 個 SKILL.md 瘦身並將程式碼範例拆至 references/
 
 ---
 
@@ -490,7 +490,7 @@ graph LR
 
 ---
 
-## 2026-03-15 NuGet 套件版本升級 + Skill 結構重構 (v2.4.0)
+## 2026-03-23 NuGet 套件版本升級 + Skill 結構重構 (v2.4.0)
 
 使用 Anthropic 官方 skill-creator 重新調整 12 個 dotnet-testing 系列 SKILL.md，並全面升級測試相關 NuGet 套件版本：
 

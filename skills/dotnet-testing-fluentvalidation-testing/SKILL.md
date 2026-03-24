@@ -24,12 +24,13 @@ description: |
 
 ```xml
 <PackageReference Include="FluentValidation" Version="12.1.1" />
-<PackageReference Include="FluentValidation.TestHelper" Version="12.1.1" />
 <PackageReference Include="xunit" Version="2.9.3" />
 <PackageReference Include="Microsoft.Extensions.Time.Testing" Version="10.3.0" />
 <PackageReference Include="NSubstitute" Version="5.3.0" />
 <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
 ```
+
+> **注意**：`FluentValidation.TestHelper` 命名空間（`TestValidate`、`ShouldHaveValidationErrorFor` 等 API）已包含在 `FluentValidation` 主套件中，不需要額外安裝獨立套件。只需 `using FluentValidation.TestHelper;` 即可使用。
 
 > **FluentValidation 12.x 注意事項**：FluentValidation 12.0 為主要版本升級，最低需求為 **.NET 8**。已移除的 API 包括 `Transform`/`TransformForEach`（改用 `Must` + 手動轉換）、`InjectValidator`（改用建構子注入 + `SetValidator`）、`CascadeMode.StopOnFirstFailure`（改用 `RuleLevelCascadeMode = CascadeMode.Stop`）。`ShouldHaveAnyValidationError` 已更名為 `ShouldHaveValidationErrors`。完整遷移指南請參閱 [FluentValidation 12.0 Upgrade Guide](https://docs.fluentvalidation.net/en/latest/upgrading-to-12.html)。
 
@@ -267,7 +268,7 @@ _fakeTimeProvider.SetUtcNow(new DateTime(2024, 1, 1));
 - 產生 Validator 測試類別（含 TestHelper 設定）
 - 使用 ShouldHaveValidationErrorFor/ShouldNotHaveValidationErrorFor 斷言
 - 包含非同步驗證、跨欄位邏輯測試範例
-- 提供 .csproj 套件參考（FluentValidation.TestHelper）
+- 提供 .csproj 套件參考（FluentValidation — 已包含 TestHelper API）
 
 ## 參考資源
 

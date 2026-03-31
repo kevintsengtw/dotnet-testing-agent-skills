@@ -25,6 +25,7 @@
 - 🔬 **2026-03-07 Skill-Creator 規範優化**：使用新版 skill-creator 檢視並優化全部 29 個 SKILL.md 的寫作風格與結構
 - 🔧 **2026-03-11 Skill-Creator 驗證測試後微調**：針對 3 個 skills 進行驗證測試後的回應品質微調
 - 📦 **2026-03-23 NuGet 套件版本升級 + Skill 結構重構**：全面升級測試相關套件版本，12 個 SKILL.md 瘦身並將程式碼範例拆至 references/
+- 🔄 **2026-03-31 NuGet 套件版本同步更新**：14 個 NuGet 套件升級至最新穩定版，修正 Testcontainers Wait Strategy 與 FluentValidation 套件參考問題
 
 ---
 
@@ -490,6 +491,49 @@ graph LR
 
 ---
 
+## 2026-03-31 NuGet 套件版本同步更新 (v2.4.1)
+
+全面同步 14 個 NuGet 套件至最新穩定版，涵蓋 12 個 Skills、19 個檔案，並改善 Testcontainers Wait Strategy 與修正 FluentValidation 套件參考。
+
+### NuGet 套件版本升級
+
+| 套件 | 舊版本 | 新版本 | 影響 Skills |
+|------|--------|--------|------------- |
+| `Aspire.Hosting.Testing` | 9.1.0 | **13.1.3** | aspire-testing |
+| `xunit.runner.visualstudio` | 2.8.2 / 3.0.0 / 3.0.1 | **3.1.5** | aspire-testing, aspnet-integration-testing, testcontainers-database, testcontainers-nosql, webapi-integration-testing, code-coverage-analysis, xunit-project-setup |
+| `Microsoft.Data.SqlClient` | 6.1.4 | **7.0.0** | testcontainers-database |
+| `MongoDB.Driver` | 3.7.0 | **3.7.1** | testcontainers-nosql |
+| `MongoDB.Bson` | 3.7.0 | **3.7.1** | testcontainers-nosql |
+| `StackExchange.Redis` | 2.11.8 | **2.12.8** | aspire-testing, testcontainers-nosql |
+| `Microsoft.Bcl.TimeProvider` | 10.0.3 | **10.0.5** | testcontainers-nosql |
+| `Microsoft.Extensions.TimeProvider.Testing` | 10.3.0 | **10.4.0** | testcontainers-nosql, tunit-fundamentals, webapi-integration-testing, fluentvalidation-testing |
+| `TUnit` | 0.57.24 / 1.19.57 | **1.24.0** | tunit-advanced, tunit-fundamentals |
+| `Microsoft.Testing.Extensions.TrxReport` | 2.0.2 | **2.1.0** | tunit-fundamentals |
+| `Npgsql` | 10.0.1 | **10.0.2** | aspire-testing, webapi-integration-testing |
+| `AutoFixture.Xunit3` | 4.18.1 | **4.19.0** | xunit-upgrade-guide |
+| `AwesomeAssertions.Web` | 9.4.0 | **1.9.6** | webapi-integration-testing |
+| `Microsoft.Extensions.Time.Testing` | *(已移除)* | → `Microsoft.Extensions.TimeProvider.Testing` | fluentvalidation-testing |
+
+### Testcontainers Wait Strategy 改善
+
+將 `UntilPortIsAvailable()` 替換為應用層健康檢查策略，避免「端口已開但服務尚未就緒」的競態條件：
+
+| 容器 | 舊策略 | 新策略 |
+|------|--------|--------|
+| PostgreSQL | `UntilPortIsAvailable(5432)` | `UntilCommandIsCompleted("pg_isready")` |
+| MongoDB | `UntilPortIsAvailable(27017)` | `UntilCommandIsCompleted("mongosh --eval 'db.runCommand({ ping: 1 })'")` |
+| SQL Server | `UntilPortIsAvailable(1433)` + 日誌偵測 | 僅保留 `UntilMessageIsLogged(...)` |
+
+### FluentValidation 套件參考修正
+
+- 移除獨立的 `FluentValidation.TestHelper` 套件參考（TestHelper API 已內含於 `FluentValidation` 主套件）
+- 修正套件名稱：`Microsoft.Extensions.Time.Testing` → `Microsoft.Extensions.TimeProvider.Testing`
+- 新增注意事項說明，引導使用者正確使用 `using FluentValidation.TestHelper;`
+
+> 詳細變更請參閱：[v2.4.1 Release Notes](https://github.com/kevintsengtw/dotnet-testing-agent-skills/releases/tag/v2.4.1)
+
+---
+
 ## 2026-03-23 NuGet 套件版本升級 + Skill 結構重構 (v2.4.0)
 
 使用 Anthropic 官方 skill-creator 重新調整 12 個 dotnet-testing 系列 SKILL.md，並全面升級測試相關 NuGet 套件版本：
@@ -502,7 +546,7 @@ graph LR
 | **templates 更新** | 各 skill 的 .csproj 範本同步更新套件版本 | 多個 templates |
 | **references 新增** | 新增詳細參考文件，包含完整範例與進階用法 | 多個 references |
 
-### NuGet 套件版本升級
+### NuGet 套件版本升級（v2.4.0）
 
 | 套件 | 舊版本 | 新版本 |
 |------|--------|--------|

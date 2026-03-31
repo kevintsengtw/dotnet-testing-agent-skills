@@ -41,11 +41,11 @@ NoSQL 資料庫測試與關聯式資料庫有顯著差異：
 
   <ItemGroup>
     <!-- MongoDB 相關套件 -->
-    <PackageReference Include="MongoDB.Driver" Version="3.7.0" />
-    <PackageReference Include="MongoDB.Bson" Version="3.7.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.7.1" />
+    <PackageReference Include="MongoDB.Bson" Version="3.7.1" />
 
     <!-- Redis 相關套件 -->
-    <PackageReference Include="StackExchange.Redis" Version="2.11.8" />
+    <PackageReference Include="StackExchange.Redis" Version="2.12.8" />
 
     <!-- Testcontainers -->
     <PackageReference Include="Testcontainers" Version="4.11.0" />
@@ -55,13 +55,13 @@ NoSQL 資料庫測試與關聯式資料庫有顯著差異：
     <!-- 測試框架 -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
     <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
 
     <!-- JSON 序列化與時間測試 -->
     <PackageReference Include="System.Text.Json" Version="10.0.5" />
-    <PackageReference Include="Microsoft.Bcl.TimeProvider" Version="10.0.3" />
-    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.3.0" />
+    <PackageReference Include="Microsoft.Bcl.TimeProvider" Version="10.0.5" />
+    <PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.4.0" />
   </ItemGroup>
 </Project>
 ```
@@ -70,9 +70,9 @@ NoSQL 資料庫測試與關聯式資料庫有顯著差異：
 
 | 套件                   | 版本   | 用途                               |
 | ---------------------- | ------ | ---------------------------------- |
-| MongoDB.Driver         | 3.7.0  | MongoDB 官方驅動程式，支援最新功能 |
-| MongoDB.Bson           | 3.7.0  | BSON 序列化處理                    |
-| StackExchange.Redis    | 2.11.8 | Redis 客戶端，支援 Redis 7.x       |
+| MongoDB.Driver         | 3.7.1  | MongoDB 官方驅動程式，支援最新功能 |
+| MongoDB.Bson           | 3.7.1  | BSON 序列化處理                    |
+| StackExchange.Redis    | 2.12.8 | Redis 客戶端，支援 Redis 7.x       |
 | Testcontainers.MongoDb | 4.11.0 | MongoDB 容器管理                   |
 | Testcontainers.Redis   | 4.11.0 | Redis 容器管理                     |
 
@@ -190,7 +190,7 @@ var uniqueEmail = $"test_{Guid.NewGuid():N}@example.com";
 _container = new MongoDbBuilder()
     .WithImage("mongo:7.0")
     .WithWaitStrategy(Wait.ForUnixContainer()
-        .UntilPortIsAvailable(27017))
+        .UntilCommandIsCompleted("mongosh --eval 'db.runCommand({ ping: 1 })'"))
     .Build();
 ```
 

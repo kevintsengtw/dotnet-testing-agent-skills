@@ -363,7 +363,7 @@ public class OrderApiIntegrationTests : IDisposable
  * 
  * 2. 套件依賴：
  *    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
- *    <PackageReference Include="TUnit" Version="0.57.24" />
+ *    <PackageReference Include="TUnit" Version="1.24.0" />
  * 
  * 3. GlobalUsings.cs 設定：
  *    global using Microsoft.AspNetCore.Mvc.Testing;

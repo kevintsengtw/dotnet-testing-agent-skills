@@ -102,14 +102,14 @@ MyApp/
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.Testing" Version="9.1.0" />
+    <PackageReference Include="Aspire.Hosting.Testing" Version="13.1.3" />
     <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
     <PackageReference Include="AwesomeAssertions.Web" Version="1.9.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     <PackageReference Include="Respawn" Version="7.0.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
   </ItemGroup>
 
   <ItemGroup>

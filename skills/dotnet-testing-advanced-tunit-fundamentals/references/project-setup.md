@@ -49,11 +49,11 @@ dotnet new tunit -n MyApp.Tests -o tests/MyApp.Tests
 
   <ItemGroup>
     <!-- TUnit 核心套件 -->
-    <PackageReference Include="TUnit" Version="1.19.57" />
+    <PackageReference Include="TUnit" Version="1.24.0" />
     <!-- 程式碼覆蓋率支援（已內建於 TUnit 1.x meta-package，此處鎖定版本）-->
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.5.2" />
     <!-- TRX 報告支援（已內建於 TUnit 1.x meta-package，此處鎖定版本）-->
-    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="2.0.2" />
+    <PackageReference Include="Microsoft.Testing.Extensions.TrxReport" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>

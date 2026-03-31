@@ -47,7 +47,7 @@ Testcontainers 是一個測試函式庫，提供輕量好用的 API 來啟動 Do
   <!-- 測試框架 -->
   <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
   <PackageReference Include="xunit" Version="2.9.3" />
-  <PackageReference Include="xunit.runner.visualstudio" Version="2.9.3" />
+  <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
   <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
 
   <!-- Testcontainers 核心套件 -->
@@ -64,7 +64,7 @@ Testcontainers 是一個測試函式庫，提供輕量好用的 API 來啟動 Do
 
   <!-- Dapper (可選) -->
   <PackageReference Include="Dapper" Version="2.1.72" />
-  <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.4" />
+  <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
 </ItemGroup>
 ```
 

@@ -44,6 +44,7 @@ description: |
 
 | 使用者說... | 載入指令 | 用途說明 |
 |------------|----------|----------|
+| AutoFixture 自訂規則 | `/skill dotnet-testing-autofixture-customization` | ISpecimenBuilder 客製化 |
 | AutoFixture + Bogus | `/skill dotnet-testing-autofixture-bogus-integration` | 自動化+擬真資料 |
 | AutoFixture + NSubstitute | `/skill dotnet-testing-autofixture-nsubstitute-integration` | 自動建立 Mock |
 | AutoData、Theory 測試 | `/skill dotnet-testing-autodata-xunit-integration` | 參數化測試 |
@@ -70,8 +71,6 @@ AI：現在按照 FluentValidation Testing skill 的指引為您建立測試...
 ## 完整技能清單
 
 如需查看完整的 19 個基礎技能清單、詳細決策樹、學習路徑建議，請繼續閱讀本檔案後續內容。
-
-**人類開發者參考**：如需快速查找，請查看 [SKILLS_QUICK_INDEX.md](/SKILLS_QUICK_INDEX.md)
 
 ---
 

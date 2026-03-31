@@ -10,12 +10,12 @@
 
   <ItemGroup>
     <!-- .NET Aspire Testing 核心套件 -->
-    <PackageReference Include="Aspire.Hosting.Testing" Version="9.1.0" />
+    <PackageReference Include="Aspire.Hosting.Testing" Version="13.1.3" />
     
     <!-- 測試框架 -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
     
     <!-- ASP.NET Core 測試支援 -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.0" />
@@ -27,11 +27,11 @@
     <PackageReference Include="Flurl.Http" Version="4.0.2" />
     
     <!-- 資料庫測試 -->
-    <PackageReference Include="Npgsql" Version="10.0.1" />
+    <PackageReference Include="Npgsql" Version="10.0.2" />
     <PackageReference Include="Respawn" Version="7.0.0" />
     
     <!-- Redis 測試 (如需要) -->
-    <PackageReference Include="StackExchange.Redis" Version="2.11.8" />
+    <PackageReference Include="StackExchange.Redis" Version="2.12.8" />
   </ItemGroup>
 
   <ItemGroup>

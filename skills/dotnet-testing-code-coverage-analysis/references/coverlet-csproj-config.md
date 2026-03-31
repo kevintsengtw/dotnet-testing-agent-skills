@@ -12,7 +12,7 @@
   <ItemGroup>
     <!-- 測試框架套件 -->
     <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.3.0" />
 
     <!-- 覆蓋率收集器 -->

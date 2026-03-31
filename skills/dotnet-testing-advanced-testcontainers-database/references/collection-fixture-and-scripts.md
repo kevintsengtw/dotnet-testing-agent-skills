@@ -142,16 +142,15 @@ private void EnsureTablesExist()
 ### 內建 Wait Strategy
 
 ```csharp
-// 等待特定埠號可用
+// 等待資料庫就緒命令成功
 var postgres = new PostgreSqlBuilder()
     .WithWaitStrategy(Wait.ForUnixContainer()
-        .UntilPortIsAvailable(5432))
+        .UntilCommandIsCompleted("pg_isready"))
     .Build();
 
 // 等待日誌訊息出現
 var sqlServer = new MsSqlBuilder()
     .WithWaitStrategy(Wait.ForUnixContainer()
-        .UntilPortIsAvailable(1433)
         .UntilMessageIsLogged("SQL Server is now ready for client connections"))
     .Build();
 ```

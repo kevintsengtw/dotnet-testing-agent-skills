@@ -25,7 +25,7 @@ description: |
 ```xml
 <PackageReference Include="FluentValidation" Version="12.1.1" />
 <PackageReference Include="xunit" Version="2.9.3" />
-<PackageReference Include="Microsoft.Extensions.Time.Testing" Version="10.3.0" />
+<PackageReference Include="Microsoft.Extensions.TimeProvider.Testing" Version="10.4.0" />
 <PackageReference Include="NSubstitute" Version="5.3.0" />
 <PackageReference Include="AwesomeAssertions" Version="9.4.0" />
 ```

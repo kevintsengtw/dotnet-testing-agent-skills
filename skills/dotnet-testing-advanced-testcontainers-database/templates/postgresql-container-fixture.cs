@@ -142,7 +142,7 @@ public class PostgreSqlWithWaitStrategyTests : IAsyncLifetime
             .WithPassword("testpass")
             // 使用 Wait Strategy 確保容器完全就緒
             .WithWaitStrategy(Wait.ForUnixContainer()
-                .UntilPortIsAvailable(5432)
+                .UntilCommandIsCompleted("pg_isready")
                 .UntilMessageIsLogged("database system is ready to accept connections"))
             .Build();
     }

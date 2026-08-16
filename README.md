@@ -491,6 +491,52 @@ graph LR
 
 ---
 
+## 2026-08-16 修正 AwesomeAssertions 幻覺 API 名稱 (v2.4.2)
+
+修正 3 個 Skills、8 處錯誤的斷言方法名稱。**這些名稱在 AwesomeAssertions 中並不存在，複製受影響的範本會直接造成 CS1061 編譯錯誤。**
+
+### 為什麼會發生
+
+這三個名稱是 **FluentAssertions 5.x 時代的舊式命名**。AwesomeAssertions 承接的是 FluentAssertions 7 的 API，只保留 `...ThanOrEqualTo` 形式，舊名少了中間的 `Than`：
+
+| 錯誤名稱（不存在） | 正確名稱 |
+| --- | --- |
+| `BeGreaterOrEqualTo(n)` | `BeGreaterThanOrEqualTo(n)` |
+| `BeLessOrEqualTo(n)` | `BeLessThanOrEqualTo(n)` |
+| `HaveCountGreaterOrEqualTo(n)` | `HaveCountGreaterThanOrEqualTo(n)` |
+
+這類錯誤特別難以察覺 —— 名稱本身讀起來完全合理，語意也正確，只是那個版本的 API 從來沒有這樣命名過。它不會在審閱時被抓到，只會在使用者實際編譯時才爆出來。
+
+### 查證方式
+
+本次不是憑記憶或語感判斷，而是**以組件反射列舉 AwesomeAssertions 9.5.0 的 636 個公開成員名稱**建立比對基準，再抽出全部 Skills 中含 `.Should()` 的敘述逐一比對。同時反射確認了 AwesomeAssertions.Web 的 54 個狀態碼斷言（`Be200Ok`、`Be404NotFound` 等）**全部存在，並非誤用**。
+
+### 受影響的 Skills
+
+| Skill | 處數 | 檔案 |
+| --- | --- | --- |
+| `dotnet-testing-autodata-xunit-integration` | 5 | `references/collection-size-attribute.md`、`templates/advanced-patterns.cs`（2 處）、`templates/external-data-integration.cs`、`templates/autodata-attributes.cs` |
+| `dotnet-testing-autofixture-customization` | 1 | `templates/dataannotations-integration.cs` |
+| `dotnet-testing-bogus-fake-data` | 2 | `templates/basic-usage.cs`、`templates/advanced-patterns.cs` |
+
+修正皆為單純的名稱替換，語意與斷言行為完全不變，**不影響任何既有的正確用法**。Skill 名稱、數量、目錄結構均未更動。
+
+### 已知問題（尚未修正）
+
+`dotnet-testing-awesome-assertions-guide` 與 `dotnet-testing-complex-object-comparison` 另有同類的幻覺 API（如 `WithMaxRecursionDepth`、`ExcludingNestedObjects`、`RespectingRuntimeTypes`、`HaveLengthGreaterThan`、`BePositiveInfinity`），本次**未一併修正** —— 這兩個 Skill 正在進行 v3 全面重寫，屆時會整份取代。若您正在使用這兩個 Skill，請留意下列對應：
+
+| 錯誤 | 正確 |
+| --- | --- |
+| `WithMaxRecursionDepth(n)` | `AllowingInfiniteRecursion()` |
+| `ExcludingNestedObjects` | `Excluding(x => x.Child)` |
+| `RespectingRuntimeTypes` | `PreferringRuntimeMemberTypes()` |
+| `HaveLengthGreaterThan(n)` | `text.Length.Should().BeGreaterThan(n)` |
+| `BePositiveInfinity()` | `Should().Be(double.PositiveInfinity)` |
+
+> 詳細變更請參閱：[v2.4.2 Release Notes](https://github.com/kevintsengtw/dotnet-testing-agent-skills/releases/tag/v2.4.2)
+
+---
+
 ## 2026-03-31 NuGet 套件版本同步更新 (v2.4.1)
 
 全面同步 14 個 NuGet 套件至最新穩定版，涵蓋 12 個 Skills、19 個檔案，並改善 Testcontainers Wait Strategy 與修正 FluentValidation 套件參考。

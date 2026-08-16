@@ -26,6 +26,7 @@
 - 🔧 **2026-03-11 Skill-Creator 驗證測試後微調**：針對 3 個 skills 進行驗證測試後的回應品質微調
 - 📦 **2026-03-23 NuGet 套件版本升級 + Skill 結構重構**：全面升級測試相關套件版本，12 個 SKILL.md 瘦身並將程式碼範例拆至 references/
 - 🔄 **2026-03-31 NuGet 套件版本同步更新**：14 個 NuGet 套件升級至最新穩定版，修正 Testcontainers Wait Strategy 與 FluentValidation 套件參考問題
+- 🐛 **2026-08-16 修正 AwesomeAssertions 幻覺 API 名稱**：3 個 Skills、8 處錯誤的斷言方法名稱（FluentAssertions 5.x 舊式命名），複製受影響範本會造成 CS1061 編譯錯誤
 
 ---
 

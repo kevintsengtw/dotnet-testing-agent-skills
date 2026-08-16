@@ -125,7 +125,7 @@ public class DataAnnotationsIntegrationTests
             employee.Name.Length.Should().BeInRange(2, 50);
             employee.Age.Should().BeInRange(18, 65);
             employee.Salary.Should().BeInRange(25000m, 200000m);
-            employee.Department.Length.Should().BeLessOrEqualTo(100);
+            employee.Department.Length.Should().BeLessThanOrEqualTo(100);
         });
     }
 }

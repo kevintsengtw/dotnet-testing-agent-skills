@@ -200,7 +200,7 @@ public class InlineAutoDataTests
         // Assert
         category.Should().NotBeNullOrEmpty();
         price.Should().BeInRange(100, 10000);
-        description.Length.Should().BeLessOrEqualTo(50);
+        description.Length.Should().BeLessThanOrEqualTo(50);
         product.Should().NotBeNull();
     }
 

@@ -188,7 +188,7 @@ public class ComplexBusinessLogicExamples
         employee.Age.Should().BeInRange(22, 65);
         employee.Email.Should().EndWith("@company.com");
         employee.HireDate.Should().BeBefore(DateTime.Now);
-        employee.Skills.Should().HaveCountGreaterOrEqualTo(2);
+        employee.Skills.Should().HaveCountGreaterThanOrEqualTo(2);
         
         // 驗證職級與薪資對應
         if (employee.Level == "Junior")

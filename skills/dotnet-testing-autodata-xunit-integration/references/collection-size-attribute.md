@@ -83,7 +83,7 @@ public void CollectionSize_控制自動產生集合大小(
     products.Should().AllSatisfy(product =>
     {
         product.Name.Should().NotBeNullOrEmpty();
-        product.Price.Should().BeGreaterOrEqualTo(0);
+        product.Price.Should().BeGreaterThanOrEqualTo(0);
     });
 }
 ```

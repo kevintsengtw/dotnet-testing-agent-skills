@@ -242,7 +242,7 @@ public class RuleForExamples
 
         var order = orderFaker.Generate();
 
-        order.Items.Should().HaveCountGreaterOrEqualTo(1);
+        order.Items.Should().HaveCountGreaterThanOrEqualTo(1);
         order.TotalAmount.Should().Be(order.Items.Sum(i => i.Subtotal));
     }
 }

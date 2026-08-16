@@ -270,7 +270,7 @@ public class JsonIntegrationTests
     {
         // Assert
         customerType.Should().Be("VIP");
-        creditLimit.Should().BeGreaterOrEqualTo(100000m);
+        creditLimit.Should().BeGreaterThanOrEqualTo(100000m);
     }
 }
 

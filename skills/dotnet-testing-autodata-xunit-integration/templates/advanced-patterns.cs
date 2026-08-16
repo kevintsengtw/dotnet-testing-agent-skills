@@ -137,7 +137,7 @@ public class CollectionSizeTests
         products.Should().AllSatisfy(product =>
         {
             product.Name.Should().NotBeNullOrEmpty();
-            product.Price.Should().BeGreaterOrEqualTo(0);
+            product.Price.Should().BeGreaterThanOrEqualTo(0);
         });
 
         // Assert - 驗證每個 Order 都有合理的值
@@ -436,7 +436,7 @@ public class AwesomeAssertionsIntegrationTests
         {
             product.Should().NotBeNull();
             product.Name.Should().NotBeNullOrEmpty();
-            product.Price.Should().BeGreaterOrEqualTo(0);
+            product.Price.Should().BeGreaterThanOrEqualTo(0);
         });
 
         // 使用 Should().BeEquivalentTo() 進行部分比對

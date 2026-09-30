@@ -267,6 +267,7 @@ PASS EmailHelperTests
 請參考同目錄下的範例檔案：
 
 - [templates/naming-convention-examples.cs](templates/naming-convention-examples.cs) - 命名規範完整範例
+- [references/naming-examples.md](references/naming-examples.md) - 依測試情境分類的命名範例集，可直接複製套用
 
 ### 原始文章
 

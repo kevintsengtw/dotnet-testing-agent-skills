@@ -193,7 +193,7 @@ public void MultipleComparisons_批次驗證_應一次顯示所有失敗()
 此技能可與以下技能組合使用：
 
 - **awesome-assertions-guide**: 基礎斷言語法與常用 API
-- **autofixture-data-generation**: 自動生成測試資料
+- **autofixture-basics**: 自動生成測試資料
 - **test-data-builder-pattern**: 建構複雜測試物件
 - **unit-test-fundamentals**: 單元測試基礎與 3A 模式
 

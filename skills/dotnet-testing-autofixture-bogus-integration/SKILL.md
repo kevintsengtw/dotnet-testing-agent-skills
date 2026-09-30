@@ -191,6 +191,12 @@ AutoFixture 按照 `Customizations` 集合的順序匹配，先加入的 Builder
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/specimen-builders.cs](templates/specimen-builders.cs) - 透過 `ISpecimenBuilder` 把 Bogus 接進 AutoFixture 的實作範例
+- [templates/hybrid-generator.cs](templates/hybrid-generator.cs) - `HybridTestDataGenerator` 混合產生器、`FixtureExtensions` 擴充方法，以及在地化與 seed 版的自訂 AutoData 屬性
+- [templates/integrated-factory.cs](templates/integrated-factory.cs) - `IntegratedTestDataFactory` 整合工廠與完整測試情境，示範測試資料的生命週期管理
+
 ### 原始文章
 
 - **Day 15 - AutoFixture 與 Bogus 整合：結合兩者優勢**
@@ -204,7 +210,7 @@ AutoFixture 按照 `Customizations` 集合的順序匹配，先加入的 Builder
 
 ### 相關技能
 
-- [autofixture-basics](../autofixture-basics/) - AutoFixture 基礎使用
-- [autofixture-customization](../autofixture-customization/) - AutoFixture 自訂化策略
-- [autodata-xunit-integration](../autodata-xunit-integration/) - AutoData 屬性整合
-- [bogus-fake-data](../bogus-fake-data/) - Bogus 假資料產生器
+- [autofixture-basics](../dotnet-testing-autofixture-basics/) - AutoFixture 基礎使用
+- [autofixture-customization](../dotnet-testing-autofixture-customization/) - AutoFixture 自訂化策略
+- [autodata-xunit-integration](../dotnet-testing-autodata-xunit-integration/) - AutoData 屬性整合
+- [bogus-fake-data](../dotnet-testing-bogus-fake-data/) - Bogus 假資料產生器

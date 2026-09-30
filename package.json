@@ -13,7 +13,7 @@
     "testing-best-practices",
     "AutoFixture",
     "NSubstitute",
-    "FluentAssertions",
+    "AwesomeAssertions",
     "Testcontainers",
     "integration-testing",
     "unit-testing"

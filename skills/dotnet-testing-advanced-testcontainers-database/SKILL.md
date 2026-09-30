@@ -152,6 +152,13 @@ Testcontainers 4.8.0 起，預設等待策略改為等待容器進入 **Running*
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/postgresql-container-fixture.cs](templates/postgresql-container-fixture.cs) - 單一測試類別的 PostgreSQL 容器配置，含 Wait Strategy 與資源限制的用法
+- [templates/mssql-collection-fixture.cs](templates/mssql-collection-fixture.cs) - 以 Collection Fixture 讓多個測試類別共用同一個 SQL Server 容器，檔內記錄可減少約 67% 執行時間
+- [templates/dapper-integration-tests.cs](templates/dapper-integration-tests.cs) - Dapper 資料存取層的容器化測試，涵蓋 `QueryMultiple`、`DynamicParameters` 與預存程序
+- [templates/test-project.csproj](templates/test-project.csproj) - 測試專案設定（net9.0、xUnit 2.9.3、AwesomeAssertions 9.4.0、Testcontainers 4.11.0）
+
 ### 原始文章
 
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：

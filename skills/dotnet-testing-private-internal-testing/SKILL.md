@@ -149,6 +149,12 @@ using System.Runtime.CompilerServices;
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/internals-visible-to-examples.cs](templates/internals-visible-to-examples.cs) - `InternalsVisibleTo` 的四種設定方式，並以 `internal` 的 `PriceCalculator` 示範測試
+- [templates/reflection-testing-examples.cs](templates/reflection-testing-examples.cs) - 以反射測試 private 成員，含 `ReflectionTestHelper` 輔助類別與使用前後的對照
+- [templates/strategy-pattern-refactoring.cs](templates/strategy-pattern-refactoring.cs) - 用 Strategy Pattern 重構掉「非測 private 不可」的處境，含重構前後的 `PricingService` 對照
+
 ### 原始文章
 
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：

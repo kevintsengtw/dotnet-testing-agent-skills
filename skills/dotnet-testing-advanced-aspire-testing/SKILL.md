@@ -10,7 +10,7 @@ description: |
 
 ## 前置需求
 
-- .NET 8 SDK 或更高版本
+- .NET 9 SDK 或更高版本
 - Docker Desktop（WSL 2 或 Hyper-V）
 - AppHost 專案（.NET Aspire 應用編排）
 
@@ -311,6 +311,10 @@ const string sql = @"
 - 修改測試專案 `.csproj`，加入 Aspire.Hosting.Testing 與相關套件參考
 
 ## 參考資源
+
+### 範例檔案
+
+- [templates/test-helpers.cs](templates/test-helpers.cs) - `TestHelpers` 靜態類別，提供測試資料的種入、清除與計數（`SeedProductsAsync`、`SeedSpecificProductAsync`、`CleanAllProductsAsync`、`GetProductCountAsync`）
 
 ### 原始文章
 

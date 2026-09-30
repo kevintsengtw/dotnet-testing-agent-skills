@@ -271,8 +271,8 @@
 
 ### 入口指南
 如果不確定使用哪個 skill，可先查看入口指南：
-- [基礎測試總覽](/skills/dotnet-testing/SKILL.md)
-- [進階測試總覽](/skills/dotnet-testing-advanced/SKILL.md)
+- [基礎測試總覽](skills/dotnet-testing/SKILL.md)
+- [進階測試總覽](skills/dotnet-testing-advanced/SKILL.md)
 
 這些檔案包含：
 - 完整的決策樹

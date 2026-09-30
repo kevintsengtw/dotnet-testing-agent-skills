@@ -158,6 +158,14 @@ xUnit 3.x 預設啟用 Microsoft Testing Platform（MTP），搭配 .NET 10 SDK 
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/upgrade-checklist.md](templates/upgrade-checklist.md) - 升級檢查清單，從升級前準備到完成後驗證的勾選式表單
+- [templates/code-migration-examples.cs](templates/code-migration-examples.cs) - 各項破壞性變更的前後對照（`async void`、`IAsyncLifetime`、`SkippableFact`）
+- [templates/new-features-examples.cs](templates/new-features-examples.cs) - v3 新功能範例：`[Test]`、Explicit Tests、動態 Skip、Matrix Theory Data、Assembly Fixture
+- [templates/xunit-v3-project.csproj](templates/xunit-v3-project.csproj) - 升級後的專案設定（net8.0、`xunit.v3` 3.2.2、`OutputType=Exe`、AwesomeAssertions 9.4.0）
+- [templates/xunit.runner.json](templates/xunit.runner.json) - v3 的 runner 設定（`parallelAlgorithm`、`maxParallelThreads`、`methodDisplay` 等）
+
 ### 原始文章
 
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：

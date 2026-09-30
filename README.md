@@ -27,6 +27,7 @@
 - 📦 **2026-03-23 NuGet 套件版本升級 + Skill 結構重構**：全面升級測試相關套件版本，12 個 SKILL.md 瘦身並將程式碼範例拆至 references/
 - 🔄 **2026-03-31 NuGet 套件版本同步更新**：14 個 NuGet 套件升級至最新穩定版，修正 Testcontainers Wait Strategy 與 FluentValidation 套件參考問題
 - 🐛 **2026-08-16 修正 AwesomeAssertions 幻覺 API 名稱**：3 個 Skills、8 處錯誤的斷言方法名稱（FluentAssertions 5.x 舊式命名），複製受影響範本會造成 CS1061 編譯錯誤
+- 🔗 **2026-09-30 補齊範本指標與修正斷掉的引用**：12 個 Skills 的 47 個範本檔補上 SKILL.md 指標，修正 13 處指向不存在目標的引用與連結
 
 ---
 
@@ -480,15 +481,69 @@ graph LR
 
 ## 相關連結
 
-> ⚠️ **GitHub Copilot 使用者請務必閱讀**：[GITHUB_COPILOT_UPDATE.md](GITHUB_COPILOT_UPDATE.md) 包含 VS Code v1.109 Agent Skills 正式發佈 (GA) 的重要更新說明，包括預設啟用、彈性搜尋路徑、多 AI 工具共用工作區等關鍵變更。
-
-- **GitHub Copilot 更新紀錄**：[GITHUB_COPILOT_UPDATE.md](GITHUB_COPILOT_UPDATE.md) — Copilot 使用者必讀
 - **完整使用手冊**：[SKILLS_USAGE_GUIDE.md](SKILLS_USAGE_GUIDE.md)
 - **Agent Skills 標準**：[agentskills.io](https://agentskills.io)
 - **Anthropic Skill 建立完整指南**：[The Complete Guide to Building Skills for Claude](https://claude.com/blog/complete-guide-to-building-skills-for-claude) — 本專案 2026-02-11 優化依據
   - [PDF 版本](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf?hsLang=en)
   - [Anthropic Skill Authoring Best Practices](https://platform.claude.com/docs/agent-skills/skill-authoring-best-practices)
 - **GitHub Copilot Agent Skills 文件**：[官方說明](https://docs.github.com/copilot/using-github-copilot/using-github-copilot-agent-skills)
+
+---
+
+## 2026-09-30 補齊範本指標與修正斷掉的引用 (v2.4.3)
+
+本版不新增、不移除任何 dotnet-testing Skill，也不更動 Skill 名稱。主要修正的是 **Skill 內部的指向關係** —— 有些檔案存在卻永遠讀不到，有些引用則指向根本不存在的目標。
+
+### 補齊 47 個範本檔的指標
+
+Agent Skill 採漸進式載入：`references/` 與 `templates/` 只有在 SKILL.md 內文指過去時，AI 才會去讀。**沒有被 SKILL.md 提及的檔案，實際上永遠不會被載入。**
+
+盤點後發現 12 個 Skills 的範本檔完全沒有被 SKILL.md 提及，合計 47 個檔案。這些都是可直接複製使用的完整實作（測試基底類別、Container Fixture、`.csproj` 專案設定等），先前等於白白躺在目錄裡。本版在這些 Skill 的「參考資源」下新增「範例檔案」一節，逐一列出各檔用途。
+
+| Skill | 補上指標的範本數 |
+| --- | ---: |
+| `dotnet-testing-advanced-webapi-integration-testing` | 8 |
+| `dotnet-testing-advanced-tunit-fundamentals` | 6 |
+| `dotnet-testing-advanced-testcontainers-nosql` | 5 |
+| `dotnet-testing-advanced-xunit-upgrade-guide` | 5 |
+| `dotnet-testing-advanced-aspnet-integration-testing` | 4 |
+| `dotnet-testing-advanced-testcontainers-database` | 4 |
+| `dotnet-testing-autofixture-bogus-integration` | 3 |
+| `dotnet-testing-bogus-fake-data` | 3 |
+| `dotnet-testing-datetime-testing-timeprovider` | 3 |
+| `dotnet-testing-private-internal-testing` | 3 |
+| `dotnet-testing-unit-test-fundamentals` | 2 |
+| `dotnet-testing-advanced-aspire-testing` | 1 |
+
+範本本身仍然只在需要時才讀取，新增的只是 SKILL.md 裡的幾行清單，不會增加每次對話的常駐 token。
+
+### 修正 13 處斷掉的引用與連結
+
+| 類型 | 處數 | 說明 |
+| --- | ---: | --- |
+| 引用不存在的 Skill | 2 | `complex-object-comparison` 指向的 `autofixture-data-generation` 改為 `autofixture-basics`；`nsubstitute-mocking` 移除不存在的 `dependency-injection-testing` |
+| 引用不存在的範本 | 2 | `filesystem-testing-abstractions` 列出的兩個範本檔不存在，改為實際的三個範本 |
+| 交叉引用漏掉前綴 | 7 | `advanced-testcontainers-nosql` 與 `autofixture-bogus-integration` 的相關技能連結缺少 `dotnet-testing-` 前綴，點擊會 404 |
+| 絕對路徑 | 2 | `SKILLS_QUICK_REFERENCE.md` 兩個總覽 Skill 的連結寫成 `/skills/...`，在 GitHub 上會跳到站台根目錄 |
+
+### 其他修正
+
+- `dotnet-testing-advanced-aspire-testing` 的前置需求由「.NET 8 SDK」修正為「.NET 9 SDK」，與範本專案的 `net9.0` 一致
+- `package.json` 的 keywords 由 `FluentAssertions` 修正為 `AwesomeAssertions`，與 Skill 實際採用的斷言函式庫一致
+
+### ⚠️ 路徑與目錄異動
+
+以下兩項會影響直接引用檔案路徑的使用方式，請留意：
+
+| 異動 | 原本 | 現在 |
+| --- | --- | --- |
+| 目錄更名 | `skills/dotnet-testing-test-naming-conventions/examples/naming-examples.md` | `skills/dotnet-testing-test-naming-conventions/references/naming-examples.md` |
+| 目錄移除 | `skills/skill-creator-advanced/` | （已移除） |
+
+- `examples/` 更名是為了與其餘 28 個 Skills 一致，全部統一使用 `references/`
+- `skill-creator-advanced` 是 Skill 製作用的工具包，不屬於 dotnet-testing 系列、也不在 29 個 Skills 的計數內。若您是複製整個 `skills/` 目錄安裝，更新後該目錄會消失
+
+> 詳細變更請參閱：[v2.4.3 Release Notes](https://github.com/kevintsengtw/dotnet-testing-agent-skills/releases/tag/v2.4.3)
 
 ---
 

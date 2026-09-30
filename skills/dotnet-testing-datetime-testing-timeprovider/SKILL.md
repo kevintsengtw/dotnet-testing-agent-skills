@@ -338,6 +338,12 @@ public void GetTimeBasedDiscount_週五_應回傳九折優惠(
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/timeprovider-basics.cs](templates/timeprovider-basics.cs) - 把時間相依的程式碼重構為可測試設計，含 `LegacyOrderService` 與 `OrderService` 的前後對照、`TimeProvider` API 對照表與 DI 註冊
+- [templates/faketimeprovider-examples.cs](templates/faketimeprovider-examples.cs) - 以 `FakeTimeProvider` 控制時間，涵蓋邊界條件、時間凍結與批次處理情境
+- [templates/autofixture-integration.cs](templates/autofixture-integration.cs) - 與 AutoFixture 整合，含 `FakeTimeProviderCustomization` 與自訂的 AutoData 屬性
+
 ### 原始文章
 
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：

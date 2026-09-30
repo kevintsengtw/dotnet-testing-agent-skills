@@ -101,8 +101,9 @@ var service = new ConfigService(mockFs);
 
 請參考 `templates/` 目錄下的完整實作：
 
-- `configmanager-service.cs` - 設定檔管理服務（載入/儲存/備份）
-- `filemanager-service.cs` - 檔案管理服務（複製/目錄操作/錯誤處理）
+- [templates/filesystem-abstractions-basics.cs](templates/filesystem-abstractions-basics.cs) - 從直接呼叫 System.IO 靜態類別的不可測試寫法，重構為依賴 IFileSystem 的可測試設計
+- [templates/mockfilesystem-examples.cs](templates/mockfilesystem-examples.cs) - 以 MockFileSystem 測試檔案讀寫、目錄操作與錯誤處理
+- [templates/stream-and-config-examples.cs](templates/stream-and-config-examples.cs) - 串流處理大型檔案，以及設定檔的載入、儲存與備份
 
 ## 輸出格式
 

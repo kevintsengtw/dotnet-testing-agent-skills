@@ -390,6 +390,12 @@ MyProject.Tests/
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/basic-usage.cs](templates/basic-usage.cs) - `Faker<T>` 的基本語法、`RuleFor` 規則設定與資料產生方式
+- [templates/datasets-examples.cs](templates/datasets-examples.cs) - 各種內建 DataSet 的完整用法
+- [templates/advanced-patterns.cs](templates/advanced-patterns.cs) - 複雜業務邏輯、自訂 DataSet、繁體中文在地化、效能最佳化與邊界資料
+
 ### 原始文章
 
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：

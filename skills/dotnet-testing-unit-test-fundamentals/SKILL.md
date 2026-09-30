@@ -285,6 +285,11 @@ Solution/
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/basic-test-template.cs](templates/basic-test-template.cs) - 基本單元測試範本，遵循 FIRST 原則與 3A Pattern
+- [templates/parameterized-test-template.cs](templates/parameterized-test-template.cs) - 參數化測試範本，以 `[Theory]` 與 `[InlineData]` 涵蓋多組案例
+
 ### 原始文章
 
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：

@@ -192,6 +192,13 @@ public partial class Program { }
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/custom-webapplication-factory.cs](templates/custom-webapplication-factory.cs) - 自訂 `CustomWebApplicationFactory<TProgram>`，含測試用的 Email、外部 API 與檔案服務替身
+- [templates/integration-test-base.cs](templates/integration-test-base.cs) - `IntegrationTestBase` 測試基底類別，以 `ShippersControllerTests` 示範繼承用法
+- [templates/http-assertion-examples.cs](templates/http-assertion-examples.cs) - HTTP 回應斷言範例，含輸出模型與建立參數的對應型別
+- [templates/integration-test-project.csproj](templates/integration-test-project.csproj) - 測試專案設定（net9.0、xUnit 2.9.3、`Microsoft.AspNetCore.Mvc.Testing` 9.0.0、coverlet.collector 8.0.1）
+
 ### 原始文章
 
 - **Day 19 - 整合測試入門：基礎架構與應用場景**

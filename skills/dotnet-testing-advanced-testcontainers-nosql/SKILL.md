@@ -198,9 +198,9 @@ _container = new MongoDbBuilder()
 
 ## 相關技能
 
-- [testcontainers-database](../testcontainers-database/SKILL.md) - PostgreSQL/MSSQL 容器化測試
-- [aspnet-integration-testing](../aspnet-integration-testing/SKILL.md) - ASP.NET Core 整合測試
-- [nsubstitute-mocking](../../dotnet-testing/nsubstitute-mocking/SKILL.md) - 測試替身與 Mock
+- [testcontainers-database](../dotnet-testing-advanced-testcontainers-database/SKILL.md) - PostgreSQL/MSSQL 容器化測試
+- [aspnet-integration-testing](../dotnet-testing-advanced-aspnet-integration-testing/SKILL.md) - ASP.NET Core 整合測試
+- [nsubstitute-mocking](../dotnet-testing-nsubstitute-mocking/SKILL.md) - 測試替身與 Mock
 - [xunit-upgrade-guide](../dotnet-testing-advanced-xunit-upgrade-guide/SKILL.md) - xUnit v3 升級指南（含 Testcontainers.XunitV3 整合）
 
 ---
@@ -213,6 +213,14 @@ _container = new MongoDbBuilder()
 - 包含資料隔離與容器生命週期管理程式碼
 
 ## 參考資源
+
+### 範例檔案
+
+- [templates/mongodb-container-fixture.cs](templates/mongodb-container-fixture.cs) - `MongoDbContainerFixture` 與 Collection Fixture 設定
+- [templates/mongodb-crud-tests.cs](templates/mongodb-crud-tests.cs) - MongoDB 的 CRUD、BSON 序列化與索引測試
+- [templates/redis-container-fixture.cs](templates/redis-container-fixture.cs) - `RedisContainerFixture` 與 Collection Fixture 設定
+- [templates/redis-datastructure-tests.cs](templates/redis-datastructure-tests.cs) - Redis 五種資料結構的測試，含 Session、瀏覽紀錄與排行榜情境
+- [templates/test-project.csproj](templates/test-project.csproj) - 測試專案設定（net9.0、MongoDB.Driver 3.7.1、StackExchange.Redis 2.12.8、Testcontainers 4.11.0）
 
 ### 原始文章
 

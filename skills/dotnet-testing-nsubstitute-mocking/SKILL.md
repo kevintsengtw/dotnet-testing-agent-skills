@@ -380,7 +380,6 @@ _service.TryGetValue("key", out Arg.Any<string>())
 此技能可與以下技能組合使用：
 
 - **unit-test-fundamentals**: 單元測試基礎與 3A 模式
-- **dependency-injection-testing**: 依賴注入測試策略
 - **test-naming-conventions**: 測試命名規範
 - **test-output-logging**: ITestOutputHelper 與 ILogger 整合
 - **datetime-testing-timeprovider**: TimeProvider 抽象化時間依賴

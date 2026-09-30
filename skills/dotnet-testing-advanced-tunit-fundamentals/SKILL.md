@@ -150,6 +150,15 @@ TUnit 預設並行執行所有測試，使用 `[NotInParallel]` 控制特定群�
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/basic-test-examples.cs](templates/basic-test-examples.cs) - `[Test]` 屬性、非同步斷言與參數化測試的入門範例
+- [templates/assertion-examples.cs](templates/assertion-examples.cs) - TUnit 斷言系統的完整範例，涵蓋各種斷言類型
+- [templates/lifecycle-examples.cs](templates/lifecycle-examples.cs) - Before/After 屬性與建構式／Dispose 模式，含執行順序示範
+- [templates/GlobalUsings.cs](templates/GlobalUsings.cs) - TUnit 專案的全域 using 設定
+- [templates/tunit-project.csproj](templates/tunit-project.csproj) - 專案設定（net9.0、TUnit 1.24.0）。走 Microsoft.Testing.Platform，**刻意不安裝** `Microsoft.NET.Test.Sdk`
+- [templates/xunit-migration-guide.md](templates/xunit-migration-guide.md) - xUnit 與 TUnit 的語法對照，供遷移評估使用
+
 ### 原始文章
 
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：

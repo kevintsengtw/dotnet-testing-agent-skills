@@ -144,6 +144,17 @@ tests/
 
 ## 參考資源
 
+### 範例檔案
+
+- [templates/test-web-application-factory.cs](templates/test-web-application-factory.cs) - `TestWebApplicationFactory`，以 `IAsyncLifetime` 管理容器生命週期
+- [templates/integration-test-base.cs](templates/integration-test-base.cs) - `IntegrationTestBase` 基底類別與 `IntegrationTestCollection` 共用容器設定
+- [templates/database-manager.cs](templates/database-manager.cs) - `DatabaseManager`，負責測試資料庫的初始化與重置
+- [templates/create-products-table.sql](templates/create-products-table.sql) - products 資料表的 DDL，示範 SQL 腳本外部化
+- [templates/products-controller-tests.cs](templates/products-controller-tests.cs) - Controller 的完整 CRUD 測試，含請求與回應模型
+- [templates/global-exception-handler.cs](templates/global-exception-handler.cs) - 實作 `IExceptionHandler` 的全域例外處理器
+- [templates/fluent-validation-exception-handler.cs](templates/fluent-validation-exception-handler.cs) - FluentValidation 例外處理器，回傳 `ValidationProblemDetails`。註冊順序需先於全域處理器
+- [templates/test-project.csproj](templates/test-project.csproj) - 測試專案設定（net9.0、xUnit 2.9.3、AwesomeAssertions 9.4.0）
+
 ### 原始文章
 
 本技能內容提煉自「老派軟體工程師的測試修練 - 30 天挑戰」系列文章：

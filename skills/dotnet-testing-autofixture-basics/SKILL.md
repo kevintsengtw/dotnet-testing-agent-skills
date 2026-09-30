@@ -2,8 +2,7 @@
 name: dotnet-testing-autofixture-basics
 description: |
   使用 AutoFixture 自動產生測試資料的基礎技能。當需要快速產生測試物件、減少樣板程式碼、實現匿名測試時使用。涵蓋 Fixture.Create、CreateMany、循環參考處理、與 xUnit 整合等。
-  Make sure to use this skill whenever the user mentions AutoFixture, fixture.Create, anonymous testing, auto-generating test data, or reducing test boilerplate, even if they don't explicitly ask for AutoFixture guidance.
-  Keywords: autofixture, fixture, 自動產生測試資料, test data generation, anonymous testing, 匿名測試, fixture.Create, CreateMany, fixture.Build, Create<T>, AutoFixture.Xunit2, OmitOnRecursionBehavior, IFixture, 產生測試資料, generate test data
+  Keywords: autofixture, fixture, 自動產生測試資料, test data generation, anonymous testing, 匿名測試, fixture.Create, CreateMany, fixture.Build, AutoFixture.Xunit2, OmitOnRecursionBehavior, IFixture, 產生測試資料, generate test data
 ---
 
 # AutoFixture 基礎：自動產生測試資料

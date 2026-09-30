@@ -2,7 +2,6 @@
 name: dotnet-testing-advanced-xunit-upgrade-guide
 description: |
   xUnit 2.9.x 到 3.x 升級完整指南。當需要將 xUnit v2 升級至 v3 或了解 xUnit v3 新功能與破壞性變更時使用。涵蓋套件更新、async void 修正、IAsyncLifetime 調整。包含新功能介紹: Assert.Skip、Explicit Tests、Matrix Theory、Assembly Fixtures。
-  Make sure to use this skill whenever the user mentions xUnit upgrade, xUnit v3, xUnit migration, xUnit breaking changes, or Assert.Skip, even if they don't explicitly ask for xUnit upgrade guidance.
   Keywords: xunit upgrade, xunit v3, xunit 3.x, xunit migration, xunit 升級, xunit.v3, OutputType Exe, IAsyncLifetime v3, Assert.Skip, SkipUnless, SkipWhen, Explicit attribute, MatrixTheoryData, AssemblyFixture, 破壞性變更
 ---
 

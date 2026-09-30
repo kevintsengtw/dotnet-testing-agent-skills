@@ -2,8 +2,7 @@
 name: dotnet-testing-bogus-fake-data
 description: |
   使用 Bogus 產生擬真假資料的專門技能。當需要產生真實感的姓名、地址、電話、Email、公司資訊等測試資料時使用。涵蓋 Faker 類別、多語言支援、自訂規則、大量資料產生等。
-  Make sure to use this skill whenever the user mentions Bogus, Faker, fake data, realistic test data, generating names/addresses/emails, or seed data, even if they don't explicitly ask for fake data guidance.
-  Keywords: bogus, faker, fake data, 假資料, 擬真資料, realistic data, fake name, fake address, fake email, Faker<T>, RuleFor, Generate, faker.Name, faker.Address, faker.Internet, 產生假資料, generate fake data, seed data
+  Keywords: bogus, faker, fake data, 假資料, 擬真資料, realistic data, fake name, fake address, fake email, RuleFor, Generate, faker.Name, faker.Address, faker.Internet, 產生假資料, generate fake data, seed data
 ---
 
 # Bogus 假資料產生器

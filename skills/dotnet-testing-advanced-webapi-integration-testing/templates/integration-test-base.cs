@@ -21,7 +21,6 @@ public class IntegrationTestCollection : ICollectionFixture<TestWebApplicationFa
 /// <summary>
 /// 整合測試基底類別 - 使用 Collection Fixture 共享容器
 /// </summary>
-[Collection(IntegrationTestCollection.Name)]
 public abstract class IntegrationTestBase : IAsyncLifetime
 {
     /// <summary>
@@ -35,9 +34,9 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     protected readonly HttpClient HttpClient;
 
     /// <summary>
-    /// 資料庫管理器
+    /// 資料庫管理器 - 由 Factory 持有單一實例，避免每個測試重建 Respawner
     /// </summary>
-    protected readonly DatabaseManager DatabaseManager;
+    protected DatabaseManager DatabaseManager => Factory.DatabaseManager;
 
     /// <summary>
     /// Flurl HTTP 用戶端
@@ -48,19 +47,18 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     {
         Factory = factory;
         HttpClient = factory.CreateClient();
-        DatabaseManager = new DatabaseManager(factory.PostgresContainer.GetConnectionString());
 
         // 設定 Flurl 用戶端
         FlurlClient = new FlurlClient(HttpClient);
     }
 
     /// <summary>
-    /// 每個測試前執行 - 初始化資料庫結構
+    /// 每個測試前執行 - 重設時間（資料庫結構與 Respawner 已在 Factory 初始化）
     /// </summary>
-    public virtual async Task InitializeAsync()
+    public virtual Task InitializeAsync()
     {
-        await DatabaseManager.InitializeDatabaseAsync();
         ResetTime();
+        return Task.CompletedTask;
     }
 
     /// <summary>

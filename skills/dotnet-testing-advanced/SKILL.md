@@ -1,9 +1,6 @@
 ---
 name: dotnet-testing-advanced
-description: |
-  .NET 進階測試技能總覽與引導中心。當使用者詢問「整合測試」、「API 測試」、「容器化測試」、「微服務測試」、「測試框架遷移」、「Testcontainers」、「Aspire 測試」等進階測試需求時觸發。會根據具體需求推薦適合的子技能組合，涵蓋整合測試、Testcontainers、Aspire 測試、框架升級等 8 個進階技能。
-  Make sure to use this skill whenever the user mentions integration testing, API testing, Testcontainers, .NET Aspire testing, WebApplicationFactory, or xUnit/TUnit migration, even if they don't explicitly ask for advanced testing guidance.
-  Keywords: integration testing, 整合測試, API testing, advanced testing, 進階測試, testcontainers, aspire testing, WebApplicationFactory, TestServer, database test, 資料庫測試, EF Core test, MongoDB test, Redis test, Docker test, 容器測試, microservice test, 微服務測試, .NET Aspire, xUnit upgrade, TUnit, framework migration
+description: .NET 進階測試技能的導航入口。當使用者詢問整合測試、API 測試、Testcontainers、Aspire 測試、測試框架遷移（xUnit v3、TUnit）等進階需求，或不確定該載入哪個 dotnet-testing-advanced 子技能時使用，依需求引導至對應的進階子技能。
 ---
 
 # .NET 進階測試技能總覽

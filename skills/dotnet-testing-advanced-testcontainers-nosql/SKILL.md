@@ -2,7 +2,6 @@
 name: dotnet-testing-advanced-testcontainers-nosql
 description: |
   Testcontainers NoSQL 整合測試完整指南。當需要對 MongoDB 或 Redis 進行容器化整合測試時使用。涵蓋 MongoDB 文件操作、Redis 五種資料結構、Collection Fixture 模式。包含 BSON 序列化、索引效能測試、資料隔離策略與容器生命週期管理。
-  Make sure to use this skill whenever the user mentions Testcontainers MongoDB, Testcontainers Redis, NoSQL integration test, BSON serialization, or Redis data structure testing, even if they don't explicitly ask for NoSQL container testing.
   Keywords: testcontainers mongodb, testcontainers redis, mongodb integration test, redis integration test, nosql testing, MongoDbContainer, RedisContainer, IMongoDatabase, IConnectionMultiplexer, BSON serialization, BsonDocument, 文件模型測試, 快取測試, Collection Fixture
 ---
 

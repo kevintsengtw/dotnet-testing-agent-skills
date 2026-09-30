@@ -133,6 +133,27 @@ public class ProductsControllerTests : IntegrationTestBase
                     problem.Errors.Should().ContainKey("Price");
                 });
     }
+    [Fact]
+    public async Task CreateProduct_名稱重複_應回傳409狀態衝突()
+    {
+        // Arrange
+        await TestHelpers.SeedSpecificProductAsync(DatabaseManager, "既有產品", 199.99m);
+        var request = new ProductCreateRequest
+        {
+            Name = "既有產品", // 與既有資料重複
+            Price = 299.99m
+        };
+
+        // Act
+        var response = await HttpClient.PostAsJsonAsync("/products", request);
+
+        // Assert
+        response.Should().Be409Conflict()
+                .And.Satisfy<ProblemDetails>(problem =>
+                {
+                    problem.Title.Should().Be("狀態衝突");
+                });
+    }
 
     #endregion
 
@@ -257,6 +278,13 @@ public class PagedResult<T>
     public int PageSize { get; set; }
     public int PageCount { get; set; }
     public IEnumerable<T> Items { get; set; } = Enumerable.Empty<T>();
+}
+
+public class ProblemDetails
+{
+    public string Title { get; set; } = string.Empty;
+    public int Status { get; set; }
+    public string? Detail { get; set; }
 }
 
 public class ValidationProblemDetails

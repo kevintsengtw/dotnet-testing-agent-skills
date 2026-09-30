@@ -1,9 +1,6 @@
 ---
 name: dotnet-testing
-description: |
-  .NET 測試基礎技能總覽與引導中心。當使用者詢問「如何寫 .NET 測試」、「.NET 測試入門」、「需要哪些測試工具」、「測試最佳實踐」、「從零開始學測試」等一般性測試需求時觸發。會根據具體需求推薦適合的子技能組合，涵蓋測試基礎、測試資料、斷言、模擬、特殊場景等 19 個基礎技能。
-  Make sure to use this skill whenever the user asks about .NET testing in general, wants to know which testing tool to use, or needs guidance on getting started with testing, even if they don't explicitly ask for an overview.
-  Keywords: dotnet testing, .NET 測試, 測試入門, 如何寫測試, 測試最佳實踐, unit test, 單元測試, xunit, 3A pattern, FIRST 原則, assertion, 斷言, mock, stub, NSubstitute, test data, AutoFixture, Bogus, validator, FluentValidation, TimeProvider, IFileSystem, code coverage, ITestOutputHelper, test naming
+description: .NET 測試基礎技能的導航入口。當使用者詢問「如何寫 .NET 測試」、「測試入門」、「該用哪個測試工具」、「測試最佳實踐」等一般性需求，或不確定該載入哪個 dotnet-testing 子技能時使用，依需求引導至對應的基礎子技能。
 ---
 
 # .NET 測試基礎技能總覽

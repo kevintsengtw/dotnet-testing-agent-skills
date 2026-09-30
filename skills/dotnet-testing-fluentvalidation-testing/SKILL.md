@@ -2,7 +2,6 @@
 name: dotnet-testing-fluentvalidation-testing
 description: |
   測試 FluentValidation 驗證器的專門技能。當需要為 Validator 類別建立測試、驗證業務規則、測試錯誤訊息時使用。涵蓋 FluentValidation.TestHelper 完整使用、ShouldHaveValidationErrorFor、非同步驗證、跨欄位邏輯等。
-  Make sure to use this skill whenever the user mentions FluentValidation testing, Validator testing, ShouldHaveValidationErrorFor, TestHelper, or testing business validation rules, even if they don't explicitly ask for validation testing guidance.
   Keywords: validator, 驗證器, fluentvalidation, validation testing, UserValidator, CreateOrderValidator, TestHelper, ShouldHaveValidationErrorFor, ShouldNotHaveValidationErrorFor, TestValidate, TestValidateAsync, 測試驗證器, 驗證業務規則
 ---
 

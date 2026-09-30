@@ -2,7 +2,6 @@
 name: dotnet-testing-autofixture-nsubstitute-integration
 description: |
   AutoFixture 與 NSubstitute 整合指南 - 實現自動模擬 (Auto-Mocking)。當需要自動建立 Mock 物件、簡化複雜相依性注入測試時使用。涵蓋 AutoNSubstituteDataAttribute、Frozen 機制、Greedy 建構策略。包含 IMapper (AutoMapper/Mapster) 等特殊相依性的客製化處理。
-  Make sure to use this skill whenever the user mentions AutoFixture with NSubstitute, auto-mocking, AutoNSubstituteCustomization, Frozen attribute, or AutoNSubstituteDataAttribute, even if they don't explicitly ask for integration guidance.
   Keywords: autofixture nsubstitute, auto mocking, AutoNSubstituteDataAttribute, 自動模擬, Frozen, AutoNSubstituteCustomization, AutoFixture.AutoNSubstitute, Greedy, fixture.Freeze, Received(), Returns(), IMapper, AutoMapper, Mapster, mapper testing
 ---
 

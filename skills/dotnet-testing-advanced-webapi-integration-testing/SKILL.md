@@ -2,7 +2,6 @@
 name: dotnet-testing-advanced-webapi-integration-testing
 description: |
   ASP.NET Core WebApi 整合測試完整指南。當需要對 WebApi 端點進行整合測試或驗證 ProblemDetails 錯誤格式時使用。涵蓋 WebApplicationFactory、IExceptionHandler、Testcontainers 多容器編排、Flurl URL 建構與 AwesomeAssertions HTTP 驗證。
-  Make sure to use this skill whenever the user mentions WebApi integration testing, ProblemDetails, IExceptionHandler, Flurl, Respawn, or multi-container test orchestration, even if they don't explicitly ask for WebApi testing guidance.
   Keywords: webapi integration testing, WebApplicationFactory, asp.net core integration test, webapi 整合測試, IExceptionHandler, ProblemDetails, ValidationProblemDetails, AwesomeAssertions, Flurl, Respawn, Be201Created, Be400BadRequest, 多容器測試, Collection Fixture, 全域例外處理
 ---
 

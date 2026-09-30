@@ -37,6 +37,11 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncL
         ?? throw new InvalidOperationException("TimeProvider 尚未初始化");
 
     /// <summary>
+    /// 資料庫管理器 - 整個 Collection 只持有一個實例，Respawner 只建立一次
+    /// </summary>
+    public DatabaseManager DatabaseManager { get; private set; } = null!;
+
+    /// <summary>
     /// 初始化 Testcontainers
     /// </summary>
     public async Task InitializeAsync()
@@ -62,6 +67,10 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncL
         // 啟動容器
         await _postgresContainer.StartAsync();
         await _redisContainer.StartAsync();
+
+        // 建立資料庫結構與 Respawner（只做一次，不隨每個測試重建）
+        DatabaseManager = new DatabaseManager(_postgresContainer.GetConnectionString());
+        await DatabaseManager.InitializeDatabaseAsync();
     }
 
     /// <summary>

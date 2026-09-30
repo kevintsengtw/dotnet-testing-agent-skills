@@ -4,7 +4,6 @@ namespace MyApp.Tests.Integration.Infrastructure;
 /// 整合測試基底類別 - 使用 Aspire Testing 框架
 /// 所有整合測試類別應繼承此基底類別
 /// </summary>
-[Collection(IntegrationTestCollection.Name)]
 public abstract class IntegrationTestBase : IAsyncLifetime
 {
     protected readonly AspireAppFixture Fixture;

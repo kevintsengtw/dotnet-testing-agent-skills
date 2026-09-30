@@ -2,7 +2,6 @@
 name: dotnet-testing-xunit-project-setup
 description: |
   xUnit 測試專案建立與設定的專門技能。當需要建立測試專案、設定專案結構、配置 NuGet 套件、組織測試資料夾時使用。涵蓋 csproj 設定、套件管理、專案結構、xunit.runner.json 配置等。
-  Make sure to use this skill whenever the user mentions creating a test project, xUnit setup, project structure for tests, NuGet test packages, or csproj configuration for testing, even if they don't explicitly ask for project setup guidance.
   Keywords: xunit project, xunit setup, 測試專案建立, test project setup, 建立測試專案, project structure, 專案結構, folder structure, xunit package, nuget packages, 測試套件, 如何建立測試專案, xunit configuration
 ---
 

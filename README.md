@@ -28,6 +28,7 @@
 - 🔄 **2026-03-31 NuGet 套件版本同步更新**：14 個 NuGet 套件升級至最新穩定版，修正 Testcontainers Wait Strategy 與 FluentValidation 套件參考問題
 - 🐛 **2026-08-16 修正 AwesomeAssertions 幻覺 API 名稱**：3 個 Skills、8 處錯誤的斷言方法名稱（FluentAssertions 5.x 舊式命名），複製受影響範本會造成 CS1061 編譯錯誤
 - 🔗 **2026-09-30 補齊範本指標與修正斷掉的引用**：12 個 Skills 的 47 個範本檔補上 SKILL.md 指標，修正 13 處指向不存在目標的引用與連結
+- ⚡ **2026-09-08 Description 瘦身 + 三項實測回饋修正**：29 個 SKILL.md 每回合 context 成本由約 6,100 降至約 3,700 tokens；依 orchestration 實測補記 FakeTimeProvider 單向限制、修正 Respawner 每測試重建與 Collection 重複標記、補上 HTTP 狀態碼斷言對照表
 
 ---
 
@@ -487,6 +488,41 @@ graph LR
   - [PDF 版本](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf?hsLang=en)
   - [Anthropic Skill Authoring Best Practices](https://platform.claude.com/docs/agent-skills/skill-authoring-best-practices)
 - **GitHub Copilot Agent Skills 文件**：[官方說明](https://docs.github.com/copilot/using-github-copilot/using-github-copilot-agent-skills)
+
+---
+
+## 2026-09-08 Description 瘦身 + 三項實測回饋修正 (v2.4.4)
+
+以 Claude Code 內建的 `/skill-doctor` 量測 29 個 Skills 的 context 成本，並套用 orchestration 專案實測回報的三項修改建議。**Skill 名稱、數量、目錄結構均未更動**，下游依名稱載入 SKILL.md 的工作流程不受影響。
+
+### Description 瘦身
+
+`/skill-doctor` 顯示每個 Skill 的 description 會在每一回合進入 system prompt。原本 29 份 description 都採「中文說明 + 英文 Make sure to use… 模板句 + 長串 Keywords」三段式結構，三段內容大量重複，合計每回合固定成本約 6,100 tokens，遠高於一般 Skill 的 20 至 60 tokens。
+
+| 項目 | 修改前 | 修改後 |
+| --- | --- | --- |
+| `dotnet-testing`（導航入口） | 約 220 tokens | 約 50 tokens |
+| `dotnet-testing-advanced`（導航入口） | 約 250 tokens | 約 60 tokens |
+| 27 個子技能各自 | 約 160 至 250 tokens | 約 100 至 170 tokens |
+| 29 個全部載入每回合 | 約 6,100 tokens | 約 3,700 tokens |
+
+做法：29 份全部移除重複的英文模板句；兩個導航入口改為單行 description，只保留入口職責，關鍵詞交由子技能承擔；27 個子技能的中文說明與 Keywords 完整保留。另修正 `autofixture-basics` 與 `bogus-fake-data` description 中的 `<T>` 角括號，29 份全部通過 skill-creator 的 `quick_validate.py` 驗證。
+
+### 三項實測回饋修正
+
+來源為 `dotnet-testing-agent-orchestration` 系列專案的 rule-parity 與 phantom-api 實測紀錄。依「技術知識缺口修在 Skill，不修在 agent」原則，知識由 Writer 定義檔回歸 Skill。
+
+| Skill | 問題 | 修正 |
+| --- | --- | --- |
+| `dotnet-testing-datetime-testing-timeprovider` | `FakeTimeProvider.SetUtcNow()` 不可回設較早時間（8.0.0／9.0.0／10.9.0 實測皆拋 `ArgumentOutOfRangeException: Cannot go back in time`），Skill 未記載，且「時間倒轉」一節易誤解 | 方法表註明單向限制；該節改名「以歷史時間起始」並說明共用實例時初始時間須取最早值；檢查清單新增一項 |
+| `dotnet-testing-advanced-webapi-integration-testing`、`dotnet-testing-advanced-aspire-testing` | `DatabaseManager` 在測試基底建構子建立，xUnit 每個測試一個實例，`Respawner` 快取形同虛設；`[Collection]` 同時標在抽象基底與具體類別，Reviewer 每次列出重複標記 | `TestWebApplicationFactory` 改為持有單一 `DatabaseManager`，容器啟動後只初始化一次；兩個抽象基底移除 `[Collection]`，只保留在具體測試類別 |
+| `dotnet-testing-advanced-aspire-testing` | 缺少 409 Conflict 斷言示範，Writer 為了確認 `Be409Conflict()` 是否存在而掃描整個檔案系統；「等待服務就緒」未說明不可以固定延遲取代探測 | 新增「HTTP 回應斷言」對照表（200 至 409 共 8 個方法，已對照 AwesomeAssertions.Web 1.9.6 與 2.0.3 API 文件確認），明示不得為了查證方法而搜尋檔案系統；`controller-tests.cs` 新增名稱重複回傳 409 的範例；補充 `Task.Delay` 作為退避與作為硬式等待的差別 |
+
+### 其他
+
+- 移除內部使用的 `skill-creator-advanced`，並同步 `.claude/skills/skill-creator` 至官方外掛最新版。
+
+> 詳細變更請參閱：[v2.4.4 Release Notes](https://github.com/kevintsengtw/dotnet-testing-agent-skills/releases/tag/v2.4.4)
 
 ---
 

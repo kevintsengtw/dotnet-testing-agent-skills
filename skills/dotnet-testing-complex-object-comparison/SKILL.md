@@ -2,7 +2,6 @@
 name: dotnet-testing-complex-object-comparison
 description: |
   處理複雜物件比對與深層驗證的專門技能。當需要比對深層物件、排除特定屬性、處理循環參照、驗證 DTO/Entity 時使用。涵蓋 BeEquivalentTo、Excluding、Including、自訂比對規則等。
-  Make sure to use this skill whenever the user mentions deep object comparison, BeEquivalentTo, DTO comparison, Excluding properties, or complex object validation in tests, even if they don't explicitly ask for comparison guidance.
   Keywords: object comparison, 物件比對, deep comparison, 深層比對, BeEquivalentTo, DTO 比對, Entity 驗證, 排除屬性, 循環參照, Excluding, Including, ExcludingNestedObjects, RespectingRuntimeTypes, WithStrictOrdering, 忽略時間戳記, exclude timestamp
 ---
 

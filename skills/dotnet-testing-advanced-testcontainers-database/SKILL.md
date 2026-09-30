@@ -2,7 +2,6 @@
 name: dotnet-testing-advanced-testcontainers-database
 description: |
   使用 Testcontainers 進行容器化資料庫測試的專門技能。當需要測試真實資料庫行為、使用 SQL Server/PostgreSQL/MySQL 容器、測試 EF Core/Dapper 時使用。涵蓋容器啟動、資料庫遷移、測試隔離、容器共享等。
-  Make sure to use this skill whenever the user mentions Testcontainers database, SQL Server container, PostgreSQL container, EF Core integration test, Dapper testing, or Collection Fixture, even if they don't explicitly ask for container-based database testing.
   Keywords: testcontainers, 容器測試, container testing, database testing, 資料庫測試, MsSqlContainer, PostgreSqlContainer, MySqlContainer, EF Core testing, Dapper testing, Testcontainers.MsSql, Testcontainers.PostgreSql, GetConnectionString, IAsyncLifetime, CollectionFixture
 ---
 

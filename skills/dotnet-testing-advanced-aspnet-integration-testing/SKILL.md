@@ -2,7 +2,6 @@
 name: dotnet-testing-advanced-aspnet-integration-testing
 description: |
   ASP.NET Core 整合測試的專門技能。當需要測試 Web API 端點、HTTP 請求/回應、中介軟體、依賴注入時使用。涵蓋 WebApplicationFactory、TestServer、HttpClient 測試、記憶體資料庫配置等。
-  Make sure to use this skill whenever the user mentions ASP.NET Core integration testing, WebApplicationFactory, TestServer, HTTP endpoint testing, or middleware testing, even if they don't explicitly ask for integration testing guidance.
   Keywords: integration testing, 整合測試, web api testing, WebApplicationFactory, TestServer, HttpClient testing, controller testing, endpoint testing, 端點測試, RESTful API testing, Microsoft.AspNetCore.Mvc.Testing, CreateClient, ConfigureWebHost, AwesomeAssertions.Web, Be200Ok, Be404NotFound, middleware testing, 中介軟體測試, dependency injection testing
 ---
 

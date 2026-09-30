@@ -2,7 +2,6 @@
 name: dotnet-testing-datetime-testing-timeprovider
 description: |
   使用 TimeProvider 測試時間相依邏輯的專門技能。當需要測試 DateTime、控制時間流逝、處理時區轉換、測試過期邏輯時使用。涵蓋 TimeProvider 抽象化、FakeTimeProvider 時間控制、時間凍結與快轉等。
-  Make sure to use this skill whenever the user mentions DateTime testing, TimeProvider, FakeTimeProvider, time-dependent logic, cache expiration, or token expiration testing, even if they don't explicitly ask for time testing guidance.
   Keywords: datetime, time testing, 時間測試, TimeProvider, FakeTimeProvider, DateTime.Now, 時間相依, 快取過期, token 過期, Microsoft.Bcl.TimeProvider, GetUtcNow, SetUtcNow, Advance, time freeze, 時間凍結, 時間快轉
 ---
 
@@ -61,7 +60,7 @@ FakeTimeProvider 提供完整的時間控制能力：
 
 | 方法                             | 用途          | 使用時機            |
 | -------------------------------- | ------------- | ------------------- |
-| `SetUtcNow(DateTimeOffset)`      | 設定 UTC 時間 | 需要精確 UTC 時間時 |
+| `SetUtcNow(DateTimeOffset)`      | 設定 UTC 時間（**只能往前，不能回設更早的時間**） | 需要精確 UTC 時間時 |
 | `SetLocalTimeZone(TimeZoneInfo)` | 設定本地時區  | 測試時區相關邏輯    |
 | `Advance(TimeSpan)`              | 時間快轉      | 測試過期、延遲邏輯  |
 | `GetUtcNow()`                    | 取得 UTC 時間 | 讀取當前模擬時間    |
@@ -165,9 +164,9 @@ public void Cache_經過過期時間_應清除項目()
 
 > **重要**：`Advance()` 是非阻塞的，瞬間完成時間跳躍，不會真正等待。
 
-### 時間倒轉
+### 以歷史時間起始
 
-測試歷史資料處理或重播場景：
+測試歷史資料處理或重播場景時，**在新建立的實例上**設定起始時間：
 
 ```csharp
 [Fact]
@@ -183,6 +182,16 @@ public void HistoricalDataProcessor_回到過去時間_應正確處理()
     result.ProcessedAt.Should().Be(historicalTime);
 }
 ```
+
+> ⚠️ **`SetUtcNow` 是單向的**：同一個 `FakeTimeProvider` 實例只能把時間往前設，
+> 回設較早的時間會拋 `ArgumentOutOfRangeException: Cannot go back in time.`
+> （8.0.0／9.0.0／10.9.0 實測一致）。上面能設定 2020 年，是因為那是一個**剛建立、
+> 尚未推進**的實例，不是「可以倒轉」。
+>
+> 因此，若測試類別把 `FakeTimeProvider` 提為**共用欄位**（在 constructor 建立、
+> 多個測試方法共用同一實例），初始時間必須取**所有測試會用到的最早時間**，
+> 其後各測試以 `SetUtcNow()` 或 `Advance()` 往前推進。
+> 不想受此限制時，回到〈原則三〉：每個測試各自 `new FakeTimeProvider()`。
 
 ---
 
@@ -317,6 +326,7 @@ public void GetTimeBasedDiscount_週五_應回傳九折優惠(
 ### 測試設計
 
 - [ ] 每個測試方法使用獨立的 `FakeTimeProvider` 實例
+- [ ] 若改用共用實例，初始時間取所有測試會用到的最早時間（`SetUtcNow` 不可回設）
 - [ ] 使用 `SetLocalNow()` 擴充方法簡化時間設定
 - [ ] 使用 `Advance()` 測試時間敏感邏輯（快取、過期、延遲）
 - [ ] 測試涵蓋邊界條件（開始時間、結束時間、臨界點）

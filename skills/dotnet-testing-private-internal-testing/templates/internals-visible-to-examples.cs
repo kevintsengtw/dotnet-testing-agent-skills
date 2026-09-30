@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 
 /// <summary>
 /// InternalsVisibleTo 設定範例
-/// 展示四種設定 InternalsVisibleTo 的方法
+/// 展示三種設定 InternalsVisibleTo 的方法
 /// </summary>
 /// 
 // ========================================

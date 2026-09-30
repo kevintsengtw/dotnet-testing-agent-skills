@@ -51,6 +51,9 @@ FluentValidation 異常處理器實作 `IExceptionHandler` 介面，專門處理
 測試基礎設施由三個核心組件構成：
 
 - **TestWebApplicationFactory**：繼承 `WebApplicationFactory<Program>`，配置多容器（PostgreSQL + Redis）與 DI 替換（如 FakeTimeProvider）
+
+  > `FakeTimeProvider` 由 Collection 內所有測試共用，只能往前推；不要在每個測試開始時設回固定起點，時間斷言改以 `Factory.TimeProvider.GetUtcNow()` 推算。
+
 - **IntegrationTestCollection**：Collection Fixture 定義，確保容器共享
 - **IntegrationTestBase**：測試基底類別，提供 HttpClient、DatabaseManager、FlurlClient 與時間控制方法
 

@@ -63,6 +63,8 @@ dotnet new tunit -n MyApp.Tests -o tests/MyApp.Tests
 </Project>
 ```
 
+> 不需要手動設定 `<OutputType>Exe</OutputType>`：TUnit 透過 `TUnit.Engine` 的 `buildTransitive` 設定自動將 `OutputType` 設為 `Exe`。手動寫上也不會出錯，只是多餘。
+
 ## GlobalUsings 設定
 
 ```csharp

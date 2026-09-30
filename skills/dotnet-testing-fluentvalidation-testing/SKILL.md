@@ -94,12 +94,21 @@ public class UserValidatorTests
 | `ShouldNotHaveValidationErrorFor(x => x.Property)` | 斷言該屬性不應該有錯誤   | `result.ShouldNotHaveValidationErrorFor(x => x.Email)` |
 | `ShouldNotHaveAnyValidationErrors()`               | 斷言整個物件沒有任何錯誤 | `result.ShouldNotHaveAnyValidationErrors()`            |
 
-### 錯誤訊息驗證
+### 錯誤訊息驗證（可選）
+
+`ShouldHaveValidationErrorFor` 本身已斷言「這個屬性有驗證錯誤」。以下兩個方法**再往下驗一層**，
+確認錯誤的訊息或代碼——**它們是可選的加強，不是每個驗證測試都該有**。
 
 | 方法                       | 用途             | 範例                                      |
 | -------------------------- | ---------------- | ----------------------------------------- |
 | `WithErrorMessage(string)` | 驗證錯誤訊息內容 | `.WithErrorMessage("使用者名稱不可為空")` |
 | `WithErrorCode(string)`    | 驗證錯誤代碼     | `.WithErrorCode("NOT_EMPTY")`             |
+
+**什麼時候值得加**：錯誤訊息本身是需求的一部分（要顯示給終端使用者、或有多語系要求）；
+同一個屬性有多條規則、需要區分是哪一條觸發的。
+
+**什麼時候不必加**：訊息用的是 FluentValidation 預設文字（會隨版本與語系變動，寫死反而脆弱）；
+一個屬性只有一條規則，「有錯」已足以表達意圖。
 
 ## 測試最佳實踐
 
@@ -111,7 +120,7 @@ public class UserValidatorTests
 4. **Mock 外部依賴** - 使用 NSubstitute 隔離外部服務
 5. **建立輔助方法** - 統一管理測試資料
 6. **清楚的測試命名** - 使用 `方法_情境_預期結果` 格式
-7. **測試錯誤訊息** - 確保使用者看到正確的錯誤訊息
+7. **錯誤訊息是需求時才驗證** - 例如要顯示給終端使用者或有多語系要求，見〈錯誤訊息驗證（可選）〉
 
 ### 避免做法
 
@@ -119,7 +128,7 @@ public class UserValidatorTests
 2. **避免測試過度耦合** - 每個測試只驗證一個規則
 3. **避免硬編碼測試資料** - 使用輔助方法建立
 4. **避免忽略邊界條件** - 邊界值是最容易出錯的地方
-5. **避免跳過錯誤訊息驗證** - 錯誤訊息是使用者體驗的一部分
+5. **避免為每條規則都寫死錯誤訊息** - 預設訊息會隨版本與語系變動，寫死反而脆弱；見〈錯誤訊息驗證（可選）〉
 
 ## 常見測試場景
 
@@ -252,7 +261,7 @@ _fakeTimeProvider.SetUtcNow(new DateTime(2024, 1, 1));
 
 - 每個驗證規則至少一個測試
 - 邊界值和特殊情況
-- 錯誤訊息正確性
+- 錯誤訊息正確性（當訊息本身是需求時）
 - 跨欄位邏輯的所有組合
 
 ## 範本檔案參考

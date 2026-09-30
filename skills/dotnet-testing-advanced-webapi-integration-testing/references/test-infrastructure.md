@@ -18,6 +18,9 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncL
     public FakeTimeProvider TimeProvider => _timeProvider
         ?? throw new InvalidOperationException("TimeProvider 尚未初始化");
 
+    // 整個 Collection 只持有一個實例，Respawner 只建立一次
+    public DatabaseManager DatabaseManager { get; private set; } = null!;
+
     public async Task InitializeAsync()
     {
         _postgresContainer = new PostgreSqlBuilder()
@@ -37,6 +40,10 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncL
 
         await _postgresContainer.StartAsync();
         await _redisContainer.StartAsync();
+
+        // 建立資料庫結構與 Respawner（只做一次，不隨每個測試重建）
+        DatabaseManager = new DatabaseManager(_postgresContainer.GetConnectionString());
+        await DatabaseManager.InitializeDatabaseAsync();
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -74,46 +81,44 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IAsyncL
 ## Collection Fixture 模式
 
 ```csharp
-[CollectionDefinition("Integration Tests")]
+[CollectionDefinition(Name)]
 public class IntegrationTestCollection : ICollectionFixture<TestWebApplicationFactory>
 {
     public const string Name = "Integration Tests";
+}
+
+// 具體測試類別標記 Collection；抽象基底不標
+[Collection(IntegrationTestCollection.Name)]
+public class ProductsControllerTests : IntegrationTestBase
+{
+    public ProductsControllerTests(TestWebApplicationFactory factory) : base(factory) { }
 }
 ```
 
 ## 測試基底類別
 
 ```csharp
-[Collection("Integration Tests")]
 public abstract class IntegrationTestBase : IAsyncLifetime
 {
     protected readonly TestWebApplicationFactory Factory;
     protected readonly HttpClient HttpClient;
-    protected readonly DatabaseManager DatabaseManager;
+    protected DatabaseManager DatabaseManager => Factory.DatabaseManager;
     protected readonly IFlurlClient FlurlClient;
 
     protected IntegrationTestBase(TestWebApplicationFactory factory)
     {
         Factory = factory;
         HttpClient = factory.CreateClient();
-        DatabaseManager = new DatabaseManager(factory.PostgresContainer.GetConnectionString());
         FlurlClient = new FlurlClient(HttpClient);
     }
 
-    public virtual async Task InitializeAsync()
-    {
-        await DatabaseManager.InitializeDatabaseAsync();
-    }
+    // FakeTimeProvider 由整個 Collection 共用、只能往前推，這裡不重設時間
+    public virtual Task InitializeAsync() => Task.CompletedTask;
 
     public virtual async Task DisposeAsync()
     {
         await DatabaseManager.CleanDatabaseAsync();
         FlurlClient.Dispose();
-    }
-
-    protected void ResetTime()
-    {
-        Factory.TimeProvider.SetUtcNow(new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero));
     }
 
     protected void AdvanceTime(TimeSpan timeSpan)

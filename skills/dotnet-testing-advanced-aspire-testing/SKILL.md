@@ -216,12 +216,13 @@ _respawner = await Respawner.CreateAsync(connection, new RespawnerOptions
 避免每個測試類別重複啟動容器：
 
 ```csharp
-[CollectionDefinition("Integration Tests")]
+[CollectionDefinition(Name)]
 public class IntegrationTestCollection : ICollectionFixture<AspireAppFixture>
 {
+    public const string Name = "Integration Tests";
 }
 
-[Collection("Integration Tests")]
+[Collection(IntegrationTestCollection.Name)]
 public class MyControllerTests : IntegrationTestBase
 {
     public MyControllerTests(AspireAppFixture fixture) : base(fixture) { }
@@ -344,7 +345,15 @@ const string sql = @"
 
 ### 範例檔案
 
+- [templates/apphost-program.cs](templates/apphost-program.cs) - AppHost 編排定義
+- [templates/apphost-project.csproj](templates/apphost-project.csproj) - AppHost 專案設定
+- [templates/aspire-app-fixture.cs](templates/aspire-app-fixture.cs) - 測試基礎設施：啟動應用、等待服務就緒，並持有整個 Collection 共用的 `DatabaseManager`
+- [templates/integration-test-collection.cs](templates/integration-test-collection.cs) - Collection Fixture 設定
+- [templates/integration-test-base.cs](templates/integration-test-base.cs) - 測試基底類別
+- [templates/database-manager.cs](templates/database-manager.cs) - 資料庫管理員
+- [templates/controller-tests.cs](templates/controller-tests.cs) - 控制器測試範例
 - [templates/test-helpers.cs](templates/test-helpers.cs) - `TestHelpers` 靜態類別，提供測試資料的種入、清除與計數（`SeedProductsAsync`、`SeedSpecificProductAsync`、`CleanAllProductsAsync`、`GetProductCountAsync`）
+- [templates/test-project.csproj](templates/test-project.csproj) - 測試專案設定
 
 ### 原始文章
 
@@ -362,19 +371,6 @@ const string sql = @"
 
 - [.NET Aspire 官方文件](https://learn.microsoft.com/dotnet/aspire/)
 - [Aspire Testing 文件](https://learn.microsoft.com/dotnet/aspire/testing)
-
-### 範例檔案
-
-請參考同目錄下的範例檔案：
-
-- `templates/apphost-program.cs` - AppHost 編排定義
-- `templates/aspire-app-fixture.cs` - 測試基礎設施
-- `templates/integration-test-collection.cs` - Collection Fixture 設定
-- `templates/integration-test-base.cs` - 測試基底類別
-- `templates/database-manager.cs` - 資料庫管理員
-- `templates/controller-tests.cs` - 控制器測試範例
-- `templates/test-project.csproj` - 測試專案設定
-- `templates/apphost-project.csproj` - AppHost 專案設定
 
 ### 相關技能
 

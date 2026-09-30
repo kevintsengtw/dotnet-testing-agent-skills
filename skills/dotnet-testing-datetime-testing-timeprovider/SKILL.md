@@ -56,6 +56,8 @@ services.AddScoped<OrderService>();
 
 ### 原則二：FakeTimeProvider 控制測試時間
 
+> 套件名與命名空間不同：安裝 `Microsoft.Extensions.TimeProvider.Testing`，程式碼中寫 `using Microsoft.Extensions.Time.Testing;`。
+
 FakeTimeProvider 提供完整的時間控制能力：
 
 | 方法                             | 用途          | 使用時機            |
@@ -327,6 +329,7 @@ public void GetTimeBasedDiscount_週五_應回傳九折優惠(
 
 - [ ] 每個測試方法使用獨立的 `FakeTimeProvider` 實例
 - [ ] 若改用共用實例，初始時間取所有測試會用到的最早時間（`SetUtcNow` 不可回設）
+- [ ] 整合測試中由 DI 註冊的 `FakeTimeProvider` 同屬共用實例：不要在每個測試開始時設回固定起點，時間以 `GetUtcNow()` 為基準推算
 - [ ] 使用 `SetLocalNow()` 擴充方法簡化時間設定
 - [ ] 使用 `Advance()` 測試時間敏感邏輯（快取、過期、延遲）
 - [ ] 測試涵蓋邊界條件（開始時間、結束時間、臨界點）

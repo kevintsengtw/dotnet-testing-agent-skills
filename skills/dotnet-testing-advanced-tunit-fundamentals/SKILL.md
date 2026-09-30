@@ -81,6 +81,11 @@ public async Task Add_多組輸入_應回傳正確結果(int a, int b, int expec
 }
 ```
 
+> `decimal` 不是 attribute 常數型別，`[Arguments(1.5m)]` 會編譯失敗（CS0182）。
+> TUnit 0.60.15 起會把 `double` 或 `string` 常值自動轉成 `decimal` 參數：參數宣告為 `decimal`，
+> 寫 `[Arguments(1.5)]` 或 `[Arguments("19.99")]` 即可。更早的版本不支援這個轉換，
+> 請改用 `[MethodDataSource]` 提供 `decimal` 值。
+
 ## TUnit.Assertions 斷言系統
 
 TUnit 採用流暢式（Fluent）斷言設計，所有斷言都是非同步的。支援相等性、布林值、數值比較、字串、集合、例外等多種斷言，並可透過 `And` / `Or` 組合條件。

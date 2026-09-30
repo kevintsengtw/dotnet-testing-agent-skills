@@ -28,7 +28,8 @@
 - 🔄 **2026-03-31 NuGet 套件版本同步更新**：14 個 NuGet 套件升級至最新穩定版，修正 Testcontainers Wait Strategy 與 FluentValidation 套件參考問題
 - 🐛 **2026-08-16 修正 AwesomeAssertions 幻覺 API 名稱**：3 個 Skills、8 處錯誤的斷言方法名稱（FluentAssertions 5.x 舊式命名），複製受影響範本會造成 CS1061 編譯錯誤
 - 🔗 **2026-09-30 補齊範本指標與修正斷掉的引用**：12 個 Skills 的 47 個範本檔補上 SKILL.md 指標，修正 13 處指向不存在目標的引用與連結
-- ⚡ **2026-09-08 Description 瘦身 + 三項實測回饋修正**：29 個 SKILL.md 每回合 context 成本由約 6,100 降至約 3,700 tokens；依 orchestration 實測補記 FakeTimeProvider 單向限制、修正 Respawner 每測試重建與 Collection 重複標記、補上 HTTP 狀態碼斷言對照表
+- ⚡ **2026-09-30 Description 瘦身 + 三項實測回饋修正**：29 個 SKILL.md 每回合 context 成本由約 6,100 降至約 3,700 tokens；依 orchestration 實測補記 FakeTimeProvider 單向限制、修正 Respawner 每測試重建與 Collection 重複標記、補上 HTTP 狀態碼斷言對照表
+- 🧪 **2026-09-30 實測回饋修正與內容勘誤**：修正 webapi 範本每個測試重設 FakeTimeProvider 導致後續測試全部失敗的問題，aspire 補齊 DatabaseManager 單一實例；釐清 TUnit 的 decimal 參數、Matrix 版本前提與 OutputType；另勘誤 5 處內容錯誤
 
 ---
 
@@ -491,7 +492,50 @@ graph LR
 
 ---
 
-## 2026-09-08 Description 瘦身 + 三項實測回饋修正 (v2.4.4)
+## 2026-09-30 實測回饋修正與內容勘誤 (v2.4.5)
+
+本版套用 orchestration 專案實測回報的 10 項修改建議，並勘誤 5 處內容錯誤。**Skill 名稱、數量、目錄結構均未更動**。
+
+### ⚠️ 範本 API 異動
+
+`dotnet-testing-advanced-webapi-integration-testing` 的 `IntegrationTestBase` **移除 `ResetTime()`**。已複製出去的範本不受影響；重新複製範本時，若測試有呼叫 `ResetTime()`，請改用 `AdvanceTime()` 往前推，或以 `Factory.TimeProvider.GetUtcNow()` 為基準推算時間。
+
+### 實測回饋修正
+
+| Skill | 問題 | 修正 |
+| --- | --- | --- |
+| `dotnet-testing-advanced-webapi-integration-testing` | `IntegrationTestBase` 在每個測試開始時把 Collection 共用的 `FakeTimeProvider` 設回 2024-01-01；`SetUtcNow()` 只能往前，只要有一個測試推過時間，之後的測試全部拋 `Cannot go back in time`（實測 3 次分別有 30、51、16 個測試失敗） | 不再重設時間、移除 `ResetTime()`；SKILL.md 補充共用 `FakeTimeProvider` 的注意事項 |
+| `dotnet-testing-advanced-webapi-integration-testing` | `references/test-infrastructure.md` 的基底類別仍是 v2.4.4 以前的寫法，與範本不一致 | 對齊範本：由 Factory 持有 `DatabaseManager`、抽象基底不標 `[Collection]`、Collection 名稱改用常數 |
+| `dotnet-testing-advanced-aspire-testing` | v2.4.4 的 `DatabaseManager` 單一實例修正只套用到 webapi，aspire 仍在每個測試重建，`Respawner` 快取形同虛設 | 改由 `AspireAppFixture` 持有單一 `DatabaseManager`，服務就緒後只初始化一次 |
+| `dotnet-testing-advanced-aspire-testing` | SKILL.md 的 Collection Fixture 片段用字面字串，範本用常數，產出會在兩種寫法間漂移 | SKILL.md 改為與範本相同的常數寫法 |
+| `dotnet-testing-datetime-testing-timeprovider` | 檢查清單未涵蓋整合測試中 DI 註冊的 `FakeTimeProvider`；套件名與命名空間不同，照套件名寫 `using` 會編譯失敗 | 檢查清單補一條；註明安裝 `Microsoft.Extensions.TimeProvider.Testing`、`using Microsoft.Extensions.Time.Testing;` |
+| `dotnet-testing-fluentvalidation-testing` | `WithErrorMessage`／`WithErrorCode` 沒說明定位，又被寫成「避免跳過」，讀者與審查都當成每個測試必備 | 標為可選加強，說明何時值得加、何時不必加；最佳實踐中的三處敘述一併調整 |
+
+### TUnit 版本行為的查證
+
+以下三項原提案請上游先確認，查證方式為檢查各版 TUnit 套件內容並以 .NET 9 SDK 實際建置。
+
+| Skill | 問題 | 查證結果與修正 |
+| --- | --- | --- |
+| `dotnet-testing-advanced-tunit-fundamentals` | 範本沒寫 `<OutputType>`，是否遺漏 | TUnit 透過 `TUnit.Engine` 自動設定 `OutputType=Exe`，不需手動設定。範本不變，reference 補說明 |
+| `dotnet-testing-advanced-tunit-fundamentals` | `[Arguments(1.5m)]` 會編譯失敗（CS0182） | 屬實。TUnit **0.60.15 起**可直接宣告 `decimal` 參數並傳入 `[Arguments(1.5)]` 或 `[Arguments("19.99")]`，會自動轉換；更早版本改用 `[MethodDataSource]`。SKILL.md 補說明 |
+| `dotnet-testing-advanced-tunit-advanced` | Matrix Tests 範本在 TUnit 0.6.x 編譯失敗 | 原因是範本使用的 `[MatrixDataSource]` **自 0.7.0 起才提供**（`[Matrix]` 本身更早就有）。SKILL.md 補版本前提與替代寫法 |
+
+### 內容勘誤
+
+| Skill | 錯誤 | 修正 |
+| --- | --- | --- |
+| `dotnet-testing-advanced-aspire-testing` | 「參考資源」下有兩個「範例檔案」小節，範本清單分散兩處 | 合併為一節，9 個範本全部附連結 |
+| `dotnet-testing-private-internal-testing` | 範本與 SKILL.md 寫「四種」`InternalsVisibleTo` 設定方式，實際為三種 | 改為三種 |
+| `dotnet-testing-private-internal-testing` | description 列出「AbstractLogger 模式」，但本 Skill 沒有這個內容（屬於 `test-output-logging`） | 自 description 移除 |
+| `dotnet-testing-test-data-builder-pattern` | `advanced-builder-scenarios.cs` 使用另一個命名空間的 `User`、`UserBuilder` 卻沒有 `using`，複製後編譯失敗 | 補上 `using TestDataBuilderPattern.Examples;` |
+| — | 本頁 v2.4.4 的日期誤植為 2026-09-08 | 更正為 2026-09-30 |
+
+> 詳細變更請參閱：[v2.4.5 Release Notes](https://github.com/kevintsengtw/dotnet-testing-agent-skills/releases/tag/v2.4.5)
+
+---
+
+## 2026-09-30 Description 瘦身 + 三項實測回饋修正 (v2.4.4)
 
 以 Claude Code 內建的 `/skill-doctor` 量測 29 個 Skills 的 context 成本，並套用 orchestration 專案實測回報的三項修改建議。**Skill 名稱、數量、目錄結構均未更動**，下游依名稱載入 SKILL.md 的工作流程不受影響。
 

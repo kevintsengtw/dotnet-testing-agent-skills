@@ -15,7 +15,7 @@ public class IntegrationTestCollection : ICollectionFixture<AspireAppFixture>
     
     // 這個類別不需要實作任何程式碼
     // 它只是用來定義 Collection Fixture
-    // 所有標記為 [Collection("Integration Tests")] 的測試類別
+    // 所有標記為 [Collection(IntegrationTestCollection.Name)] 的測試類別
     // 都會共享同一個 AspireAppFixture 實例
 }
 

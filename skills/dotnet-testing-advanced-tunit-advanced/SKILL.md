@@ -11,6 +11,8 @@ description: |
 
 TUnit 提供 MethodDataSource、ClassDataSource、Matrix Tests 三種進階資料來源。MethodDataSource 最靈活，支援動態產生與外部檔案載入；ClassDataSource 適合跨測試類別共享資料與 AutoFixture 整合；Matrix Tests 自動產生所有參數組合（注意控制數量避免爆炸性增長）。
 
+> 範本使用的 `[MatrixDataSource]` 自 TUnit 0.7.0 起提供；若使用更早的版本，請改用 `[MethodDataSource]` 以巢狀迴圈產生參數組合。
+
 > 完整範例與比較表請參閱 [references/data-driven-testing.md](references/data-driven-testing.md)
 
 ---

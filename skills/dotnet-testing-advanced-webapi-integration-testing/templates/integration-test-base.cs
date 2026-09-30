@@ -53,13 +53,10 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     }
 
     /// <summary>
-    /// 每個測試前執行 - 重設時間（資料庫結構與 Respawner 已在 Factory 初始化）
+    /// 每個測試前執行（資料庫結構與 Respawner 已在 Factory 初始化）
+    /// FakeTimeProvider 由整個 Collection 共用、只能往前推，這裡不重設時間
     /// </summary>
-    public virtual Task InitializeAsync()
-    {
-        ResetTime();
-        return Task.CompletedTask;
-    }
+    public virtual Task InitializeAsync() => Task.CompletedTask;
 
     /// <summary>
     /// 每個測試後執行 - 清理資料庫資料
@@ -68,14 +65,6 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     {
         await DatabaseManager.CleanDatabaseAsync();
         FlurlClient.Dispose();
-    }
-
-    /// <summary>
-    /// 重設時間為測試開始時間 (2024-01-01 00:00:00 UTC)
-    /// </summary>
-    protected void ResetTime()
-    {
-        Factory.TimeProvider.SetUtcNow(new DateTimeOffset(2024, 1, 1, 0, 0, 0, TimeSpan.Zero));
     }
 
     /// <summary>
@@ -88,7 +77,7 @@ public abstract class IntegrationTestBase : IAsyncLifetime
     }
 
     /// <summary>
-    /// 設定特定時間
+    /// 設定特定時間（只能設為晚於目前的時間，FakeTimeProvider 不可回設）
     /// </summary>
     /// <param name="time">要設定的時間</param>
     protected void SetTime(DateTimeOffset time)

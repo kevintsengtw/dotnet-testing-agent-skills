@@ -23,6 +23,11 @@ public class AspireAppFixture : IAsyncLifetime
     public HttpClient HttpClient => _httpClient ?? throw new InvalidOperationException("HTTP 客戶端尚未初始化");
 
     /// <summary>
+    /// 資料庫管理器 - 整個 Collection 只持有一個實例，Respawner 只建立一次
+    /// </summary>
+    public DatabaseManager DatabaseManager { get; private set; } = null!;
+
+    /// <summary>
     /// 初始化 Aspire 測試應用
     /// </summary>
     public async Task InitializeAsync()
@@ -37,6 +42,10 @@ public class AspireAppFixture : IAsyncLifetime
 
         // 確保所有服務完全就緒
         await WaitForServicesReadyAsync();
+
+        // 建立資料庫結構與 Respawner（只做一次，不隨每個測試重建）
+        DatabaseManager = new DatabaseManager(() => GetConnectionStringAsync());
+        await DatabaseManager.InitializeDatabaseAsync();
 
         // 建立 HTTP 客戶端，用於呼叫 API
         _httpClient = _app.CreateHttpClient("myapp-api", "http");

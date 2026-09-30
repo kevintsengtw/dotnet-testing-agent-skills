@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using TestDataBuilderPattern.Examples; // User、UserBuilder 定義於 user-builder-example.cs
 
 namespace TestDataBuilderPattern.AdvancedScenarios
 {
